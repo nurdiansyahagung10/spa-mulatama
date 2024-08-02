@@ -48,7 +48,7 @@ class AnggotaController extends Controller
 
         Anggota::create($credentcial);
 
-        return redirect()->back()->with("success","berhasil tambah anggota");
+        return redirect()->back()->with("success","berhasil tambah anggota ".$credentcial['nama']);
     }
 
     /**
