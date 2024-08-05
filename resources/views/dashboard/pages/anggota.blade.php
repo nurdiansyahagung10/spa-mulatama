@@ -36,7 +36,7 @@
             <tbody id="anggota-list-body-table" class="text-black/60 dark:text-stone-200">
                 <script>
                     window.addEventListener("load", async () => {
-                        let datafetch = await fetch("{{ route('anggotaget') }}");
+                        let datafetch = await fetch("/anggota/list/get");
                         let data = await datafetch.json();
                         let listtablebodyanggota = document.getElementById(
                             "anggota-list-body-table"

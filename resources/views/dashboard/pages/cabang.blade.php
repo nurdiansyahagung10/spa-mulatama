@@ -61,7 +61,7 @@
         >
             <script>
                 window.addEventListener("load", async () => {
-                    let datafetch = await fetch("{{ route('cabangget') }}");
+                    let datafetch = await fetch("/cabang/list/get");
                     let data = await datafetch.json();
                     let listtablebodyanggota = document.getElementById(
                         "anggota-list-body-table"

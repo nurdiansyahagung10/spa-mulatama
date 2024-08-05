@@ -53,6 +53,14 @@ class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  
     <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full px-4">
         <label class="block text-black dark:text-white mb-2" for="grid-password">
+          Confirm password
+        </label>
+        <input class="number-input block w-full bg-transparent text-black border-stone-400 dark:text-white border   rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white" required name="confirm_password" minlength="8" type="password" >
+      </div>
+    </div>
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full px-4">
+        <label class="block text-black dark:text-white mb-2" for="grid-password">
           Cabang
         </label>
         <select class="number-input block w-full bg-transparent text-black border-stone-400 dark:text-white border   rounded-full py-2 px-4  mb-3 leading-tight focus:outline-none dark:focus:border-white" required name="cabang_id"  >

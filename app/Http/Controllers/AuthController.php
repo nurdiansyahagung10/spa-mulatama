@@ -36,6 +36,10 @@ class AuthController extends Controller
 
     public function signup(request $request)
     {
+        if($request->password != $request->confirm_password){
+            return redirect()->back()->withErrors('password dan confirm password tidak sama');
+        }
+
         $credentcial = $request->validate([
             'nama' => ['required','unique:users,nama'],
             'email' => ['required', 'email','unique:users,email'],
@@ -56,6 +60,28 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('signin');
+    }
+
+    public function edit(request $request, string $id){
+        $cabang = Cabang::all();
+        $user = User::with('cabang')->find($id);
+        return view('dashboard.pages.edituser')->with(['user'=> $user, 'cabang' => $cabang]);
+
+    }
+
+
+    public function update(request $request,string $id){
+
+        $credentcial = $request->validate([
+            'nama' => 'required',
+            'email' => 'required',
+            'cabang_id' => ['required','numeric']
+        ]);
+
+        User::find($id)->update($credentcial);
+        
+        return redirect()->back()->with("success","berhasil edit staff ".$credentcial['nama']);
+
     }
 
     public function usershow(request $request){

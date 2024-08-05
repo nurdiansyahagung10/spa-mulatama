@@ -28,6 +28,8 @@ Route::middleware([HaveNtAuth::class,])->group(function () {
         Route::get('user/list/get', [JsonController::class, 'user'])->name('userget');
         Route::resource('cabang', CabangController::class);
         Route::get('cabang/list/get', [JsonController::class, 'cabang'])->name('cabangget');
+        Route::get('staff/{id}/edit', [AuthController::class, 'edit'])->name('staffedit');
+        Route::put('staff/{id}/update', [AuthController::class, 'update'])->name('staffupdate');
     });
 });
 
