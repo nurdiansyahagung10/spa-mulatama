@@ -8,11 +8,8 @@
 
 @section('dashboardpage')
 
-<div class="w-full relative">
-
-</div>
 @if ($errors->any())
-<div class="toast  z-40 toast-end">
+<div class="toast absolute z-40 toast-end">
         @foreach ($errors->all() as $error)
         <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
           <span>{{$error}}</span>

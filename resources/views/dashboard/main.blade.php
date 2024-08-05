@@ -7,7 +7,9 @@
 
 @section('main')
 
+<section class="relative">
 
 @yield('dashboardpage')
+</section>
 
 @endsection
