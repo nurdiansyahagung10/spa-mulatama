@@ -10,7 +10,7 @@
 
 <div class="w-full relative">
   @if ($errors->any())
-  <div class="toast  z-40 toast-end">
+  <div class="  z-40 toast-end">
           @foreach ($errors->all() as $error)
           <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
             <span>{{$error}}</span>
@@ -20,7 +20,7 @@
   
   @endif
   @if(session('success'))
-  <div class="toast  z-40 toast-end">
+  <div class="  z-40 toast-end">
       <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
         <span>{{session('success')}}</span>
       </div>
