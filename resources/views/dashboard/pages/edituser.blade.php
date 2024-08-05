@@ -9,7 +9,7 @@
 @section('dashboardpage')
 
 @if ($errors->any())
-<div class=" absolute right-0 bottom-0 z-40 toast-end">
+<div class=" toast fixed whitespace-normal z-40 toast-end">
         @foreach ($errors->all() as $error)
         <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
           <span>{{$error}}</span>
