@@ -33,7 +33,7 @@
                     <th class="font-medium text-black dark:text-white ">Action</th>
                 </tr>
             </thead>
-            <tbody id="anggota-list-body-table" class="text-black/60 text-sm dark:text-stone-200">
+            <tbody id="anggota-list-body-table" class="text-black/60 dark:text-stone-200">
                 <script>
                     window.addEventListener("load", async () => {
                         let datafetch = await fetch("/anggota/list/get");
