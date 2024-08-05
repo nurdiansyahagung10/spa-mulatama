@@ -30,7 +30,7 @@ Route::middleware([HaveNtAuth::class,])->group(function () {
         Route::get('cabang/list/get', [JsonController::class, 'cabang'])->name('cabangget');
         Route::get('staff/{id}/edit', [AuthController::class, 'edit'])->name('staffedit');
         Route::delete('staff/{id}/delete', [AuthController::class, 'userdelete'])->name('staffdelete');
-        Route::put('staff/{id}/update', [AuthController::class, 'update'])->name('staffupdate');
+        Route::put('staff/{id}', [AuthController::class, 'update'])->name('staffupdate');
     });
 });
 
