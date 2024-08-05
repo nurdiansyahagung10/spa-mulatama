@@ -64,7 +64,7 @@ class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  
           </label>
           <textarea
               class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-2xl py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-              value="{{$anggota->alamat}}" name="alamat"></textarea>
+               name="alamat">{{$anggota->alamat}}</textarea>
       </div>
   </div>
   <div class="flex flex-wrap -mx-3 mb-6">
