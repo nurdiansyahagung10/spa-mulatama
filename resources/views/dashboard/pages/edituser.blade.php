@@ -23,7 +23,7 @@ class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  
     @method('put')
     @csrf
     <div class="p-5 w-full text-center">
-        <h1 class="dark:text-white text-2xl">Tambah Staff</h1>
+        <h1 class="dark:text-white text-2xl">Edit Staff</h1>
 
     </div>
   

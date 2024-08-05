@@ -64,7 +64,9 @@ class AnggotaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cabang = Cabang::all();
+        $anggota = Anggota::with('cabang')->find($id);
+        return view('dashboard.pages.editanggota')->with(['anggota'=> $anggota, 'cabang' => $cabang]);
     }
 
     /**
@@ -72,7 +74,7 @@ class AnggotaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**

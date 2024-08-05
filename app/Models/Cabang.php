@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Anggota;
 
 class Cabang extends Model
 {
@@ -20,5 +21,10 @@ class Cabang extends Model
     public function user(): HasOne
     {
     return $this->HasOne(User::class);
+    }
+  
+    public function anggota(): HasOne
+    {
+    return $this->HasOne(Anggota::class);
     }
 }
