@@ -9,7 +9,7 @@
 @section('dashboardpage')
 
 @if ($errors->any())
-<div role="alert" class="alert">
+<div role="alert" class="alert absolute">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
