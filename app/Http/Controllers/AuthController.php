@@ -99,6 +99,9 @@ class AuthController extends Controller
 
     public function userdelete(request $request, string $id){
         $user = User::find($id);
+        if($user->role  == 'admin'){
+            return redirect()->back()->withErrors('tidak bisa menghapus akun utama');
+        }
         $user->delete();
 
         return redirect()->back()->with('success', "berhasil menghapus staff ". $user['nama']);
