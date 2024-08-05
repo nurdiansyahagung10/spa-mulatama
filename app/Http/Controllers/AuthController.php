@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\Cabang;
+use Hash;
 
 class AuthController extends Controller
 {
@@ -39,6 +40,8 @@ class AuthController extends Controller
         if($request->password != $request->confirm_password){
             return redirect()->back()->withErrors('password dan confirm password tidak sama');
         }
+
+        $request->password = Hash::make($request->password);
 
         $credentcial = $request->validate([
             'nama' => ['required','unique:users,nama'],
