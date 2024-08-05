@@ -26,7 +26,7 @@
             <thead class="text-sm dark:text-white">
                 <tr class="dark:border-stone-400">
                     <th class="font-medium text-black dark:text-white text-sm">No</th>
-                    <th class="font-medium text-black dark:text-white text-sm">Name</th>
+                    <th class="font-medium text-black dark:text-white text-sm">Nama</th>
                     <th class="font-medium text-black dark:text-white text-sm">No ktp</th>
                     <th class="font-medium text-black dark:text-white text-sm">No kk</th>
                     <th class="font-medium text-black dark:text-white text-sm">Cabang</th>

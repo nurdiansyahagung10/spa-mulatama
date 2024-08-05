@@ -59,7 +59,7 @@ class AuthController extends Controller
 
         User::create(array_merge($credentcial,['role'=>'staff']));
         
-        return redirect()->back()->with("success","berhasil tambah staff");
+        return redirect()->back()->with("success","berhasil tambah staff ". $credentcial['nama']);
     }
 
     public function signout(request $request)
