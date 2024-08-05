@@ -29,6 +29,7 @@ Route::middleware([HaveNtAuth::class,])->group(function () {
         Route::resource('cabang', CabangController::class);
         Route::get('cabang/list/get', [JsonController::class, 'cabang'])->name('cabangget');
         Route::get('staff/{id}/edit', [AuthController::class, 'edit'])->name('staffedit');
+        Route::delete('staff/{id}/delete', [AuthController::class, 'userdelete'])->name('staffdelte');
         Route::put('staff/{id}/update', [AuthController::class, 'update'])->name('staffupdate');
     });
 });

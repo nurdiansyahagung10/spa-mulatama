@@ -41,7 +41,7 @@ class CabangController extends Controller
     ]);
         Cabang::create($credentcial);
 
-        return redirect()->back()->with("success","berhasil tambah cabang");
+        return redirect()->back()->with("success","berhasil tambah cabang ". $credentcial['nama_cabang']);
         
     }
 

@@ -90,4 +90,11 @@ class AuthController extends Controller
         return view('dashboard.pages.users')->with('user', $user);
 
     }
+
+    public function userdelete(request $request, string $id){
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->back()->with('success', "berhasil menghapus staff ". $user['nama']);
+    }
 }
