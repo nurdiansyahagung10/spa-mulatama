@@ -50,9 +50,9 @@ class AuthController extends Controller
             'cabang_id' => ['required','numeric']
         ],
     [
-        'nama.unique' => 'staff dengan nama ini sudah terdaftar',
-        'email.unique' => 'staff dengan email ini sudah terdaftar',
-    ]);
+        'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',                
+        'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',                
+]);
 
         $credentcial['password'] = Hash::make($credentcial['password']);
 
@@ -78,11 +78,44 @@ class AuthController extends Controller
 
     public function update(request $request,string $id){
 
-        $credentcial = $request->validate([
-            'nama' => 'required',
-            'email' => 'required',
-            'cabang_id' => ['required','numeric']
-        ]);
+        $user = User::find($id);
+
+        if($user->nama == $request->nama && $user->email == $request->email){
+            $credentcial = $request->validate([
+                'nama' => 'required',
+                'email' => 'required',
+                'cabang_id' => ['required','numeric']
+            ]);    
+        }else if($user->nama != $request->nama){
+            $credentcial = $request->validate([
+                'nama' => ['required','unique:users,nama'],
+                'email' => 'required',
+                'cabang_id' => ['required','numeric']
+            ],
+            [
+                'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',                
+            ]);    
+        }else if($user->email != $request->email){
+            $credentcial = $request->validate([
+                'nama' => 'required',
+                'email' => ['required','unique:users,email'],
+                'cabang_id' => ['required','numeric']
+            ],
+            [
+                'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',                
+            ]);    
+
+        }else{
+            $credentcial = $request->validate([
+                'nama' => ['required','unique:users,nama'],
+                'email' => ['required','unique:users,email'],
+                'cabang_id' => ['required','numeric']
+            ],
+            [
+                'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',                
+                'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',                
+            ]);    
+        }
 
         User::find($id)->update($credentcial);
         

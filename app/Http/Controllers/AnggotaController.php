@@ -31,24 +31,26 @@ class AnggotaController extends Controller
      */
     public function store(Request $request)
     {
-        $credentcial = $request->validate([
-            'nama' => 'required',
-            'ktp' => ['required','unique:anggota,ktp','numeric'],
-            'kk' => ['unique:anggota,kk','numeric','nullable'],
-            'alamat' => 'required',
-            'pengikat' => 'required',
-            'nohp' => ['required','unique:anggota,nohp','numeric'],
-            'cabang_id' => ['required','numeric'],
-        ],
-        [
-            'ktp.unique' => 'no ktp ini sudah terdaftar',
-            'kk.unique' => 'no kk ini sudah terdaftar',    
-            'nohp.unique' => 'no hp ini sudah terdaftar',    
-        ]);    
+        $credentcial = $request->validate(
+            [
+                'nama' => 'required',
+                'ktp' => ['required', 'unique:anggota,ktp', 'numeric'],
+                'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
+                'alamat' => 'required',
+                'pengikat' => 'required',
+                'nohp' => ['required', 'unique:anggota,nohp', 'numeric'],
+                'cabang_id' => ['required', 'numeric'],
+            ],
+            [
+                'ktp.unique' => 'no ktp ini sudah terdaftar',
+                'kk.unique' => 'no kk ini sudah terdaftar',
+                'nohp.unique' => 'no hp ini sudah terdaftar',
+            ]
+        );
 
         Anggota::create($credentcial);
 
-        return redirect()->back()->with("success","berhasil tambah anggota ".$credentcial['nama']);
+        return redirect()->back()->with("success", "berhasil tambah anggota " . $credentcial['nama']);
     }
 
     /**
@@ -66,33 +68,97 @@ class AnggotaController extends Controller
     {
         $cabang = Cabang::all();
         $anggota = Anggota::with('cabang')->find($id);
-        return view('dashboard.pages.editanggota')->with(['anggota'=> $anggota, 'cabang' => $cabang]);
+        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota, 'cabang' => $cabang]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {   
+    {
 
-        $credentcial = $request->validate([
-            'nama' => 'required',
-            'ktp' => ['required','unique:anggota,ktp','numeric'],
-            'kk' => ['unique:anggota,kk','numeric','nullable'],
-            'alamat' => 'required',
-            'pengikat' => 'required',
-            'nohp' => ['required','unique:anggota,nohp','numeric'],
-            'cabang_id' => ['required','numeric'],
-        ],
-        [
-            'ktp.unique' => 'no ktp ini sudah terdaftar',
-            'kk.unique' => 'no kk ini sudah terdaftar',    
-            'nohp.unique' => 'no hp ini sudah terdaftar',    
-        ]);    
+        $anggota = Anggota::find($id);
+
+
+        if ($anggota->ktp == $request->ktp && $anggota->kk == $request->kk && $anggota->nohp == $request->nohp) {
+            $credentcial = $request->validate([
+                'nama' => 'required',
+                'ktp' => ['required', 'numeric'],
+                'kk' => ['numeric', 'nullable'],
+                'alamat' => 'required',
+                'pengikat' => 'required',
+                'nohp' => ['required', 'numeric'],
+                'cabang_id' => ['required', 'numeric'],
+            ]);
+
+        } else if ($anggota->ktp != $request->ktp) {
+            $credentcial = $request->validate(
+                [
+                    'nama' => 'required',
+                    'ktp' => ['required', 'unique:anggota,ktp', 'numeric'],
+                    'kk' => ['numeric', 'nullable'],
+                    'alamat' => 'required',
+                    'pengikat' => 'required',
+                    'nohp' => ['required', 'numeric'],
+                    'cabang_id' => ['required', 'numeric'],
+                ],
+                [
+                    'ktp.unique' => 'no ktp ' . $request->ktp . ' sudah terdaftar',
+                ]
+            );
+        } else if ($anggota->kk != $request->kk) {
+            $credentcial = $request->validate(
+                [
+                    'nama' => 'required',
+                    'ktp' => ['required', 'numeric'],
+                    'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
+                    'alamat' => 'required',
+                    'pengikat' => 'required',
+                    'nohp' => ['required', 'numeric'],
+                    'cabang_id' => ['required', 'numeric'],
+                ],
+                [
+                    'kk.unique' => 'no kk ' . $request->kk . ' sudah terdaftar',
+                ]
+            );       
+        } else if ($anggota->nohp != $request->nohp) {
+            $credentcial = $request->validate(
+                [
+                    'nama' => 'required',
+                    'ktp' => ['required', 'numeric'],
+                    'kk' => [ 'numeric', 'nullable'],
+                    'alamat' => 'required',
+                    'pengikat' => 'required',
+                    'nohp' => ['required', 'unique:anggota,nohp', 'numeric'],
+                    'cabang_id' => ['required', 'numeric'],
+                ],
+                [
+                    'nohp.unique' => 'no hp ' . $request->nohp . ' sudah terdaftar',
+                ]
+            );        
+        } else {
+            $credentcial = $request->validate(
+                [
+                    'nama' => 'required',
+                    'ktp' => ['required', 'unique:anggota,ktp', 'numeric'],
+                    'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
+                    'alamat' => 'required',
+                    'pengikat' => 'required',
+                    'nohp' => ['required', 'unique:anggota,nohp', 'numeric'],
+                    'cabang_id' => ['required', 'numeric'],
+                ],
+                [
+                    'ktp.unique' => 'no ktp ' . $request->ktp . ' sudah terdaftar',
+                    'kk.unique' => 'no kk ' . $request->kk . ' sudah terdaftar',
+                    'nohp.unique' => 'no hp ' . $request->nohp . ' sudah terdaftar',
+                ]
+            );
+        }
+
 
         Anggota::find($id)->update($credentcial);
-        
-        return redirect()->back()->with("success","berhasil edit anggota ". $credentcial['nama']);
+
+        return redirect()->back()->with("success", "berhasil edit anggota " . $credentcial['nama']);
     }
 
     /**
