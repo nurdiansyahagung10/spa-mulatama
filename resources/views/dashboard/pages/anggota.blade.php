@@ -21,8 +21,8 @@
         </div>
     </div>
 
-    <div style="overflow:auto" class="p-10 w-full h-auto mb-10 border-b-0 rounded-t-2xl min-h-[70vh] border backdrop-blur-sm">
-        <table class="table table-fixed  text-center align-middle">
+    <div class="p-10 overflow-auto w-full h-auto mb-10 border-b-0 rounded-t-2xl min-h-[70vh] border backdrop-blur-sm">
+        <table class="table  text-center align-middle">
             <thead class="text-sm dark:text-white">
                 <tr class="dark:border-stone-400">
                     <th class="font-medium text-black dark:text-white ">No</th>
