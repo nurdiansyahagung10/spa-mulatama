@@ -98,6 +98,11 @@ class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  
           <select
               class="number-input block w-full bg-transparent dark:text-white border   border-stone-400 rounded-full text-black py-2 px-4  mb-3 leading-tight focus:outline-none dark:focus:border-white" name="cabang_id">
               <option class="text-black" value="{{$anggota->cabang->id}}">{{$anggota->cabang->nama_cabang}}</option>        
+              @foreach ($cabang as $item )
+              @if ($item->id != $anggota->cabang_id)
+              <option class="text-black" value="{{$item->id}}">{{$item->nama_cabang}}</option>
+              @endif
+              @endforeach
           </select>
 
       </div>
