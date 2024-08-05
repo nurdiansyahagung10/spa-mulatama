@@ -8,9 +8,9 @@
 
 @section('dashboardpage')
 
-<div class="w-full relative">
+<div class="w-full relative flex justify-end items-end">
   @if ($errors->any())
-  <div class="  z-40 toast-end">
+  <div class="  z-40 absolute">
           @foreach ($errors->all() as $error)
           <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
             <span>{{$error}}</span>
@@ -20,7 +20,7 @@
   
   @endif
   @if(session('success'))
-  <div class="  z-40 toast-end">
+  <div class="  z-40 absolute">
       <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
         <span>{{session('success')}}</span>
       </div>
