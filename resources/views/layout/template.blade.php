@@ -10,7 +10,7 @@
 </head>
 <body>
     @yield('header')
-    <section class=" container px-4 mx-auto">
+    <section class=" container relative px-4 mx-auto">
         <div class="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden">
             <div
                 class="absolute left-1/2 scale-125 top-0 ml-[-38rem] h-[25rem] w-[81.25rem]">
