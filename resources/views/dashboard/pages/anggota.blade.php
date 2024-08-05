@@ -22,7 +22,7 @@
     </div>
 
     <div style="overflow:auto" class="p-10 text-sm w-full h-auto mb-10 border-b-0 rounded-t-2xl min-h-[70vh] border backdrop-blur-sm">
-        <table class="table table-fixed text-center align-middle">
+        <table class="table table-fixed text-sm text-center align-middle">
             <thead class=" dark:text-white">
                 <tr class="dark:border-stone-400">
                     <th class="font-medium text-black dark:text-white ">No</th>
