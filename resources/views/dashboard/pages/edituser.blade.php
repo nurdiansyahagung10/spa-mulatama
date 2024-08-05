@@ -8,7 +8,7 @@
 
 @section('dashboardpage')
 
-<div class="w-full relative">
+<div class="w-full z-40 relative">
   @if ($errors->any())
   <div class="absolute w-full">
           @foreach ($errors->all() as $error)
