@@ -2,7 +2,7 @@
     <div class="container mx-auto py-3.5 px-2  flex items-center justify-between">
 
         <a href="{{ url('dashboard') }}">
-            <h1 class="text-xl dark:text-white font-medium">Mulatama</h1>
+            <h1 class="text-xl dark:text-white text-black font-medium">Mulatama</h1>
         </a>
         <div class="sm:block hidden">
             <ul class="inline-flex items-center text-sm space-x-7">
