@@ -73,8 +73,26 @@ class AnggotaController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
+    {   
 
+        $credentcial = $request->validate([
+            'nama' => 'required',
+            'ktp' => ['required','unique:anggota,ktp','numeric'],
+            'kk' => ['unique:anggota,kk','numeric','nullable'],
+            'alamat' => 'required',
+            'pengikat' => 'required',
+            'nohp' => ['required','unique:anggota,nohp','numeric'],
+            'cabang_id' => ['required','numeric'],
+        ],
+        [
+            'ktp.unique' => 'no ktp ini sudah terdaftar',
+            'kk.unique' => 'no kk ini sudah terdaftar',    
+            'nohp.unique' => 'no hp ini sudah terdaftar',    
+        ]);    
+
+        Anggota::find($id)->update($credentcial);
+        
+        return redirect()->back()->with("success","berhasil edit anggota ". $credentcial['nama']);
     }
 
     /**
