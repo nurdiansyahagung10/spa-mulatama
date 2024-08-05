@@ -41,7 +41,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors('password dan confirm password tidak sama');
         }
 
-        $request->password = Hash::make($request->password);
+        
 
         $credentcial = $request->validate([
             'nama' => ['required','unique:users,nama'],
@@ -53,6 +53,9 @@ class AuthController extends Controller
         'nama.unique' => 'staff dengan nama ini sudah terdaftar',
         'email.unique' => 'staff dengan email ini sudah terdaftar',
     ]);
+
+        $credentcial['password'] = Hash::make($credentcial['password']);
+
 
         User::create(array_merge($credentcial,['role'=>'staff']));
         
