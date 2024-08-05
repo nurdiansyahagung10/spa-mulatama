@@ -86,7 +86,8 @@ class AuthController extends Controller
 
     public function usershow(request $request){
         $user = User::get();
-
+        var_dump($user);
+        die();
         return view('dashboard.pages.users')->with('user', $user);
 
     }
