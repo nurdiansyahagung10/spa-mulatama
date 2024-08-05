@@ -16,7 +16,17 @@
         </div>
               @endforeach
       </div>
-      @endif
+
+@endif
+@if(session('success'))
+<div class="toast z-40 toast-end">
+    <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
+      <span>{{session('success')}}</span>
+    </div>
+  </div>
+
+@endif
+
 <div
 class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
 <form class="w-full " action="{{ route ('staffupdate', ['id' => $user->id]) }}" method="post">
