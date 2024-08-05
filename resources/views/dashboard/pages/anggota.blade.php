@@ -23,14 +23,14 @@
 
     <div style="overflow:auto" class="p-10 w-full h-auto mb-10 border-b-0 rounded-t-2xl min-h-[70vh] border backdrop-blur-sm">
         <table class="table  table-fixed text-center align-middle">
-            <thead class=" text-lg dark:text-white">
+            <thead class=" dark:text-white">
                 <tr class="dark:border-stone-400">
-                    <th class="font-medium text-black dark:text-white ">No</th>
-                    <th class="font-medium text-black dark:text-white ">Nama</th>
-                    <th class="font-medium text-black dark:text-white ">No ktp</th>
-                    <th class="font-medium text-black dark:text-white ">No kk</th>
-                    <th class="font-medium text-black dark:text-white ">Cabang</th>
-                    <th class="font-medium text-black dark:text-white ">Action</th>
+                    <th class="font-medium text-lg text-black dark:text-white ">No</th>
+                    <th class="font-medium text-lg text-black dark:text-white ">Nama</th>
+                    <th class="font-medium text-lg text-black dark:text-white ">No ktp</th>
+                    <th class="font-medium text-lg text-black dark:text-white ">No kk</th>
+                    <th class="font-medium text-lg text-black dark:text-white ">Cabang</th>
+                    <th class="font-medium text-lg text-black dark:text-white ">Action</th>
                 </tr>
             </thead>
             <tbody id="anggota-list-body-table" class="text-black/60 dark:text-stone-200">
