@@ -6,10 +6,8 @@
 @endsection
 
 @section('main')
-<section class="w-full relative">
-    @yield('dashboardpage')
-    
-</section>
 
+
+@yield('dashboardpage')
 
 @endsection
