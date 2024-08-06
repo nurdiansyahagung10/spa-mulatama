@@ -9,7 +9,7 @@
 @section('dashboardpage')
 
 @if ($errors->any())
-<div class=" toast whitespace-normal bg-white ps-4 pe-[0.150rem]  z-40 toast-end">
+<div class=" toast whitespace-normal p-[0.6rem] z-40 toast-end">
         @foreach ($errors->all() as $error)
         <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
           <span>{{$error}}</span>
@@ -19,7 +19,7 @@
 
 @endif
 @if(session('success'))
-<div class="toast  z-40 toast-end">
+<div class=" toast whitespace-normal p-[0.6rem] z-40 toast-end">
     <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
       <span>{{session('success')}}</span>
     </div>
