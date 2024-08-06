@@ -13,7 +13,7 @@
         @foreach ($errors->all() as $error)
         <div style="text-align: left" class="border alert gap-2 justify-between flex border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
           <span>{{$error}}</span>
-          <button>X</button>
+          <button class="px-5">X</button>
         </div>
               @endforeach
       </div>
