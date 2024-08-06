@@ -11,7 +11,7 @@
 @if ($errors->any())
 <div style="white-space: normal" class=" toast p-[0.6rem] z-40 toast-end">
         @foreach ($errors->all() as $error)
-        <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
+        <div style="text-align: left" class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
           <span>{{$error}}</span>
         </div>
               @endforeach
