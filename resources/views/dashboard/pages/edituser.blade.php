@@ -9,15 +9,14 @@
 @section('dashboardpage')
 
 @if ($errors->any())
-<div style="white-space: normal" class=" toast p-[0.6rem] z-40 toast-end">
+<div style="white-space: normal" class="  toast p-[0.6rem] z-40 toast-end">
         @foreach ($errors->all() as $error)
-        <div style="text-align: left" class="border alert gap-2 justify-between flex border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
-          <span>{{$error}}</span>
-          <button class="px-5">X</button>
+        <div class="border text-left text-black alert gap-2 justify-between flex border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg notif{{$loop->iteration}}">
+          <span class="border-r pr-3">{{$error}}</span>
+          <button class="px-3" onclick="hidden_notif('{{$loop->itteration}}')">X</button>
         </div>
-              @endforeach
+        @endforeach
       </div>
-
 @endif
 @if(session('success'))
 <div style="white-space: normal" class=" toast p-[0.6rem] z-40 toast-end">
@@ -82,5 +81,9 @@ class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  
   </form>
 </div>
 
-
+<script>
+  function hidden_notif(id){
+    document.querySelector('.'+id).classList.add('hidden');
+  }
+</script>
 @endsection
