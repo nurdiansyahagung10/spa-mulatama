@@ -73,5 +73,12 @@
     </section>
     @include('layout.css.bottom.css')
     @include('layout.js.bottom.js')
+
+    <script>
+        function hidden_notif(id){
+          document.querySelector('.'+id).classList.add('hidden');
+        }
+      </script>
+      
 </body>
 </html>

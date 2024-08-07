@@ -64,9 +64,4 @@ class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  
   </form>
 </div>
 
-<script>
-  function hidden_notif(id){
-    document.querySelector('.'+id).classList.add('hidden');
-  }
-</script>
 @endsection
