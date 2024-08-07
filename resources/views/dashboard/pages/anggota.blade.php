@@ -1,6 +1,9 @@
 @extends('dashboard.main') @section('dashboardheader')
     @include('layout.nav')
     @endsection @section('dashboardpage')
+
+    @include('layout.notiferror')
+@include('layout.notifsuccess')
     <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
         <h1 class="text-xl">Table List Anggota</h1>
         <div class="flex gap-4">

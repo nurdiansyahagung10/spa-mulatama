@@ -1,22 +1,9 @@
 @extends('dashboard.main') @section('dashboardheader')
     @include('layout.nav')
     @endsection @section('dashboardpage')
-    @if ($errors->any())
-        <div class="toast z-40 toast-end">
-            @foreach ($errors->all() as $error)
-                <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
-                    <span>{{ $error }}</span>
-                </div>
-            @endforeach
-        </div>
-    @endif
-    @if (session('success'))
-        <div class="toast z-40 toast-end">
-            <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
-                <span>{{ session('success') }}</span>
-            </div>
-        </div>
-    @endif
+    @include('layout.notiferror')
+@include('layout.notifsuccess')
+
     <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
         <h1 class="text-xl">Table List Staff</h1>
         <div class="flex gap-4">

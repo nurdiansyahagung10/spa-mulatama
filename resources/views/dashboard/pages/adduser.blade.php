@@ -7,7 +7,8 @@
 
 
 @section('dashboardpage')
-@include('layout.notif')<div
+@include('layout.notiferror')
+@include('layout.notifsuccess')
 class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
 <form class="w-full " action="{{ route ('staffauth') }}" method="post">
     @csrf
