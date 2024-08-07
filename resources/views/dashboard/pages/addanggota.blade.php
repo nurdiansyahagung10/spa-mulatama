@@ -85,7 +85,7 @@
                     </label>
 
                     <select
-                        class="number-input pointer-events-none block w-full bg-transparent dark:text-white border   border-stone-400 rounded-full text-black py-2 px-4  mb-3 leading-tight focus:outline-none dark:focus:border-white" name="cabang_id">
+                        class="number-input block w-full bg-transparent dark:text-white border   border-stone-400 rounded-full text-black py-2 px-4  mb-3 leading-tight focus:outline-none dark:focus:border-white" name="cabang_id">
                         @foreach ($cabang as $item)
                                 <option class="text-black" value="{{ $item->id }}">{{ $item->nama_cabang }}</option>
                         @endforeach
