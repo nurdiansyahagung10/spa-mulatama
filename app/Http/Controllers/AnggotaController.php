@@ -167,9 +167,6 @@ class AnggotaController extends Controller
     public function destroy(string $id)
     {
         $anggota = Anggota::find($id);
-        if($anggota->role  == 'admin'){
-            return redirect()->back()->withErrors('tidak bisa menghapus akun utama');
-        }
         $anggota->delete();
 
         return redirect()->back()->with('success', "berhasil menghapus staff ". $anggota['nama']);
