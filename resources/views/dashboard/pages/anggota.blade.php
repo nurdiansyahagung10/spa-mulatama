@@ -1,9 +1,8 @@
 @extends('dashboard.main') @section('dashboardheader')
     @include('layout.nav')
     @endsection @section('dashboardpage')
-
     @include('layout.notiferror')
-@include('layout.notifsuccess')
+    @include('layout.notifsuccess')
     <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
         <h1 class="text-xl">Table List Anggota</h1>
         <div class="flex gap-4">
@@ -24,7 +23,8 @@
         </div>
     </div>
 
-    <div style="overflow: auto" class="p-10 w-full h-auto mb-10 border-b-0 rounded-t-2xl min-h-[70vh] border backdrop-blur-sm">
+    <div style="overflow: auto"
+        class="p-10 w-full h-auto mb-10 border-b-0 rounded-t-2xl min-h-[70vh] border backdrop-blur-sm">
         <table class="table  text-center align-middle">
             <thead class="text-sm dark:text-white">
                 <tr class="dark:border-stone-400">
@@ -39,11 +39,22 @@
             <tbody id="anggota-list-body-table" class="text-black/60 dark:text-stone-200">
                 <script>
                     window.addEventListener("load", async () => {
-                        let datafetch = await fetch("/anggota/list/get");
-                        let data = await datafetch.json();
                         let listtablebodyanggota = document.getElementById(
                             "anggota-list-body-table"
                         );
+
+                        listtablebodyanggota.innerHTML =
+                            `
+                                        <tr class="border-b-0">
+                    <td colspan="6" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                </tr>
+
+                        `;
+
+                        let datafetch = await fetch("/anggota/list/get");
+                        let data = await datafetch.json();
+                        listtablebodyanggota.innerHTML = '';
+
                         data.forEach((item, index) => {
                             listtablebodyanggota.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">

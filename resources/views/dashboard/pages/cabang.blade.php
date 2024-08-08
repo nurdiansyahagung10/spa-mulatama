@@ -57,19 +57,27 @@
                 </th>
             </tr>
         </thead>
-        <tbody
-            id="anggota-list-body-table"
-            class="text-black/60 dark:text-stone-200"
-        >
-            <script>
-                window.addEventListener("load", async () => {
-                    let datafetch = await fetch("/cabang/list/get");
-                    let data = await datafetch.json();
-                    let listtablebodyanggota = document.getElementById(
-                        "anggota-list-body-table"
-                    );
+           <tbody id="cabang-list-body-table" class="text-black/60 dark:text-stone-200">
+                <script>
+                    window.addEventListener("load", async () => {
+                        let listtablebodycabang = document.getElementById(
+                            "cabang-list-body-table"
+                        );
+
+                        listtablebodycabang.innerHTML =
+                            `
+                                        <tr class="border-b-0">
+                    <td colspan="6" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                </tr>
+
+                        `;
+
+                        let datafetch = await fetch("/cabang/list/get");
+                        let data = await datafetch.json();
+                        listtablebodycabang.innerHTML = '';
+
                     data.forEach((item, index) => {
-                        listtablebodyanggota.innerHTML += `
+                        listtablebodycabang.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
                         <td>${item.nama_cabang}</td>

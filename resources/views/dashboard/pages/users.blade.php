@@ -35,16 +35,27 @@
                     <th class="font-medium text-black dark:text-white">Action</th>
                 </tr>
             </thead>
-            <tbody id="anggota-list-body-table" class="text-black/60 dark:text-stone-200">
+            <tbody id="staff-list-body-table" class="text-black/60 dark:text-stone-200">
                 <script>
                     window.addEventListener("load", async () => {
+                        let listtablebodystaff = document.getElementById(
+                            "staff-list-body-table"
+                        );
+
+                        listtablebodystaff.innerHTML =
+                            `
+                                        <tr class="border-b-0">
+                    <td colspan="6" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                </tr>
+
+                        `;
+
                         let datafetch = await fetch("/user/list/get");
                         let data = await datafetch.json();
-                        let listtablebodyanggota = document.getElementById(
-                            "anggota-list-body-table"
-                        );
+                        listtablebodystaff.innerHTML = '';
+
                         data.forEach((item, index) => {
-                            listtablebodyanggota.innerHTML += `
+                            listtablebodystaff.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
                         <td>${item.nama}</td>
