@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Cabang;
+use App\Models\pdl;
 use Hash;
 
 class UserSeeder extends Seeder
@@ -24,7 +25,13 @@ class UserSeeder extends Seeder
 
         Cabang::create(
             [
-                "nama_cabang" => "testing_cabang"
+                "nama" => "testing_cabang"
+            ]
+            );
+        pdl::create(
+            [
+                "nama" => "iyansyah",
+                "cabang_id" => "1",
             ]
             );
     }

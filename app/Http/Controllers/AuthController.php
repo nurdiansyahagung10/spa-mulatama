@@ -119,7 +119,7 @@ class AuthController extends Controller
 
         User::find($id)->update($credentcial);
         
-        return redirect()->back()->with("success","berhasil edit staff ".$credentcial['nama']);
+        return redirect()->back()->with("success","berhasil edit staff ".$user['nama']);
 
     }
 

@@ -32,7 +32,11 @@
                     <th class="font-medium text-black dark:text-white ">Nama</th>
                     <th class="font-medium text-black dark:text-white ">No ktp</th>
                     <th class="font-medium text-black dark:text-white ">No kk</th>
+                    <th class="font-medium text-black dark:text-white ">Nominal pinjaman</th>
+                    <th class="font-medium text-black dark:text-white ">Dropping</th>
+                    <th class="font-medium text-black dark:text-white ">Pdl</th>
                     <th class="font-medium text-black dark:text-white ">Cabang</th>
+                    <th class="font-medium text-black dark:text-white ">Tanggal pengajuan</th>
                     <th class="font-medium text-black dark:text-white ">Action</th>
                 </tr>
             </thead>
@@ -46,7 +50,7 @@
                         listtablebodyanggota.innerHTML =
                             `
                                         <tr class="border-b-0">
-                    <td colspan="6" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                    <td colspan="9" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
                 </tr>
 
                         `;
@@ -54,7 +58,6 @@
                         let datafetch = await fetch("/anggota/list/get");
                         let data = await datafetch.json();
                         listtablebodyanggota.innerHTML = '';
-
                         data.forEach((item, index) => {
                             listtablebodyanggota.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
@@ -62,7 +65,11 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        <td>${item.cabang_id}</td>
+                        <td>${item.nominal_pinjaman}</td>
+                        <td>belum di drop</td>
+                        <td>${item.pdl.nama}</td>
+                        <td>${item.pdl.cabang.nama}</td>
+                        <td>${item.tanggal_pengajuan}</td>
 <td>
                                                         <div class="dropdown">
                             <div tabindex="0" class="cursor-pointer dark:text-white text-black" >

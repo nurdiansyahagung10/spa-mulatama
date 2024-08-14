@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Cabang;
+use Auth;
+use App\Models\pdl;
 
 class AnggotaController extends Controller
 {
@@ -13,8 +15,7 @@ class AnggotaController extends Controller
      */
     public function index()
     {
-        $anggota = Anggota::all();
-        return view("dashboard.pages.anggota")->with("anggota", $anggota);
+        return view("dashboard.pages.anggota");
     }
 
     /**
@@ -22,8 +23,9 @@ class AnggotaController extends Controller
      */
     public function create()
     {
+        $pdl = pdl::all();
         $cabang = Cabang::all();
-        return view('dashboard.pages.addanggota')->with('cabang', $cabang);
+        return view('dashboard.pages.addanggota')->with(['cabang'=> $cabang,'pdl' => $pdl]);
     }
 
     /**
@@ -34,12 +36,19 @@ class AnggotaController extends Controller
         $credentcial = $request->validate(
             [
                 'nama' => 'required',
-                'ktp' => ['required', 'unique:anggota,ktp', 'numeric'],
+                'ktp' => [ 'unique:anggota,ktp', 'numeric'],
                 'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
-                'alamat' => 'required',
-                'pengikat' => 'required',
-                'nohp' => ['required', 'unique:anggota,nohp', 'numeric'],
-                'cabang_id' => ['required', 'numeric'],
+                'nohp' => [ 'unique:anggota,nohp', 'numeric'],
+                'pdl_id' => ['required', 'numeric'],
+                'tanggal_lahir' => 'nullable',
+                'tanggal_pengajuan' => 'nullable',
+                'usaha' => 'nullable',
+                'foto_usaha' => 'nullable',
+                'alamat_usaha' => 'nullable',
+                'alamat' => 'nullable',
+                'pengikat' => 'nullable',
+                'foto_pengikat' => 'nullable',
+                'nominal_pinjaman' => 'nullable',
             ],
             [
                 'ktp.unique' => 'no ktp ini sudah terdaftar',
@@ -48,7 +57,48 @@ class AnggotaController extends Controller
             ]
         );
 
-        Anggota::create($credentcial);
+
+        $pdl = pdl::find($credentcial['pdl_id']);
+        $cabang = Cabang::find($pdl['cabang_id']);
+
+
+
+        if($request->file('foto_anggota')){
+            $file= $request->file('foto_anggota');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/ktp dan anggota'), $filename);
+            $credentcial['foto_anggota']= $filename;
+        }
+        if($request->file('foto_ktp_anggota')){
+            $file= $request->file('foto_ktp_anggota');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/ktp dan anggota'), $filename);
+            $credentcial['foto_ktp_anggota']= $filename;
+        }
+        if($request->file('foto_anggota_memegang_ktp')){
+            $file= $request->file('foto_anggota_memegang_ktp');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/ktp dan anggota'), $filename);
+            $credentcial['foto_anggota_memegang_ktp']= $filename;
+        }
+        if($request->file('foto_usaha')){
+            $file= $request->file('foto_usaha');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/tempat usaha'), $filename);
+            $credentcial['foto_usaha']= $filename;
+        }
+        if($request->file('foto_pengikat')){
+            $file= $request->file('foto_pengikat');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/surat pengikat'), $filename);
+            $credentcial['foto_pengikat']= $filename;
+        }
+
+
+        $user = Auth::user();
+
+        Anggota::create(array_merge($credentcial, ['staff_id' => $user->id ]));
+
 
         return redirect()->back()->with("success", "berhasil tambah anggota " . $credentcial['nama']);
     }
@@ -58,17 +108,19 @@ class AnggotaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $anggota = Anggota::with('pdl.cabang')->find($id);
+        return view('dashboard.pages.detailanggota')->with('anggota', $anggota );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
+
+
     public function edit(string $id)
     {
-        $cabang = Cabang::all();
-        $anggota = Anggota::with('cabang')->find($id);
-        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota, 'cabang' => $cabang]);
+        $anggota = Anggota::with('pdl.cabang')->find($id);
+        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota, ]);
     }
 
     /**
@@ -158,7 +210,7 @@ class AnggotaController extends Controller
 
         Anggota::find($id)->update($credentcial);
 
-        return redirect()->back()->with("success", "berhasil edit anggota " . $credentcial['nama']);
+        return redirect()->back()->with("success", "berhasil edit anggota " . $anggota['nama']);
     }
 
     /**
@@ -169,7 +221,7 @@ class AnggotaController extends Controller
         $anggota = Anggota::find($id);
         $anggota->delete();
 
-        return redirect()->back()->with('success', "berhasil menghapus staff ". $anggota['nama']);
+        return redirect()->back()->with('success', "berhasil menghapus anggota ". $anggota['nama']);
 
     }
 }

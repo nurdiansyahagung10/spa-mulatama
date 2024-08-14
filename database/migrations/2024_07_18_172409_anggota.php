@@ -14,13 +14,25 @@ return new class extends Migration
         Schema::create("anggota", function (Blueprint $table) {
             $table->id();
             $table->string("nama")->unique("nama");
-            $table->bigInteger("ktp")->unique("ktp");
+            $table->date('tanggal_lahir')->nullable();
+            $table->date('tanggal_pengajuan')->nullable();
+            $table->bigInteger("ktp")->unique("ktp")->nullable();
             $table->bigInteger("kk")->unique("kk")->nullable();
-            $table->text('alamat');
-            $table->string('pengikat');
-            $table->bigInteger('nohp');
-            $table->bigInteger("cabang_id")->unsigned()->index();
-            $table->foreign("cabang_id")->references("id")->on("cabang")->onDelete('cascade');
+            $table->string('foto_anggota')->nullable();
+            $table->string('foto_ktp_anggota')->nullable();
+            $table->string('foto_anggota_memegang_ktp')->nullable();
+            $table->string('usaha')->nullable();
+            $table->string('foto_usaha')->nullable();
+            $table->string('alamat_usaha')->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('pengikat')->nullable();
+            $table->string('foto_pengikat')->nullable();
+            $table->string('nominal_pinjaman')->nullable();
+            $table->bigInteger('nohp')->nullable();
+            $table->bigInteger("staff_id")->unsigned()->index()->nullable();
+            $table->foreign("staff_id")->references("id")->on("users")->onDelete('cascade');
+            $table->bigInteger("pdl_id")->unsigned()->index()->nullable();
+            $table->foreign("pdl_id")->references("id")->on("pdl")->onDelete('cascade');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
 

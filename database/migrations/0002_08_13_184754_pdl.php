@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cabang', function (Blueprint $table) {
+        Schema::create('pdl', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
+            $table->bigInteger("cabang_id")->unsigned()->index();
+            $table->foreign("cabang_id")->references("id")->on("cabang")->onDelete('cascade');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cabang');
+        schema::dropIfExists("pdl");
     }
 };

@@ -58,7 +58,8 @@ class CabangController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cabang = Cabang::find($id);
+        return view('dashboard.pages.editcabang')->with('cabang', $cabang);
     }
 
     /**
@@ -66,7 +67,25 @@ class CabangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $cabang = Cabang::find($id);
+
+        if($cabang->nama_cabang != $request->nama_cabang){
+            $credentcial = $request->validate([
+                'nama_cabang' => ["required",'unique:cabang,nama_cabang'],
+            ],
+            [
+                'nama_cabang.unique' => 'cabang dengan nama '. $request->nama_cabang .' sudah terdaftar',                
+            ]);    
+        }else{
+            $credentcial = $request->validate([
+                'nama_cabang' => 'required',
+            ]);    
+        }
+
+        Cabang::find($id)->update($credentcial);
+        
+        return redirect()->back()->with("success","berhasil edit cabang ".$cabang['nama_cabang']);
     }
 
     /**
@@ -74,6 +93,10 @@ class CabangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $cabang = Cabang::find($id);
+        $cabang->delete();
+
+        return redirect()->back()->with('success', "berhasil menghapus cabang ". $cabang['nama_cabang']);
+
     }
 }
