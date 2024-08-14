@@ -34,6 +34,7 @@
                     <th class="font-medium text-black dark:text-white ">No kk</th>
                     <th class="font-medium text-black dark:text-white ">Nominal pinjaman</th>
                     <th class="font-medium text-black dark:text-white ">Dropping</th>
+                    <th class="font-medium text-black dark:text-white ">Storting</th>
                     <th class="font-medium text-black dark:text-white ">Pdl</th>
                     <th class="font-medium text-black dark:text-white ">Cabang</th>
                     <th class="font-medium text-black dark:text-white ">Tanggal pengajuan</th>
@@ -50,7 +51,7 @@
                         listtablebodyanggota.innerHTML =
                             `
                                         <tr class="border-b-0">
-                    <td colspan="9" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                    <td colspan="10" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
                 </tr>
 
                         `;
@@ -66,7 +67,8 @@
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
                         <td>${item.nominal_pinjaman}</td>
-                        <td>belum di drop</td>
+                        <td>0</td>
+                        <td>0</td>
                         <td>${item.pdl.nama}</td>
                         <td>${item.pdl.cabang.nama}</td>
                         <td>${item.tanggal_pengajuan}</td>
@@ -79,7 +81,11 @@
                             <form method="post" action="/anggota/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
                                 @method('delete')   
                                 @csrf
-                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Edit</a></li>
+                                <li><a href="/anggota/${item.id}" class="hover:text-white ">view</a></li>
+                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Edit</a></li>
+                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Dropping</a></li>
+                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Storting</a></li>
+
                                 <li><button class="hover:text-white ">Delete</button></li>
                             </form>                            </div>
                             </td>                    </tr> 
