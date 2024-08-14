@@ -119,8 +119,11 @@ class AnggotaController extends Controller
 
     public function edit(string $id)
     {
-        $anggota = Anggota::with('pdl.cabang')->find($id);
-        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota, ]);
+        // $anggota = Anggota::with('pdl.cabang')->find($id);
+        $anggota = Anggota::where('id',$id)->get();
+        $pdl = pdl::all();
+        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota,
+            'pdl'=>$pdl, ]);
     }
 
     /**
