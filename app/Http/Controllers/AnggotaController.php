@@ -36,19 +36,17 @@ class AnggotaController extends Controller
         $credentcial = $request->validate(
             [
                 'nama' => 'required',
-                'ktp' => [ 'unique:anggota,ktp', 'numeric'],
-                'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
-                'nohp' => [ 'unique:anggota,nohp', 'numeric'],
-                'pdl_id' => ['required', 'numeric'],
+                'ktp' =>  ['unique:anggota,ktp','nullable'],
+                'kk' => ['unique:anggota,kk', 'nullable'],
+                'nohp' =>  ['unique:anggota,nohp', 'nullable'],
+                'pdl_id' => 'required',
                 'tanggal_lahir' => 'nullable',
-                'tanggal_pengajuan' => 'nullable',
                 'usaha' => 'nullable',
                 'foto_usaha' => 'nullable',
                 'alamat_usaha' => 'nullable',
                 'alamat' => 'nullable',
                 'pengikat' => 'nullable',
                 'foto_pengikat' => 'nullable',
-                'nominal_pinjaman' => 'nullable',
             ],
             [
                 'ktp.unique' => 'no ktp ini sudah terdaftar',
@@ -58,39 +56,38 @@ class AnggotaController extends Controller
         );
 
 
-        $pdl = pdl::find($credentcial['pdl_id']);
-        $cabang = Cabang::find($pdl['cabang_id']);
+        $pdl = pdl::with('cabang')->find($credentcial['pdl_id']);
 
 
 
         if($request->file('foto_anggota')){
             $file= $request->file('foto_anggota');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_anggota '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
             $credentcial['foto_anggota']= $filename;
         }
         if($request->file('foto_ktp_anggota')){
             $file= $request->file('foto_ktp_anggota');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_ktp_anggota '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
             $credentcial['foto_ktp_anggota']= $filename;
         }
         if($request->file('foto_anggota_memegang_ktp')){
             $file= $request->file('foto_anggota_memegang_ktp');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_anggota_memegang_ktp '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
             $credentcial['foto_anggota_memegang_ktp']= $filename;
         }
         if($request->file('foto_usaha')){
             $file= $request->file('foto_usaha');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/tempat usaha'), $filename);
+            $filename= date('YmdHi').' foto_usaha '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/tempat usaha'), $filename);
             $credentcial['foto_usaha']= $filename;
         }
         if($request->file('foto_pengikat')){
             $file= $request->file('foto_pengikat');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('Image/'.$cabang['nama'].'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. $credentcial['tanggal_pengajuan'] .'/surat pengikat'), $filename);
+            $filename= date('YmdHi').' foto_pengikat '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/surat pengikat'), $filename);
             $credentcial['foto_pengikat']= $filename;
         }
 
@@ -119,8 +116,9 @@ class AnggotaController extends Controller
 
     public function edit(string $id)
     {
+        $pdl = pdl::all();
         $anggota = Anggota::with('pdl.cabang')->find($id);
-        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota, ]);
+        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota,'pdl' => $pdl ]);
     }
 
     /**
@@ -135,24 +133,35 @@ class AnggotaController extends Controller
         if ($anggota->ktp == $request->ktp && $anggota->kk == $request->kk && $anggota->nohp == $request->nohp) {
             $credentcial = $request->validate([
                 'nama' => 'required',
-                'ktp' => ['required', 'numeric'],
-                'kk' => ['numeric', 'nullable'],
-                'alamat' => 'required',
-                'pengikat' => 'required',
-                'nohp' => ['required', 'numeric'],
-                'cabang_id' => ['required', 'numeric'],
+                'ktp' =>  'nullable',
+                'kk' =>  'nullable',
+                'nohp' =>   'nullable',
+                'pdl_id' => 'required',
+                'tanggal_lahir' => 'nullable',
+                'usaha' => 'nullable',
+                'foto_usaha' => 'nullable',
+                'alamat_usaha' => 'nullable',
+                'alamat' => 'nullable',
+                'pengikat' => 'nullable',
+                'foto_pengikat' => 'nullable',
             ]);
 
         } else if ($anggota->ktp != $request->ktp) {
             $credentcial = $request->validate(
                 [
                     'nama' => 'required',
-                    'ktp' => ['required', 'unique:anggota,ktp', 'numeric'],
-                    'kk' => ['numeric', 'nullable'],
-                    'alamat' => 'required',
-                    'pengikat' => 'required',
-                    'nohp' => ['required', 'numeric'],
-                    'cabang_id' => ['required', 'numeric'],
+                    'ktp' =>  ['unique:anggota,ktp','nullable'],
+                    'kk' =>  'nullable',
+                    'nohp' =>   'nullable',
+                    'pdl_id' => 'required',
+                    'tanggal_lahir' => 'nullable',
+                        'usaha' => 'nullable',
+                    'foto_usaha' => 'nullable',
+                    'alamat_usaha' => 'nullable',
+                    'alamat' => 'nullable',
+                    'pengikat' => 'nullable',
+                    'foto_pengikat' => 'nullable',
+
                 ],
                 [
                     'ktp.unique' => 'no ktp ' . $request->ktp . ' sudah terdaftar',
@@ -162,12 +171,18 @@ class AnggotaController extends Controller
             $credentcial = $request->validate(
                 [
                     'nama' => 'required',
-                    'ktp' => ['required', 'numeric'],
-                    'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
-                    'alamat' => 'required',
-                    'pengikat' => 'required',
-                    'nohp' => ['required', 'numeric'],
-                    'cabang_id' => ['required', 'numeric'],
+                    'ktp' =>   'nullable',
+                    'kk' => ['unique:anggota,kk', 'nullable'],
+                    'nohp' =>  'nullable',
+                    'pdl_id' => 'required',
+                    'tanggal_lahir' => 'nullable',
+                        'usaha' => 'nullable',
+                    'foto_usaha' => 'nullable',
+                    'alamat_usaha' => 'nullable',
+                    'alamat' => 'nullable',
+                    'pengikat' => 'nullable',
+                    'foto_pengikat' => 'nullable',
+
                 ],
                 [
                     'kk.unique' => 'no kk ' . $request->kk . ' sudah terdaftar',
@@ -177,12 +192,18 @@ class AnggotaController extends Controller
             $credentcial = $request->validate(
                 [
                     'nama' => 'required',
-                    'ktp' => ['required', 'numeric'],
-                    'kk' => [ 'numeric', 'nullable'],
-                    'alamat' => 'required',
-                    'pengikat' => 'required',
-                    'nohp' => ['required', 'unique:anggota,nohp', 'numeric'],
-                    'cabang_id' => ['required', 'numeric'],
+                    'ktp' =>  'nullable',
+                    'kk' => 'nullable',
+                    'nohp' =>  ['unique:anggota,nohp', 'nullable'],
+                    'pdl_id' => 'required',
+                    'tanggal_lahir' => 'nullable',
+                        'usaha' => 'nullable',
+                    'foto_usaha' => 'nullable',
+                    'alamat_usaha' => 'nullable',
+                    'alamat' => 'nullable',
+                    'pengikat' => 'nullable',
+                    'foto_pengikat' => 'nullable',
+
                 ],
                 [
                     'nohp.unique' => 'no hp ' . $request->nohp . ' sudah terdaftar',
@@ -192,12 +213,18 @@ class AnggotaController extends Controller
             $credentcial = $request->validate(
                 [
                     'nama' => 'required',
-                    'ktp' => ['required', 'unique:anggota,ktp', 'numeric'],
-                    'kk' => ['unique:anggota,kk', 'numeric', 'nullable'],
-                    'alamat' => 'required',
-                    'pengikat' => 'required',
-                    'nohp' => ['required', 'unique:anggota,nohp', 'numeric'],
-                    'cabang_id' => ['required', 'numeric'],
+                    'ktp' =>  ['unique:anggota,ktp','nullable'],
+                    'kk' => ['unique:anggota,kk', 'nullable'],
+                    'nohp' =>  ['unique:anggota,nohp', 'nullable'],
+                    'pdl_id' => 'required',
+                    'tanggal_lahir' => 'nullable',
+                        'usaha' => 'nullable',
+                    'foto_usaha' => 'nullable',
+                    'alamat_usaha' => 'nullable',
+                    'alamat' => 'nullable',
+                    'pengikat' => 'nullable',
+                    'foto_pengikat' => 'nullable',
+
                 ],
                 [
                     'ktp.unique' => 'no ktp ' . $request->ktp . ' sudah terdaftar',
@@ -207,8 +234,44 @@ class AnggotaController extends Controller
             );
         }
 
+        $pdl = pdl::find($credentcial['pdl_id']);
+        $cabang = Cabang::find($pdl['cabang_id']);
 
-        Anggota::find($id)->update($credentcial);
+
+
+        if($request->file('foto_anggota')){
+            $file= $request->file('foto_anggota');
+            $filename= date('YmdHi').' foto_anggota '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $credentcial['foto_anggota']= $filename;
+        }
+        if($request->file('foto_ktp_anggota')){
+            $file= $request->file('foto_ktp_anggota');
+            $filename= date('YmdHi').' foto_ktp_anggota '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $credentcial['foto_ktp_anggota']= $filename;
+        }
+        if($request->file('foto_anggota_memegang_ktp')){
+            $file= $request->file('foto_anggota_memegang_ktp');
+            $filename= date('YmdHi').' foto_anggota_memegang_ktp '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $credentcial['foto_anggota_memegang_ktp']= $filename;
+        }
+        if($request->file('foto_usaha')){
+            $file= $request->file('foto_usaha');
+            $filename= date('YmdHi').' foto_usaha '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/tempat usaha'), $filename);
+            $credentcial['foto_usaha']= $filename;
+        }
+        if($request->file('foto_pengikat')){
+            $file= $request->file('foto_pengikat');
+            $filename= date('YmdHi').' foto_pengikat '. $credentcial['nama'].'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/surat pengikat'), $filename);
+            $credentcial['foto_pengikat']= $filename;
+        }
+
+        Anggota::find($id)->update(array_merge($credentcial, ['staff_id', ]));
+
 
         return redirect()->back()->with("success", "berhasil edit anggota " . $anggota['nama']);
     }

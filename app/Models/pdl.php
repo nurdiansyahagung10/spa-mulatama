@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cabang;
 
+
 class pdl extends Model
 {
     use HasFactory;
@@ -18,4 +19,6 @@ class pdl extends Model
     {
     return $this->BelongsTo(Cabang::class);
     }
+
+
 }

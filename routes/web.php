@@ -8,6 +8,7 @@ use App\Http\Middleware\HaveAuth;
 use App\Http\Middleware\HaveNtAuth;
 use App\Http\Middleware\AuthAdmin;
 use App\Http\Controllers\JsonController;
+use App\Http\Controllers\DroppingController;
 
 Route::middleware([HaveAuth::class,])->group(function () {
     Route::get('signin', [AuthController::class, 'signinview'])->name('signin');
@@ -16,6 +17,7 @@ Route::middleware([HaveAuth::class,])->group(function () {
 Route::middleware([HaveNtAuth::class,])->group(function () {
     Route::get('signout', [AuthController::class, 'signout'])->name('signout');
     Route::resource('anggota', AnggotaController::class);
+    Route::resource('dropping', DroppingController::class);
     Route::get('anggota/list/get', [JsonController::class, 'anggota'])->name('anggotaget');
     Route::get('dashboard', function () {
         return view('dashboard.pages.dashboard');
@@ -26,6 +28,7 @@ Route::middleware([HaveNtAuth::class,])->group(function () {
         Route::post('staff/auth', [AuthController::class, 'signup'])->name('staffauth');
         Route::get('staff/list', [AuthController::class, 'usershow'])->name('staff');
         Route::get('user/list/get', [JsonController::class, 'user'])->name('userget');
+        Route::get('dropping/list/get', [JsonController::class, 'dropping'])->name('droppingget');
         Route::resource('cabang', CabangController::class);
         Route::get('cabang/list/get', [JsonController::class, 'cabang'])->name('cabangget');
         Route::get('staff/{id}/edit', [AuthController::class, 'edit'])->name('staffedit');

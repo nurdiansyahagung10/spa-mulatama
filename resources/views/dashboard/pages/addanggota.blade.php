@@ -19,16 +19,6 @@
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
-                        Tanggal pengajuan
-                    </label>
-                    <input
-                        class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="tanggal_pengajuan" type="date">
-                </div>
-            </div>
-            <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full px-4">
-                    <label class="block text-black dark:text-white mb-2" for="grid-password">
                         Pdl
                     </label>
 
@@ -84,7 +74,7 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="nohp" id="field_nohp" type="number">
+                        name="nohp" id="field_nohp" type="number"> 
                 </div>
             </div>
 
@@ -117,7 +107,12 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="foto_anggota" type="file" accept="image/png, image/gif, image/jpeg">
+                        name="foto_anggota" id="anggota" type="file" accept="image/png, image/gif, image/jpeg">
+                </div>
+            </div>
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
+                    <Image  id="foto_anggota" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -127,9 +122,15 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="foto_ktp_anggota" type="file" accept="image/png, image/gif, image/jpeg">
+                        name="foto_ktp_anggota" id="ktp_anggota" type="file" accept="image/png, image/gif, image/jpeg">
                 </div>
             </div>
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed  p-5 text-center   '>
+                    <Image  id="foto_ktp_anggota" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                </div>
+            </div>
+
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
@@ -137,7 +138,12 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="foto_anggota_memegang_ktp" type="file" accept="image/png, image/gif, image/jpeg">
+                        name="foto_anggota_memegang_ktp" id="memegang_ktp" type="file" accept="image/png, image/gif, image/jpeg">
+                </div>
+            </div>
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5 text-center   '>
+                    <Image  id="foto_memegang_ktp" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -158,9 +164,15 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="foto_usaha" type="file" accept="image/png, image/gif, image/jpeg">
+                        name="foto_usaha" id="usaha" type="file" accept="image/png, image/gif, image/jpeg">
                 </div>
             </div>
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
+                    <Image   id="foto_usaha" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                </div>
+            </div>
+
 
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
@@ -192,12 +204,19 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="foto_pengikat" type="file" accept="image/png, image/gif, image/jpeg">
+                        name="foto_pengikat" id="pengikat" type="file" accept="image/png, image/gif, image/jpeg">
+                </div>
+            </div>
+
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
+                    <Image  id="foto_pengikat" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
 
-            <div class="flex flex-wrap -mx-3">
+
+            <!-- <div class="flex flex-wrap -mx-3">
                 <div class="w-full px-4">
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
                         Nominal pinjaman
@@ -206,7 +225,7 @@
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
                         name="nominal_pinjaman" type="number">
                 </div>
-            </div>
+            </div> -->
             <div class="flex bg-white sticky bottom-0 flex-wrap pt-3 mt-6 -mx-3 mb-6">
                 <div class="w-full px-4">
                     <button
@@ -221,12 +240,52 @@
     </div>
 
     <script>
+
+    document.getElementById('anggota').onchange = evt => {
+  const [file] = document.getElementById('anggota').files
+  if (file) {
+    document.getElementById('foto_anggota').src = URL.createObjectURL(file);
+    document.getElementById('foto_anggota').classList.add('h-40');
+  }
+}
+    document.getElementById('ktp_anggota').onchange = evt => {
+  const [file] = document.getElementById('ktp_anggota').files
+  if (file) {
+    document.getElementById('foto_ktp_anggota').src = URL.createObjectURL(file);
+    document.getElementById('foto_ktp_anggota').classList.add('h-40');
+  }
+}
+    document.getElementById('memegang_ktp').onchange = evt => {
+  const [file] = document.getElementById('memegang_ktp').files
+  if (file) {
+    document.getElementById('foto_memegang_ktp').src = URL.createObjectURL(file);
+    document.getElementById('foto_memegang_ktp').classList.add('h-40');
+  }
+}
+    document.getElementById('usaha').onchange = evt => {
+  const [file] = document.getElementById('usaha').files
+  if (file) {
+    document.getElementById('foto_usaha').src = URL.createObjectURL(file);
+    document.getElementById('foto_usaha').classList.add('h-40');
+  }
+}
+    document.getElementById('pengikat').onchange = evt => {
+  const [file] = document.getElementById('pengikat').files
+  if (file) {
+    document.getElementById('foto_pengikat').src = URL.createObjectURL(file);
+    document.getElementById('foto_pengikat').classList.add('h-40');
+  }
+}
+
+
+
         const numberinput = document.querySelectorAll('.number-input');
         numberinput.forEach(function(inputan) {
             inputan.addEventListener('input', (e) => {
                 e.target.value = e.target.value.slice(0, 16);
             });
         });
+
 
         document.getElementById('field_nohp').addEventListener('input', (e) => {
             e.target.value = e.target.value.slice(0, 13);

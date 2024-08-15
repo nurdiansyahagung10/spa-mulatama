@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('dropping', function (Blueprint $table) {
             $table->id();
-            $table->string('foto_nasabah_mendatangani_spk');
-            $table->string('foto_nasabah_dan_spk');
-            $table->text('note');
-            $table->string('bukti');
+            $table->date('tanggal_dropping');
+            $table->string('nominal_dropping');
+            $table->string('foto_nasabah_mendatangani_spk')->nullable();
+            $table->string('foto_nasabah_dan_spk')->nullable();
+            $table->text('note')->nullable();
+            $table->string('bukti')->nullable();
             $table->bigInteger("anggota_id")->unsigned()->index();
             $table->foreign("anggota_id")->references("id")->on("anggota")->onDelete('cascade');
             $table->dateTime('created_at');

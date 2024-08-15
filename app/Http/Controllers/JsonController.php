@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\User;
 use App\Models\Cabang;
-
+use App\Models\Dropping;
 class JsonController extends Controller
 {
     public function user(request $request){
@@ -39,5 +39,15 @@ class JsonController extends Controller
         }
 
         return response()->json($cabang, 200);
+    }
+    public function dropping(request $request){
+        $dropping = Dropping::with('anggota')->get();
+
+
+        if ($dropping->isEmpty()) {
+            return response()->json(['message' => 'No dropping found'], 404);
+        }
+
+        return response()->json($dropping, 200);
     }
 }

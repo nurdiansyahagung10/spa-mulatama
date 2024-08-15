@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create("anggota", function (Blueprint $table) {
             $table->id();
-            $table->string("nama")->unique("nama");
+            $table->string("nama");
             $table->date('tanggal_lahir')->nullable();
-            $table->date('tanggal_pengajuan')->nullable();
             $table->bigInteger("ktp")->unique("ktp")->nullable();
             $table->bigInteger("kk")->unique("kk")->nullable();
             $table->string('foto_anggota')->nullable();

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\pdl;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Dropping;
 
 class Anggota extends Model
 {
@@ -40,5 +42,11 @@ class Anggota extends Model
     {
         return $this->BelongsTo(pdl::class);
     }
+
+    public function dropping(): HasOne
+    {
+    return $this->HasOne(Dropping::class);
+    }
+
 
 }
