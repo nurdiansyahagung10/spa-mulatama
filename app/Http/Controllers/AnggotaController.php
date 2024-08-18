@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Cabang;
@@ -56,48 +57,46 @@ class AnggotaController extends Controller
         );
 
 
-        $pdl = pdl::with('cabang')->find($credentcial['pdl_id']);
+        $user = Auth::user();
 
+        $anggota = Anggota::create(array_merge($credentcial, ['staff_id' => $user->id ]));
+        $pdl = pdl::with('cabang')->find($credentcial['pdl_id']);
 
 
         if($request->file('foto_anggota')){
             $file= $request->file('foto_anggota');
-            $filename= date('YmdHi').' foto_anggota '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_anggota '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->id.'/'.$pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/pengajuan/ktp dan anggota'), $filename);
             $credentcial['foto_anggota']= $filename;
         }
         if($request->file('foto_ktp_anggota')){
             $file= $request->file('foto_ktp_anggota');
-            $filename= date('YmdHi').' foto_ktp_anggota '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_ktp_anggota '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->id.'/'.$pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/pengajuan/ktp dan anggota'), $filename);
             $credentcial['foto_ktp_anggota']= $filename;
         }
         if($request->file('foto_anggota_memegang_ktp')){
             $file= $request->file('foto_anggota_memegang_ktp');
-            $filename= date('YmdHi').' foto_anggota_memegang_ktp '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_anggota_memegang_ktp '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->id.'/'.$pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/pengajuan/ktp dan anggota'), $filename);
             $credentcial['foto_anggota_memegang_ktp']= $filename;
         }
         if($request->file('foto_usaha')){
             $file= $request->file('foto_usaha');
-            $filename= date('YmdHi').' foto_usaha '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/tempat usaha'), $filename);
+            $filename= date('YmdHi').' foto_usaha '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->id.'/'.$pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/pengajuan/tempat usaha'), $filename);
             $credentcial['foto_usaha']= $filename;
         }
         if($request->file('foto_pengikat')){
             $file= $request->file('foto_pengikat');
-            $filename= date('YmdHi').' foto_pengikat '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/surat pengikat'), $filename);
+            $filename= date('YmdHi').' foto_pengikat '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$pdl->cabang->id.'/'.$pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/pengajuan/surat pengikat'), $filename);
             $credentcial['foto_pengikat']= $filename;
         }
 
+        Anggota::find($anggota->id)->update($credentcial);
 
-        $user = Auth::user();
-
-        Anggota::create(array_merge($credentcial, ['staff_id' => $user->id ]));
-
-
-        return redirect()->back()->with("success", "berhasil tambah anggota " . $credentcial['nama']);
+        return redirect()->back()->with("success", "berhasil tambah anggota " . $credentcial['nama'] );
     }
 
     /**
@@ -234,43 +233,57 @@ class AnggotaController extends Controller
             );
         }
 
-        $pdl = pdl::find($credentcial['pdl_id']);
-        $cabang = Cabang::find($pdl['cabang_id']);
-
-
 
         if($request->file('foto_anggota')){
             $file= $request->file('foto_anggota');
-            $filename= date('YmdHi').' foto_anggota '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_anggota '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota'), $filename);
+            if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota)){
+                File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota);
+            }    
             $credentcial['foto_anggota']= $filename;
         }
         if($request->file('foto_ktp_anggota')){
             $file= $request->file('foto_ktp_anggota');
-            $filename= date('YmdHi').' foto_ktp_anggota '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_ktp_anggota '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota'), $filename);
+            if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_ktp_anggota)){
+                File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_ktp_anggota);
+            }
+
             $credentcial['foto_ktp_anggota']= $filename;
         }
         if($request->file('foto_anggota_memegang_ktp')){
             $file= $request->file('foto_anggota_memegang_ktp');
-            $filename= date('YmdHi').' foto_anggota_memegang_ktp '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/ktp dan anggota'), $filename);
+            $filename= date('YmdHi').' foto_anggota_memegang_ktp '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota'), $filename);
+            if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota_memegang_ktp)){
+                File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota_memegang_ktp);
+            }
+
             $credentcial['foto_anggota_memegang_ktp']= $filename;
         }
         if($request->file('foto_usaha')){
             $file= $request->file('foto_usaha');
-            $filename= date('YmdHi').' foto_usaha '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/tempat usaha'), $filename);
+            $filename= date('YmdHi').' foto_usaha '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/tempat usaha'), $filename);
+            if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/tempat usaha/'.$anggota->foto_usaha)){
+                File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/tempat usaha/'.$anggota->foto_usaha);
+            }
+
             $credentcial['foto_usaha']= $filename;
         }
         if($request->file('foto_pengikat')){
             $file= $request->file('foto_pengikat');
-            $filename= date('YmdHi').' foto_pengikat '. $credentcial['nama'].'.'.$file->extension();
-            $file-> move(public_path('Image/'.$pdl->cabang->nama.'/'.$pdl['nama'].'/'.$credentcial['nama'].'/'. date('Y-m-d') .'/surat pengikat'), $filename);
+            $filename= date('YmdHi').' foto_pengikat '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/surat pengikat'), $filename);
+            if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/surat pengikat/'.$anggota->surat_pengikat)){
+                File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/surat pengikat/'.$anggota->surat_pengikat);
+            }
             $credentcial['foto_pengikat']= $filename;
         }
 
-        Anggota::find($id)->update(array_merge($credentcial, ['staff_id', ]));
+        Anggota::find($id)->update($credentcial);
 
 
         return redirect()->back()->with("success", "berhasil edit anggota " . $anggota['nama']);
@@ -281,8 +294,25 @@ class AnggotaController extends Controller
      */
     public function destroy(string $id)
     {
-        $anggota = Anggota::find($id);
+        $anggota = Anggota::with('pdl.cabang')->find($id);
         $anggota->delete();
+        
+        if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota)){
+            File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota);
+        }
+        if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_ktp_anggota)){
+            File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_ktp_anggota);
+        }
+        if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota_memegang_ktp)){
+            File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/ktp dan anggota/'.$anggota->foto_anggota_memegang_ktp);
+        }
+        if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/tempat usaha/'.$anggota->foto_usaha)){
+            File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/tempat usaha/'.$anggota->foto_usaha);
+        }
+        if(File::exists('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/surat pengikat/'.$anggota->surat_pengikat)){
+            File::delete('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id.'/'. $anggota->created_at->format('Y-m-d') .'/pengajuan/surat pengikat/'.$anggota->surat_pengikat);
+        }
+
 
         return redirect()->back()->with('success', "berhasil menghapus anggota ". $anggota['nama']);
 

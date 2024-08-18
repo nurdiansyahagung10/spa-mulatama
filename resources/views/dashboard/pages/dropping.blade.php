@@ -29,13 +29,11 @@
             <thead class="text-sm dark:text-white">
                 <tr class="dark:border-stone-400">
                     <th class="font-medium text-black dark:text-white ">No</th>
-                    <th class="font-medium text-black dark:text-white ">Nama</th>
-                    <th class="font-medium text-black dark:text-white ">No ktp</th>
-                    <th class="font-medium text-black dark:text-white ">No kk</th>
-                    <th class="font-medium text-black dark:text-white ">Dropping</th>
-                    <th class="font-medium text-black dark:text-white ">Storting</th>
+                    <th class="font-medium text-black dark:text-white ">Nama anggota</th>
+                    <th class="font-medium text-black dark:text-white ">Jumlah Pinjaman</th>
                     <th class="font-medium text-black dark:text-white ">Pdl</th>
                     <th class="font-medium text-black dark:text-white ">Cabang</th>
+                    <th class="font-medium text-black dark:text-white ">Tanggal dropping</th>
                     <th class="font-medium text-black dark:text-white ">Tanggal ditambahkan</th>
                     <th class="font-medium text-black dark:text-white ">Action</th>
                 </tr>
@@ -50,25 +48,23 @@
                         listtablebodyanggota.innerHTML =
                             `
                                         <tr class="border-b-0">
-                    <td colspan="9" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                    <td colspan="8" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
                 </tr>
 
                         `;
 
-                        let datafetch = await fetch("/anggota/list/get");
+                        let datafetch = await fetch("/dropping/list/get");
                         let data = await datafetch.json();
                         listtablebodyanggota.innerHTML = '';
                         data.forEach((item, index) => {
                             listtablebodyanggota.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
-                        <td>${item.nama}</td>
-                        <td>${item.ktp}</td>
-                        <td>${item.kk}</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>${item.pdl.nama}</td>
-                        <td>${item.pdl.cabang.nama}</td>
+                        <td>${item.anggota.nama}</td>
+                        <td>${item.nominal_dropping}</td>
+                        <td>${item.anggota.pdl.nama}</td>
+                        <td>${item.anggota.pdl.cabang.nama}</td>
+                        <td>${item.tanggal_dropping}</td>
                         <td>${new Date(item.created_at).toISOString().split('T')[0]}</td>
 <td>
                                                         <div class="dropdown">
@@ -76,15 +72,13 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                     </svg></div>
-                            <form method="post" action="/anggota/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
+                            <form method="post" action="/dropping/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
                                 @method('delete')   
                                 @csrf
-                                <li><a href="/anggota/${item.id}" class="hover:text-white ">view</a></li>
-                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Edit</a></li>
-                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Dropping</a></li>
-                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Storting</a></li>
+                                <li class="w-full"><a href="/dropping/${item.id}" class="hover:text-white ">view</a></li>
+                                                                <li class="w-full"><a href="/dropping/${item.id}/edit" class="hover:text-white ">Edit</a></li>
 
-                                <li><button class="hover:text-white ">Delete</button></li>
+                                <li class="w-full"><button class="hover:text-white ">Delete</button></li>
                             </form>                            </div>
                             </td>                    </tr> 
                     `;

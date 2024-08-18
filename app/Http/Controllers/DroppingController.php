@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Dropping;
@@ -19,9 +20,9 @@ class DroppingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        $anggota = Anggota::all();
+        $anggota = Anggota::find($id);
         return view('dashboard.pages.adddropping')->with(['anggota'=> $anggota,]);
 
     }
@@ -34,7 +35,6 @@ class DroppingController extends Controller
 
         $credentcial = $request->validate(
             [
-
                 'tanggal_dropping' => 'required',
                 'nominal_dropping' => 'required',
                 'note' => 'nullable',
@@ -50,20 +50,20 @@ class DroppingController extends Controller
 
         if($request->file('foto_nasabah_mendatangani_spk')){
             $file= $request->file('foto_nasabah_mendatangani_spk');
-            $filename= date('YmdHi').' foto_nasabah_mendatangani_spk '. $anggota->nama .'.'.$file->extension();
-            $file-> move(public_path('Image/'.$anggota->pdl->cabang->nama.'/'.$anggota->pdl->nama.'/'.$anggota->nama .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
+            $filename= date('YmdHi').' foto_nasabah_mendatangani_spk '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
             $credentcial['foto_nasabah_mendatangani_spk']= $filename;
         }
         if($request->file('foto_nasabah_dan_spk')){
             $file= $request->file('foto_nasabah_dan_spk');
-            $filename= date('YmdHi').' foto_nasabah_dan_spk '. $anggota->nama .'.'.$file->extension();
-            $file-> move(public_path('Image/'.$anggota->pdl->cabang->nama.'/'.$anggota->pdl->nama.'/'.$anggota->nama .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
+            $filename= date('YmdHi').' foto_nasabah_dan_spk '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
             $credentcial['foto_nasabah_dan_spk']= $filename;
         }
         if($request->file('bukti')){
             $file= $request->file('bukti');
-            $filename= date('YmdHi').' bukti '. $anggota->nama .'.'.$file->extension();
-            $file-> move(public_path('Image/'.$anggota->pdl->cabang->nama.'/'.$anggota->pdl->nama.'/'.$anggota->nama .'/'. date('Y-m-d') .'/dropping/bukti'), $filename);
+            $filename= date('YmdHi').' bukti_dropping '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/dropping/bukti'), $filename);
             $credentcial['bukti']= $filename;
         }
      
@@ -83,7 +83,8 @@ class DroppingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
+        return view('dashboard.pages.detaildropping')->with('dropping', $dropping );
     }
 
     /**
@@ -91,7 +92,9 @@ class DroppingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $anggota = Anggota::all();
+        $dropping = dropping::with('anggota')->find($id);
+        return view('dashboard.pages.editdropping')->with(['anggota' => $anggota,'dropping' => $dropping ]);
     }
 
     /**
@@ -99,7 +102,58 @@ class DroppingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $credentcial = $request->validate(
+            [
+
+                'tanggal_dropping' => 'required',
+                'nominal_dropping' => 'required',
+                'note' => 'nullable',
+                'bukti' => 'nullable',
+                "anggota_id" => 'required'
+                
+            ],
+        );
+
+
+        $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
+
+
+        if($request->file('foto_nasabah_mendatangani_spk')){
+            $file= $request->file('foto_nasabah_mendatangani_spk');
+            $filename= date('YmdHi').' foto_nasabah_mendatangani_spk '. $dropping->anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
+            if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_mendatangani_spk)){
+                File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_mendatangani_spk);
+            }
+            $credentcial['foto_nasabah_mendatangani_spk']= $filename;
+        }
+        if($request->file('foto_nasabah_dan_spk')){
+            $file= $request->file('foto_nasabah_dan_spk');
+            $filename= date('YmdHi').' foto_nasabah_dan_spk '. $dropping->anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
+            if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk)){
+                File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk);
+            }
+            $credentcial['foto_nasabah_dan_spk']= $filename;
+        }
+        if($request->file('bukti')){
+            $file= $request->file('bukti');
+            $filename= date('YmdHi').' bukti_dropping '. $dropping->anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. date('Y-m-d') .'/dropping/bukti'), $filename);
+            if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->bukti)){
+                File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->bukti);
+            }
+
+            $credentcial['bukti']= $filename;
+        }
+     
+
+        $dropping->update($credentcial);
+
+
+        return redirect()->back()->with("success", "berhasil edit dropping " . $dropping->anggota->nama);
+
     }
 
     /**
@@ -107,6 +161,22 @@ class DroppingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        
+        $dropping = dropping::with('anggota.pdl.cabang')->find($id);
+        $dropping->delete();
+
+        if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_mendatangani_spk)){
+            File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_mendatangani_spk);
+        }
+        
+        if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk)){
+            File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk);
+        }
+
+        if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/bukti/'.$dropping->bukti)){
+            File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/bukti/'.$dropping->bukti);
+        }
+
+        return redirect()->back()->with('success', "berhasil menghapus dropping ". $dropping->anggota->nama);
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Anggota;
 use App\Models\User;
 use App\Models\Cabang;
 use App\Models\Dropping;
+use App\Models\Storting;
 class JsonController extends Controller
 {
     public function user(request $request){
@@ -41,7 +42,7 @@ class JsonController extends Controller
         return response()->json($cabang, 200);
     }
     public function dropping(request $request){
-        $dropping = Dropping::with('anggota')->get();
+        $dropping = Dropping::with('anggota.pdl.cabang')->get();
 
 
         if ($dropping->isEmpty()) {
@@ -49,5 +50,15 @@ class JsonController extends Controller
         }
 
         return response()->json($dropping, 200);
+    }
+    public function storting(request $request){
+        $storting = storting::with('anggota.pdl.cabang')->get();
+
+
+        if ($storting->isEmpty()) {
+            return response()->json(['message' => 'No storting found'], 404);
+        }
+
+        return response()->json($storting, 200);
     }
 }

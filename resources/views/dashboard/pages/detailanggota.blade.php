@@ -59,23 +59,40 @@
                     <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                         <td>Foto anggota</td>
                         <td>:</td>
-                        <td class="flex justify-center"> <img
-                            src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/ktp dan anggota/{{$anggota->foto_anggota}}"
-                             class="!max-w-52" /></td>
+                        <td class="flex justify-center">
+                            <div class=" flex  h-full mb-6">
+                                <div  class='rounded-xl  relative inline-block   text-center p-5  '>
+                                    <Image id="foto_pengikat"                               
+                                    src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota}}"
+                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                                </div>
+                            </div>
+</td>
                     </tr>
                     <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                         <td>Foto ktp anggota</td>
                         <td>:</td>
-                        <td class="flex justify-center">   <img
-                            src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/ktp dan anggota/{{$anggota->foto_ktp_anggota}}"
-                             class="!max-w-52" />
+                        <td class="flex justify-center">
+                            <div class=" flex  h-full mb-6">
+                                <div  class='rounded-xl  relative inline-block   text-center p-5  '>
+                                    <Image id="foto_pengikat"                               
+                                    src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_ktp_anggota}}"
+                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                         <td>Foto anggota memegang ktp</td>
                         <td>:</td>
-                        <td class="flex justify-center">  <img
-                            src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}"
-                             class="!max-w-52" />
+                        <td class="flex justify-center">
+                            <div class=" flex  h-full mb-6">
+                                <div  class='rounded-xl  relative inline-block   text-center p-5  '>
+                                    <Image id="foto_pengikat"                               
+                                    src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}"
+                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                                </div>
+                            </div>
                     </tr>
                     <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                         <td>Foto Usaha</td>
@@ -85,9 +102,16 @@
                     <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                         <td>usaha</td>
                         <td>:</td>
-                        <td class="flex justify-center"> <img
-                            src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/tempat usaha/{{$anggota->foto_usaha}}"
-                             class="!max-w-52" /></td>
+                        <td class="flex justify-center">
+                            
+                            <div class=" flex  h-full mb-6">
+                                <div  class='rounded-xl  relative inline-block   text-center p-5  '>
+                                    <Image id="foto_pengikat"                               
+                                    src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/tempat usaha/{{$anggota->foto_usaha}}"
+                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                    
                    

@@ -112,7 +112,7 @@
             </div>
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
-                    <Image  id="foto_anggota" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image  id="foto_anggota" class="w-auto relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -169,7 +169,7 @@
             </div>
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
-                    <Image   id="foto_usaha" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image   id="foto_usaha" class="w-auto relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -210,7 +210,7 @@
 
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
-                    <Image  id="foto_pengikat" class="w-auto relative  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image  id="foto_pengikat" class="w-auto relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 

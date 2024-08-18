@@ -50,7 +50,7 @@
                         listtablebodyanggota.innerHTML =
                             `
                                         <tr class="border-b-0">
-                    <td colspan="9" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
+                    <td colspan="10" class="h-[20rem]"><span class="loading dark:text-white loading-bars text-black loading-md"></span></td>
                 </tr>
 
                         `;
@@ -81,8 +81,8 @@
                                 @csrf
                                 <li><a href="/anggota/${item.id}" class="hover:text-white ">view</a></li>
                                                                 <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Edit</a></li>
-                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Dropping</a></li>
-                                                                <li><a href="/anggota/${item.id}/edit" class="hover:text-white ">Storting</a></li>
+                                                                <li><a href="/dropping/create/${item.id}" class="hover:text-white ">Dropping</a></li>
+                                                                <li><a href="/storting/create/${item.id}" class="hover:text-white ">Storting</a></li>
 
                                 <li><button class="hover:text-white ">Delete</button></li>
                             </form>                            </div>

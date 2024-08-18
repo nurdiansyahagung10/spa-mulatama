@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\pdl;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Dropping;
+use App\Models\Storting;
 
 class Anggota extends Model
 {
@@ -46,6 +47,10 @@ class Anggota extends Model
     public function dropping(): HasOne
     {
     return $this->HasOne(Dropping::class);
+    }
+    public function storting(): HasOne
+    {
+    return $this->HasOne(Storting::class);
     }
 
 

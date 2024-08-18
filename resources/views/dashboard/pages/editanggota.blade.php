@@ -118,7 +118,7 @@
             </div>
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed  text-center p-5  '>
-                    <Image id="foto_anggota" src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/ktp dan anggota/{{$anggota->foto_anggota}}" class="w-auto relative h-40    rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota}}" class="w-auto relative h-40    rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -135,7 +135,7 @@
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/ktp dan anggota/{{$anggota->foto_ktp_anggota}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_ktp_anggota}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-3">
@@ -151,7 +151,7 @@
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="memegang_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="memegang_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -177,7 +177,7 @@
             </div>
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_usaha" src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/tempat usaha/{{$anggota->foto_usaha}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_usaha" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/tempat usaha/{{$anggota->foto_usaha}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -218,7 +218,7 @@
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_pengikat"  src="/Image/{{$anggota->pdl->cabang->nama}}/{{$anggota->pdl->nama}}/{{$anggota->nama}}/{{$anggota->created_at->format('Y-m-d')}}/surat pengikat/{{$anggota->foto_pengikat}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_pengikat"  src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/surat pengikat/{{$anggota->foto_pengikat}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
