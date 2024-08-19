@@ -27,7 +27,6 @@
                 </svg>
             </label>
         </div>
-                                {{implode("/",array_slice(explode("/",Request::url()),5)) }}
 
         <div class="drawer-side sm:hidden">
             <ul
@@ -56,7 +55,7 @@
                                 <button>List Anggota</button>
                             </a>
                         </li>
-                        @elseif (implode("",array_slice(explode("/",Request::url()),0,-1)) == url('edit'))
+                        @elseif (implode("/",array_slice(explode("/",Request::url()),5)) == 'edit' && implode("/",array_slice(explode("/",Request::url()),0,-2)) == url('cabang'))
                         <li class="w-full text-stone-600 hover:text-black p-4">
                             <a href="{{ url('anggota') }}">
                                 <button>List Anggota</button>
