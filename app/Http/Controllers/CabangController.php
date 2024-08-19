@@ -33,15 +33,15 @@ class CabangController extends Controller
     {
     
         $credentcial = $request->validate([
-            "nama_cabang" => ["required",'unique:cabang,nama_cabang']
+            "nama" => ["required",'unique:cabang,nama']
         ],
     [
-        'nama_cabang.unique' => 'cabang ini sudah terdaftar',
+        'nama.unique' => 'cabang ini sudah terdaftar',
 
     ]);
         Cabang::create($credentcial);
 
-        return redirect()->back()->with("success","berhasil tambah cabang ". $credentcial['nama_cabang']);
+        return redirect()->back()->with("success","berhasil tambah cabang ". $credentcial['nama']);
         
     }
 
@@ -70,22 +70,22 @@ class CabangController extends Controller
         
         $cabang = Cabang::find($id);
 
-        if($cabang->nama_cabang != $request->nama_cabang){
+        if($cabang->nama != $request->nama){
             $credentcial = $request->validate([
-                'nama_cabang' => ["required",'unique:cabang,nama_cabang'],
+                'nama' => ["required",'unique:cabang,nama'],
             ],
             [
-                'nama_cabang.unique' => 'cabang dengan nama '. $request->nama_cabang .' sudah terdaftar',                
+                'nama.unique' => 'cabang dengan nama '. $request->nama .' sudah terdaftar',                
             ]);    
         }else{
             $credentcial = $request->validate([
-                'nama_cabang' => 'required',
+                'nama' => 'required',
             ]);    
         }
 
         Cabang::find($id)->update($credentcial);
         
-        return redirect()->back()->with("success","berhasil edit cabang ".$cabang['nama_cabang']);
+        return redirect()->back()->with("success","berhasil edit cabang ".$cabang->nama);
     }
 
     /**
@@ -96,7 +96,7 @@ class CabangController extends Controller
         $cabang = Cabang::find($id);
         $cabang->delete();
 
-        return redirect()->back()->with('success', "berhasil menghapus cabang ". $cabang['nama_cabang']);
+        return redirect()->back()->with('success', "berhasil menghapus cabang ". $cabang->nama);
 
     }
 }

@@ -27,7 +27,7 @@ class=" p-10 pb-0 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] bor
           </label>
           <input
               class=" block w-full bg-transparent dark:text-white border-stone-400 text-black border   rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white"
-              required name="nama_cabang" value="{{$cabang->nama_cabang}}" type="text">
+              required name="nama" value="{{$cabang->nama}}" type="text">
       </div>
   </div>
     

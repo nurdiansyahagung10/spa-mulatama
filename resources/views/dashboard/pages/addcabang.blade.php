@@ -26,7 +26,7 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent dark:text-white border-stone-400 text-black border   rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white"
-                        required name="nama_cabang" type="text">
+                        required name="nama" type="text">
                 </div>
             </div>
 
