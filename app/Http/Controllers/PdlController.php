@@ -11,7 +11,7 @@ class PdlController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $id)
+    public function index()
     {
         return view("dashboard.pages.pdl");
 

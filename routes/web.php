@@ -29,9 +29,8 @@ Route::middleware([HaveNtAuth::class,])->group(function () {
     });
     
     Route::middleware([AuthAdmin::class,])->group(function () {
-        Route::resource('pdl', PdlController::class)->except(['index',]);
-        Route::get('pdl/list/{id}', [DroppingController::class, 'index'])->name('pdl.index');
-        Route::get('pdl/list/get/{id}', [JsonController::class, 'pdl'])->name('pdlget');
+        Route::resource('pdl', PdlController::class)->except(['create',]);
+        Route::get('pdl/list/get', [JsonController::class, 'pdl'])->name('pdlget');
         Route::get('staff/create', [AuthController::class, 'signupview'])->name('addstaff');
         Route::post('staff/auth', [AuthController::class, 'signup'])->name('staffauth');
         Route::get('staff/list', [AuthController::class, 'usershow'])->name('staff');
