@@ -32,11 +32,11 @@ class PdlController extends Controller
     public function store(Request $request)
     {
         $credentcial = $request->validate([
-            "nama" => ["required",'unique:cabang,nama_cabang'],
+            "nama" => ["required",'unique:cabang,nama'],
             "cabang_id" => "required"
         ],
     [
-        'nama_cabang.unique' => 'cabang ini sudah terdaftar',
+        'nama.unique' => 'pdl ini sudah terdaftar',
     ]);
         Pdl::create($credentcial);
 
