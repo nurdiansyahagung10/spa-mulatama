@@ -90,6 +90,7 @@
 <form method="post" action="/cabang/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
     @method('delete')   
     @csrf
+    <li><a href="/pdl/${item.id}" class="hover:text-white ">pdl</a></li>
     <li><a href="/cabang/${item.id}/edit" class="hover:text-white ">Edit</a></li>
     <li><button class="hover:text-white ">Delete</button></li>
 </form>                            </div>
