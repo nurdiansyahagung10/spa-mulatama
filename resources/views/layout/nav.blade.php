@@ -179,7 +179,7 @@
                     @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
                             implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('dropping'))
                         <li>
-                            <a href="{{ url('storting') }}">
+                            <a href="{{ url('dropping') }}">
                                 <button
                                     class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
                                     List dropping

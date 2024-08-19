@@ -73,9 +73,9 @@
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
                         catatan storting
                     </label>
-                    <input
-                        class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="note" type="text">
+                    <textarea
+                    class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-2xl py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
+                    name="note"></textarea>
                 </div>
             </div>
             <div class="flex bg-white sticky bottom-0 flex-wrap pt-3 mt-6 -mx-3 mb-6">
