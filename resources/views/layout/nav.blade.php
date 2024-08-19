@@ -27,6 +27,8 @@
                 </svg>
             </label>
         </div>
+                                {{implode("",array_slice(explode("/",Request::url()),0,-2))}}
+
         <div class="drawer-side sm:hidden">
             <ul
                 class="bg-white flex flex-col w-full text-base-content min-h-full p-4"
@@ -49,6 +51,12 @@
                             <a href="{{ url('dashboard') }}">Dashboard</a>
                         </li>
                         @if (Request::url() == url('anggota/create'))
+                        <li class="w-full text-stone-600 hover:text-black p-4">
+                            <a href="{{ url('anggota') }}">
+                                <button>List Anggota</button>
+                            </a>
+                        </li>
+                        @elseif (implode("",array_slice(explode("/",Request::url()),0,-1)) == url('edit'))
                         <li class="w-full text-stone-600 hover:text-black p-4">
                             <a href="{{ url('anggota') }}">
                                 <button>List Anggota</button>
