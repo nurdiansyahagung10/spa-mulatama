@@ -22,8 +22,9 @@ class PdlController extends Controller
      */
     public function create()
     {
-        $cabang = Cabang::all();
-        return view('dashboard.pages.addpdl')->with('cabang' , $cabang);
+        // $cabang = Cabang::all();
+        // return view('dashboard.pages.addpdl')->with('cabang' , $cabang);
+        return 'sdfsdf';
     }
 
     /**
