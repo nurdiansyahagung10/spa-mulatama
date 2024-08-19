@@ -13,7 +13,7 @@ class Cabang extends Model
 
     protected $table = "cabang";
     protected $fillable = [
-        'nama_cabang',
+        'nama',
         'created_at',
         'updated_at'
     ];
