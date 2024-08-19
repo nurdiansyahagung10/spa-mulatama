@@ -141,28 +141,28 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        `;
+                        `
                         if (item.dropping != null) {
                             `
-                                                <td>${item.dropping.length}</td>
+                        <td>${item.dropping.length}</td>
 
-                        `;
+                        `
                         } else {
                             `
                         <td>0</td>
-                        `;
+                        `
                         }
                         `
-                        `;
+                        `
                         if (item.storting != null) {
                             `
-                                                <td>${item.storting.length}</td>
+                        <td>${item.storting.length}</td>
 
-                        `;
+                        `
                         } else {
                             `
                         <td>0</td>
-                        `;
+                        `
                         }
                         `
                         <td>${item.jenis_anggota}</td>
@@ -200,7 +200,7 @@
                                 <li><button class="hover:text-white ">Delete</button></li>
                             </form>                            </div>
                             </td>                    </tr> 
-                    `;
+                    `
                     });
                 });
                 let newdata = null;
