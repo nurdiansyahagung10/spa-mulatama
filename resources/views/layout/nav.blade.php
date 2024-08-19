@@ -27,7 +27,7 @@
                 </svg>
             </label>
         </div>
-                                {{implode("/",array_slice(explode("/",Request::url()),0,-2)) == url('/cabang') }}
+                                {{implode("/",array_slice(explode("/",Request::url()),-1,-2)) }}
 
         <div class="drawer-side sm:hidden">
             <ul
