@@ -141,7 +141,7 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        <td>${jsonData.filter(item => item.dropping).length}</td>
+                        <td>${item.filter(item => item.dropping).length}</td>
                         <td>${item.storting && item.storting.length}</td>
                         <td>${item.jenis_anggota}</td>
                         <td>${item.pdl.nama}</td>
