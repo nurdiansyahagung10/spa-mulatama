@@ -62,8 +62,8 @@ class JsonController extends Controller
 
         return response()->json($storting, 200);
     }
-    public function pdl(request $request, string $id){
-        $pdl = Pdl::with('cabang')->where('id', $id)->get();
+    public function pdl(request $request){
+        $pdl = Pdl::with('cabang')->get();
 
 
         if ($pdl->isEmpty()) {
