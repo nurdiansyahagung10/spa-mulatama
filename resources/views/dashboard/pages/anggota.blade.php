@@ -141,8 +141,8 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>${item.dropping.length}</td>
+                        <td>${item.storting.length}</td>
                         <td>${item.jenis_anggota}</td>
                         <td>${item.pdl.nama}</td>
                         <td>${item.pdl.cabang.nama}</td>
@@ -229,8 +229,8 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>${item.dropping.length}</td>
+                        <td>${item.storting.length}</td>
                         <td>${item.jenis_anggota}</td>
                         <td>${item.pdl.nama}</td>
                         <td>${item.pdl.cabang.nama}</td>

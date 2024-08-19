@@ -4,7 +4,7 @@
     @include('layout.notiferror')
     @include('layout.notifsuccess')
     <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
-        <h1 class="text-xl">Table List Anggota</h1>
+        <h1 class="text-xl">Table List Dropping</h1>
         <div class="flex gap-4">
             <a href="">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
