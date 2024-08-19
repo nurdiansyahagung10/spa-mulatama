@@ -12,7 +12,7 @@
 @include('layout.notifsuccess')
 
 <div class=" p-10 pb-0 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
-        <form class="w-full " action="{{ url('pdl') }}" method="post">
+        <form class="w-full " action="{{ url('pdl/{{$pdl->id}}') }}" method="post">
             @method('put')
             @csrf
             <div class="p-5 w-full text-center">
