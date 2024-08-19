@@ -31,10 +31,45 @@
                                 </a>
                             </li>
                         @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
-                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('cabang'))
+                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('storting'))
+                            <li class="w-full text-stone-600 hover:text-black p-4">
+                                <a href="{{ url('storting') }}">
+                                    <button>List storting</button>
+                                </a>
+                            </li>
+                        @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('dropping'))
+                            <li class="w-full text-stone-600 hover:text-black p-4">
+                                <a href="{{ url('dropping') }}">
+                                    <button>List Dropping</button>
+                                </a>
+                            </li>
+                        @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('pdl'))
+                            <li class="w-full text-stone-600 hover:text-black p-4">
+                                <a href="{{ url('pdl') }}">
+                                    <button>List Pdl</button>
+                                </a>
+                            </li>
+                        @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('staff'))
+                            <li class="w-full text-stone-600 hover:text-black p-4">
+                                <a href="{{ url('staff') }}">
+                                    <button>List staff</button>
+                                </a>
+                            </li>
+                        @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('anggota'))
                             <li class="w-full text-stone-600 hover:text-black p-4">
                                 <a href="{{ url('anggota') }}">
                                     <button>List Anggota</button>
+                                </a>
+                            </li>
+                        @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                                implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('cabang'))
+                            <li class="w-full text-stone-600 hover:text-black p-4">
+                                <a href="{{ url('cabang') }}">
+                                    <button>List cabang</button>
                                 </a>
                             </li>
                         @elseif (Request::url() == url('anggota'))
@@ -132,12 +167,62 @@
                             </a>
                         </li>
                     @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
-                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('cabang'))
+                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('storting'))
+                        <li>
+                            <a href="{{ url('storting') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List storting
+                                </button>
+                            </a>
+                        </li>
+                    @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('dropping'))
+                        <li>
+                            <a href="{{ url('storting') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List dropping
+                                </button>
+                            </a>
+                        </li>
+                    @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('pdl'))
+                        <li>
+                            <a href="{{ url('pdl') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List pdl
+                                </button>
+                            </a>
+                        </li>
+                    @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('staff'))
+                        <li>
+                            <a href="{{ url('staff/list') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List staff
+                                </button>
+                            </a>
+                        </li>
+                    @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('anggota'))
                         <li>
                             <a href="{{ url('anggota') }}">
                                 <button
                                     class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
                                     List Anggota
+                                </button>
+                            </a>
+                        </li>
+                    @elseif (implode('/', array_slice(explode('/', Request::url()), 5)) == 'edit' &&
+                            implode('/', array_slice(explode('/', Request::url()), 0, -2)) == url('cabang'))
+                        <li>
+                            <a href="{{ url('cabang') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List Cabang
                                 </button>
                             </a>
                         </li>
@@ -169,15 +254,22 @@
                             </a>
                         </li>
                     @elseif (implode('/', array_slice(explode('/', Request::url()), 0, -1)) == url('dropping/create'))
-                        <li class="w-full text-stone-600 hover:text-black p-4">
+                        <li>
                             <a href="{{ url('dropping') }}">
-                                <button>List Dropping</button>
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List dropping
+                                </button>
                             </a>
                         </li>
                     @elseif (Request::url() == url('dropping'))
-                        <li class="w-full  text-stone-600 hover:text-black p-4">
-                            <a href="{{ url('anggota/create') }}"> <button>Tambah
-                                    Anggota</button> </a>
+                        <li>
+                            <a href="{{ url('anggota/create') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    Tambah anggota
+                                </button>
+                            </a>
                         </li>
                     @elseif (Request::url() == url('cabang/create'))
                         <li>
@@ -189,15 +281,21 @@
                             </a>
                         </li>
                     @elseif (implode('/', array_slice(explode('/', Request::url()), 0, -1)) == url('storting/create'))
-                        <li class="w-full text-stone-600 hover:text-black p-4">
+                        <li>
                             <a href="{{ url('storting') }}">
-                                <button>List storting</button>
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List storting
+                                </button>
                             </a>
                         </li>
                     @elseif (Request::url() == url('storting'))
-                        <li class="w-full text-stone-600 hover:text-black p-4">
+                        <li>
                             <a href="{{ url('anggota/create') }}">
-                                <button>Tambah Anggota</button>
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    Tambah anggota
+                                </button>
                             </a>
                         </li>
                     @elseif (Request::url() == url('cabang'))
