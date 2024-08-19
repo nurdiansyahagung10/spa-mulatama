@@ -27,7 +27,7 @@
                 </svg>
             </label>
         </div>
-
+{{[implode("/",array_slice(explode("/",Request::url()),5)) == 'edit', implode("/",array_slice(explode("/",Request::url()),0,-2)) == url('cabang')]}}
         <div class="drawer-side sm:hidden">
             <ul
                 class="bg-white flex flex-col w-full text-base-content min-h-full p-4"
