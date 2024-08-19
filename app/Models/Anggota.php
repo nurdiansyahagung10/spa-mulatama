@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\pdl;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Dropping;
 use App\Models\Storting;
 
@@ -44,9 +45,9 @@ class Anggota extends Model
         return $this->BelongsTo(pdl::class);
     }
 
-    public function dropping(): HasOne
+    public function dropping(): HasMany
     {
-    return $this->HasOne(Dropping::class);
+    return $this->HasMany(Dropping::class);
     }
     public function storting(): HasOne
     {
