@@ -9,7 +9,7 @@
 @section('dashboardpage')
     @include('layout.notiferror')
     @include('layout.notifsuccess')
-    <div class=" p-10 w-full h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
+    <div class=" p-10 pb-0 w-full h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
         <form class="w-full " enctype="multipart/form-data" action="{{ url('anggota') }}" method="post">
             @csrf
             <div class="p-5 w-full text-center">
@@ -28,6 +28,21 @@
                         @foreach ($pdl as $item)
                             <option class="text-black" value="{{ $item->id }}">{{ $item->nama }}</option>
                         @endforeach
+                    </select>
+
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block text-black dark:text-white mb-2" for="grid-password">
+                        Jenis anggota
+                    </label>
+
+                    <select
+                        class="number-input block w-full bg-transparent dark:text-white border   border-stone-400 rounded-full text-black py-2 px-4  mb-3 leading-tight focus:outline-none dark:focus:border-white"
+                        name="jenis_anggota">
+                            <option class="text-black" value="baru">baru</option>
+                            <option class="text-black" value="lama">lama</option>
                     </select>
 
                 </div>

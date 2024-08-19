@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Middleware\HaveAuth;
+use App\Http\Controllers\PdlController;
 use App\Http\Middleware\HaveNtAuth;
 use App\Http\Middleware\AuthAdmin;
 use App\Http\Controllers\JsonController;
@@ -28,6 +29,8 @@ Route::middleware([HaveNtAuth::class,])->group(function () {
     });
     
     Route::middleware([AuthAdmin::class,])->group(function () {
+        Route::resource('pdl', PdlController::class);
+        Route::get('pdl/list/get', [JsonController::class, 'pdl'])->name('pdlget');
         Route::get('staff/create', [AuthController::class, 'signupview'])->name('addstaff');
         Route::post('staff/auth', [AuthController::class, 'signup'])->name('staffauth');
         Route::get('staff/list', [AuthController::class, 'usershow'])->name('staff');

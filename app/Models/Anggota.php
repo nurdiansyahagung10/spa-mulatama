@@ -31,7 +31,7 @@ class Anggota extends Model
         'alamat',
         'pengikat',
         'foto_pengikat',
-        'nominal_pinjaman',
+        'jenis_anggota',
         'nohp',
         'cabang_id',
         'staff_id',

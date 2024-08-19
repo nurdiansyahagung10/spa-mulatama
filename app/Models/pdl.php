@@ -14,7 +14,10 @@ class pdl extends Model
     
     protected $table = "pdl";
 
-
+    protected $fillable = [
+        'nama',
+        'cabang_id',
+    ];
     public function cabang(): BelongsTo
     {
     return $this->BelongsTo(Cabang::class);

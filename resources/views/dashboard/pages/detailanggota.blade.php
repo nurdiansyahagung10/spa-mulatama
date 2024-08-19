@@ -17,6 +17,11 @@
                         <td>{{$anggota->created_at->format('Y-m-d')}}</td>
                     </tr>
                     <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
+                        <td>Jenis anggota</td>
+                        <td>:</td>
+                        <td>{{$anggota->jenis_anggota}}</td>
+                    </tr>
+                    <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                         <td>Pdl</td>
                         <td>:</td>
                         <td>{{$anggota->pdl->nama}}</td>

@@ -36,6 +36,7 @@ class AnggotaController extends Controller
     {
         $credentcial = $request->validate(
             [
+                'jenis_anggota' => 'required',
                 'nama' => 'required',
                 'ktp' =>  ['unique:anggota,ktp','nullable'],
                 'kk' => ['unique:anggota,kk', 'nullable'],
@@ -131,6 +132,7 @@ class AnggotaController extends Controller
 
         if ($anggota->ktp == $request->ktp && $anggota->kk == $request->kk && $anggota->nohp == $request->nohp) {
             $credentcial = $request->validate([
+                'jenis_anggota' => 'required',
                 'nama' => 'required',
                 'ktp' =>  'nullable',
                 'kk' =>  'nullable',
@@ -148,7 +150,8 @@ class AnggotaController extends Controller
         } else if ($anggota->ktp != $request->ktp) {
             $credentcial = $request->validate(
                 [
-                    'nama' => 'required',
+   
+   'jenis_anggota' => 'required',                 'nama' => 'required',
                     'ktp' =>  ['unique:anggota,ktp','nullable'],
                     'kk' =>  'nullable',
                     'nohp' =>   'nullable',
@@ -169,7 +172,8 @@ class AnggotaController extends Controller
         } else if ($anggota->kk != $request->kk) {
             $credentcial = $request->validate(
                 [
-                    'nama' => 'required',
+   
+   'jenis_anggota' => 'required',                 'nama' => 'required',
                     'ktp' =>   'nullable',
                     'kk' => ['unique:anggota,kk', 'nullable'],
                     'nohp' =>  'nullable',
@@ -190,7 +194,8 @@ class AnggotaController extends Controller
         } else if ($anggota->nohp != $request->nohp) {
             $credentcial = $request->validate(
                 [
-                    'nama' => 'required',
+   
+   'jenis_anggota' => 'required',                 'nama' => 'required',
                     'ktp' =>  'nullable',
                     'kk' => 'nullable',
                     'nohp' =>  ['unique:anggota,nohp', 'nullable'],
@@ -211,7 +216,8 @@ class AnggotaController extends Controller
         } else {
             $credentcial = $request->validate(
                 [
-                    'nama' => 'required',
+   
+   'jenis_anggota' => 'required',                 'nama' => 'required',
                     'ktp' =>  ['unique:anggota,ktp','nullable'],
                     'kk' => ['unique:anggota,kk', 'nullable'],
                     'nohp' =>  ['unique:anggota,nohp', 'nullable'],

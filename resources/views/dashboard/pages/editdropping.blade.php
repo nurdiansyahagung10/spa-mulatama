@@ -9,7 +9,7 @@
 @section('dashboardpage')
     @include('layout.notiferror')
     @include('layout.notifsuccess')
-    <div class=" p-10 w-full h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
+    <div class=" p-10 pb-0 w-full h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
         <form class="w-full " enctype="multipart/form-data" action="/dropping/{{$dropping->id}}" method="post">
             @method('put')
             @csrf

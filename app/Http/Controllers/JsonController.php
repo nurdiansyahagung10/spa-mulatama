@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Cabang;
 use App\Models\Dropping;
 use App\Models\Storting;
+use App\Models\pdl;
 class JsonController extends Controller
 {
     public function user(request $request){
@@ -60,5 +61,15 @@ class JsonController extends Controller
         }
 
         return response()->json($storting, 200);
+    }
+    public function pdl(request $request){
+        $pdl = Pdl::with('cabang')->get();
+
+
+        if ($pdl->isEmpty()) {
+            return response()->json(['message' => 'No pdl found'], 404);
+        }
+
+        return response()->json($pdl, 200);
     }
 }

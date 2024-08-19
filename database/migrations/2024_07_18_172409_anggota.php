@@ -27,12 +27,13 @@ return new class extends Migration
             $table->string('pengikat')->nullable();
             $table->string('foto_pengikat')->nullable();
             $table->string('nominal_pinjaman')->nullable();
+            $table->string('jenis_anggota')->default('baru');
             $table->bigInteger('nohp')->nullable();
             $table->bigInteger("staff_id")->unsigned()->index()->nullable();
             $table->foreign("staff_id")->references("id")->on("users")->onDelete('cascade');
             $table->bigInteger("pdl_id")->unsigned()->index()->nullable();
             $table->foreign("pdl_id")->references("id")->on("pdl")->onDelete('cascade');
-            $table->dateTime('created_at');
+             $table->dateTime('created_at');
             $table->dateTime('updated_at');
 
         });
