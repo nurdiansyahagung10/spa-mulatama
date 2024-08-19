@@ -24,7 +24,7 @@ class JsonController extends Controller
     }
 
     public function anggota (request $request){
-        $anggota = Anggota::with(['pdl.cabang', 'dropping', 'storting'])->orderByDesc('created_at');
+        $anggota = Anggota::with(['pdl.cabang', 'dropping', 'storting'])->orderByDesc('created_at')->get();
 
         if ($anggota->isEmpty()) {
             return response()->json(['message' => 'No angota found'], 404);
