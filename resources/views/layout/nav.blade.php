@@ -27,7 +27,7 @@
                 </svg>
             </label>
         </div>
-                                {{implode("/",array_slice(explode("/",Request::url()),4)) }}
+                                {{implode("/",array_slice(explode("/",Request::url()),5)) }}
 
         <div class="drawer-side sm:hidden">
             <ul
