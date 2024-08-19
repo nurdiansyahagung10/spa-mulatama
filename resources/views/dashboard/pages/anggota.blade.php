@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<div class="h-0  overflow-hidden" id="input-search">
+<div class="h-0 overflow-hidden" id="input-search">
     <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full gap-2 flex px-4">
             <div class="w-full flex-row">
@@ -141,8 +141,30 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        <td>${item.dropping.length}</td>
-                        <td>${item.storting.length}</td>
+                        `;
+                        if (item.dropping != null) {
+                            `
+                                                <td>${item.dropping.length}</td>
+
+                        `;
+                        } else {
+                            `
+                        <td>0</td>
+                        `;
+                        }
+                        `
+                        `;
+                        if (item.storting != null) {
+                            `
+                                                <td>${item.storting.length}</td>
+
+                        `;
+                        } else {
+                            `
+                        <td>0</td>
+                        `;
+                        }
+                        `
                         <td>${item.jenis_anggota}</td>
                         <td>${item.pdl.nama}</td>
                         <td>${item.pdl.cabang.nama}</td>
@@ -189,9 +211,7 @@
                 btnsearchby.forEach((e) => {
                     e.addEventListener("click", (e) => {
                         btnsaerchbyvalue = e.target.textContent;
-                        
                     });
-              
                 });
 
                 search.addEventListener("input", (e) => {
@@ -204,11 +224,17 @@
                         );
                     } else if (btnsaerchbyvalue.trim() == "Kk") {
                         newdata = data.filter((item) =>
-                            item.kk.toString().toLowerCase().includes(searchdata)
+                            item.kk
+                                .toString()
+                                .toLowerCase()
+                                .includes(searchdata)
                         );
                     } else if (btnsaerchbyvalue.trim() == "Ktp") {
                         newdata = data.filter((item) =>
-                            item.ktp.toString().toLowerCase().includes(searchdata)
+                            item.ktp
+                                .toString()
+                                .toLowerCase()
+                                .includes(searchdata)
                         );
                     }
 
@@ -229,8 +255,18 @@
                         <td>${item.nama}</td>
                         <td>${item.ktp}</td>
                         <td>${item.kk}</td>
-                        <td>${item.dropping.length}</td>
+                        `;
+                        if (item.dropping != null) {
+                            `
+                                                <td>${item.dropping.length}</td>
+
+                        `;
+                        } else {
+                            `
                         <td>${item.storting.length}</td>
+                        `;
+                        }
+                        `
                         <td>${item.jenis_anggota}</td>
                         <td>${item.pdl.nama}</td>
                         <td>${item.pdl.cabang.nama}</td>
@@ -270,12 +306,16 @@
                     });
                 });
 
-
-                document.getElementById('search-toggle').addEventListener('click', async () => {
-                    await document.getElementById('input-search').classList.toggle('h-14');
-                    document.getElementById('input-search').classList.toggle('overflow-hidden');
-                
-                });
+                document
+                    .getElementById("search-toggle")
+                    .addEventListener("click", async () => {
+                        await document
+                            .getElementById("input-search")
+                            .classList.toggle("h-14");
+                        document
+                            .getElementById("input-search")
+                            .classList.toggle("overflow-hidden");
+                    });
             </script>
         </tbody>
     </table>
