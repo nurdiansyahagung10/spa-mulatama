@@ -80,7 +80,7 @@
                         listtablebodycabang.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
-                        <td>${item.nama_cabang}</td>
+                        <td>${item.nama}</td>
                         <td>
                             <div class="dropdown">
 <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
