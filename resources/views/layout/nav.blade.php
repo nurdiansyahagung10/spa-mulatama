@@ -280,6 +280,15 @@
                                 </button>
                             </a>
                         </li>
+                    @elseif (Request::url() == url('pdl/create'))
+                        <li>
+                            <a href="{{ url('pdl') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    List pdl
+                                </button>
+                            </a>
+                        </li>
                     @elseif (implode('/', array_slice(explode('/', Request::url()), 0, -1)) == url('storting/create'))
                         <li>
                             <a href="{{ url('storting') }}">
@@ -304,6 +313,15 @@
                                 <button
                                     class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
                                     Tambah Cabang
+                                </button>
+                            </a>
+                        </li>
+                    @elseif (Request::url() == url('pdl'))
+                        <li>
+                            <a href="{{ url('pdl/create') }}">
+                                <button
+                                    class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
+                                    Tambah pdl
                                 </button>
                             </a>
                         </li>
