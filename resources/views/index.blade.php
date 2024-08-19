@@ -3,15 +3,8 @@
 @section('dashboardpage')
 
 
-@if ($errors->any())
-<div class="toast z-40 toast-end">
-        @foreach ($errors->all() as $error)
-        <div class="border alert border-stone-200 dark:bg-transparent dark:text-white bg-white/20 backdrop-blur-lg ">
-          <span>{{$error}}</span>
-        </div>
-              @endforeach
-      </div>
-      @endif
+@include('layout.notiferror')
+@include('layout.notifsuccess')
 
     <div class=" p-10 w-full  h-auto mt-14 border-b-0 rounded-t-2xl min-h-[70vh] border  backdrop-blur-sm ">
         <form class="w-full " action="{{ route('auth') }}" method="post">
