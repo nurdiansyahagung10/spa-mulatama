@@ -12,7 +12,7 @@
             </label>
         </div>
         <div class="drawer-side sm:hidden">
-            <ul class="bg-white flex flex-col w-full text-base-content min-h-full p-4">
+            <ul class="bg-white dark:bg-base-100 dark:text-white flex flex-col w-full text-base-content min-h-full p-4">
                 <!-- Sidebar content here -->
                 <li class="flex justify-end w-full">
                     <label for="my-drawer" aria-label="close sidebar"

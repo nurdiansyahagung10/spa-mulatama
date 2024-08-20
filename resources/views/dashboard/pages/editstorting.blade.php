@@ -93,7 +93,7 @@
 
                 </div>
             </div>
-            <div class="flex bg-white sticky bottom-0 flex-wrap pt-3 mt-6 -mx-3 mb-6">
+            <div class="flex flex-wrap pt-3 mt-6 -mx-3 mb-6">
                 <div class="w-full px-4">
                     <button
                         class=" block w-full dark:bg-base-300  bg-black text-white border border-stone-400  rounded-full py-2 px-4 mb-3 leading--none focus:border-white">
