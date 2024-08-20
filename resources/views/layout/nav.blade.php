@@ -335,7 +335,7 @@
                         </a>
                     </li>
                 </ul>
-                <li class="sm:px-0 px-3">
+                <li class="sm:px-0 pr-3">
                     <button id="theme-toggle" class="align-middle text-black dark:text-white">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
