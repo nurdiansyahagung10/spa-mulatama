@@ -12,7 +12,7 @@ use App\Models\pdl;
 class JsonController extends Controller
 {
     public function user(request $request){
-        $user  = User::where('email', '!=' ,'admin@gmail.com')->with('cabang')->orderByDesc('created_at')->get();->get();
+        $user  = User::where('email', '!=' ,'admin@gmail.com')->with('cabang')->orderByDesc('created_at')->get();
 
         if ($user->isEmpty()) {
             return response()->json(['message' => 'No user found'], 404);
