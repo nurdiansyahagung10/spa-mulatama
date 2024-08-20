@@ -50,7 +50,7 @@ class DroppingController extends Controller
         $anggota = Anggota::with('pdl.cabang')->find($credentcial['anggota_id']);
 
         if($cekdropping){
-            return redirect()->back()->withErrors('anggota'. $anggota->nama .'sudah dropping di tanggal'. $credentcial['tanggal_dropping']);
+            return redirect()->back()->withErrors('anggota '. $anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_dropping']);
         }
 
 
@@ -81,7 +81,7 @@ class DroppingController extends Controller
         Dropping::create($credentcial);
 
 
-        return redirect()->back()->with("success", "berhasil tambah dropping " . $anggota['nama']);
+        return redirect()->back()->withInput()->with("success", "berhasil tambah dropping " . $anggota['nama']);
 
     }
 
@@ -126,7 +126,7 @@ class DroppingController extends Controller
         $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
 
         if($cekdropping){
-            return redirect()->back()->withErrors('anggota'. $dropping->anggota->nama .'sudah dropping di tanggal'. $credentcial['tanggal_dropping']);
+            return redirect()->back()->withErrors('anggota '. $dropping->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_dropping']);
         }
 
 
