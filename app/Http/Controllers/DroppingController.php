@@ -45,8 +45,9 @@ class DroppingController extends Controller
         );
 
         $cekdropping = Dropping::where('tanggal_dropping', $credentcial['tanggal_dropping'])->where('anggota_id', $credentcial['anggota_id'])->first();
-        var_dump($cekdropping);
-        die();
+        if($cekdropping){
+            return redirect()->back()->withErrors('anggota ini sudah dropping di tanggal itu');
+        }
 
 
         $anggota = Anggota::with('pdl.cabang')->find($credentcial['anggota_id']);
@@ -120,8 +121,9 @@ class DroppingController extends Controller
         );
 
         $cekdropping = Dropping::where('tanggal_dropping', $credentcial['tanggal_dropping'])->where('anggota_id', $credentcial['anggota_id'])->first();
-        var_dump($cekdropping);
-        die();
+        if($cekdropping){
+            return redirect()->back()->withErrors('anggota ini sudah dropping di tanggal itu ');
+        }
 
         $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
 
