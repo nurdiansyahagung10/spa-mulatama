@@ -114,8 +114,12 @@ class StortingController extends Controller
 
 
         $cekstorting = Storting::where('tanggal_storting', $credentcial['tanggal_storting'])->where('anggota_id', $credentcial['anggota_id'])->first();
-        if($cekstorting){
-            return redirect()->back()->withErrors('anggota '. $storting->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_storting']);
+        
+        if($storting->tanggal_storting != $credentcial['tanggal_storting']){
+            if($cekstorting){
+                return redirect()->back()->withErrors('anggota '. $storting->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_storting']);
+            }
+        
         }
 
         if($request->file('bukti')){
