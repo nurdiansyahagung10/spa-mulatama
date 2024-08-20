@@ -12,7 +12,7 @@ use App\Models\pdl;
 class JsonController extends Controller
 {
     public function user(request $request){
-        $user  = User::where('email', '!=' ,'admin@gmail.com')->with('cabang')->get();
+        $user  = User::where('email', '!=' ,'admin@gmail.com')->with('cabang')->orderByDesc('created_at')->get();->get();
 
         if ($user->isEmpty()) {
             return response()->json(['message' => 'No user found'], 404);
@@ -34,7 +34,7 @@ class JsonController extends Controller
     }
 
     public function cabang(request $request){
-        $cabang = Cabang::all();
+        $cabang = Cabang::orderByDesc('created_at')->get();;
 
         if ($cabang->isEmpty()) {
             return response()->json(['message' => 'No cabang found'], 404);
@@ -43,7 +43,7 @@ class JsonController extends Controller
         return response()->json($cabang, 200);
     }
     public function dropping(request $request){
-        $dropping = Dropping::with('anggota.pdl.cabang')->get();
+        $dropping = Dropping::with('anggota.pdl.cabang')->orderByDesc('created_at')->get();
 
 
         if ($dropping->isEmpty()) {
@@ -53,7 +53,7 @@ class JsonController extends Controller
         return response()->json($dropping, 200);
     }
     public function storting(request $request){
-        $storting = storting::with('anggota.pdl.cabang')->get();
+        $storting = storting::with('anggota.pdl.cabang')->orderByDesc('created_at')->get();
 
 
         if ($storting->isEmpty()) {
@@ -63,7 +63,7 @@ class JsonController extends Controller
         return response()->json($storting, 200);
     }
     public function pdl(request $request){
-        $pdl = Pdl::with('cabang')->get();
+        $pdl = Pdl::with('cabang')->orderByDesc('created_at')->get();
 
 
         if ($pdl->isEmpty()) {
