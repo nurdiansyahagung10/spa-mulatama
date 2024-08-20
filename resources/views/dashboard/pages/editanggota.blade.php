@@ -167,13 +167,13 @@
                     </label>
                     <input
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="foto_anggota_memegang_ktp" id="memegang_ktp_anggota" type="file" accept="image/png, image/gif, image/jpeg">
+                        name="foto_anggota_memegang_ktp" id="memegang_ktp" type="file" accept="image/png, image/gif, image/jpeg">
                 </div>
             </div>
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="memegang_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_memegang_ktp" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
