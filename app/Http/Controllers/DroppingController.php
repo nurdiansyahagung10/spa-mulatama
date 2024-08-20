@@ -45,12 +45,14 @@ class DroppingController extends Controller
         );
 
         $cekdropping = Dropping::where('tanggal_dropping', $credentcial['tanggal_dropping'])->where('anggota_id', $credentcial['anggota_id'])->first();
-        if($cekdropping){
-            return redirect()->back()->withErrors('anggota ini sudah dropping di tanggal itu');
-        }
 
 
         $anggota = Anggota::with('pdl.cabang')->find($credentcial['anggota_id']);
+
+        if($cekdropping){
+            return redirect()->back()->withErrors('anggota'. $anggota->nama .'sudah dropping di tanggal'. $credentcial['tanggal_dropping']);
+        }
+
 
 
         if($request->file('foto_nasabah_mendatangani_spk')){
@@ -121,11 +123,12 @@ class DroppingController extends Controller
         );
 
         $cekdropping = Dropping::where('tanggal_dropping', $credentcial['tanggal_dropping'])->where('anggota_id', $credentcial['anggota_id'])->first();
+        $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
+
         if($cekdropping){
-            return redirect()->back()->withErrors('anggota ini sudah dropping di tanggal itu ');
+            return redirect()->back()->withErrors('anggota'. $dropping->anggota->nama .'sudah dropping di tanggal'. $credentcial['tanggal_dropping']);
         }
 
-        $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
 
 
         if($request->file('foto_nasabah_mendatangani_spk')){
