@@ -1,7 +1,7 @@
 <nav id="navbar" class="z-30 sticky top-0 backdrop-blur-lg border-b bg-white/10 dark:bg-base-100/10">
     <div class="container drawer mx-auto py-3.5 px-2 flex items-center justify-between">
         <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content sm:hidden">
+        <div class="drawer-content  sm:hidden">
             <!-- Page content here -->
             <label for="my-drawer" class="btn btn-square btn-ghost drawer-button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
