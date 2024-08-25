@@ -112,7 +112,7 @@ class StortingController extends Controller
             ],
         );
 
-
+ 
         $cekstorting = Storting::where('tanggal_storting', $credentcial['tanggal_storting'])->where('anggota_id', $credentcial['anggota_id'])->first();
         
         if($storting->tanggal_storting != $credentcial['tanggal_storting']){
@@ -133,9 +133,6 @@ class StortingController extends Controller
             $credentcial['bukti']= $filename;
         }
      
-
-
-        // $user = Auth::user();
 
         Storting::find($id)->update($credentcial);
 
