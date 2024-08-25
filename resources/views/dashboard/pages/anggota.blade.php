@@ -322,10 +322,6 @@ listtablebodyanggota.innerHTML += `
                            `;
                        });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6b045260027799aacba08732ce4310762278a505
                        
                         console.log(btnsaerchbyvalue.trim());
                         if (btnsaerchbyvalue.trim() == "Nama") {
