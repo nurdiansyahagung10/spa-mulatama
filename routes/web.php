@@ -10,24 +10,16 @@ use App\Http\Middleware\HaveNtAuth;
 use App\Http\Middleware\AuthAdmin;
 use App\Http\Controllers\DroppingController;
 use App\Http\Controllers\StortingController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\LaporanController;
->>>>>>> master
 
 Route::middleware([HaveAuth::class,])->group(function () {
     Route::get('signin', [AuthController::class, 'signinview'])->name('signin');
     Route::post('signin/auth', [AuthController::class, 'signin'])->name('auth');
 });
-<<<<<<< HEAD
-Route::middleware([HaveNtAuth::class,])->group(function () {
-    Route::get('signout', [AuthController::class, 'signout'])->name('signout');
-=======
 
 Route::middleware([HaveNtAuth::class,])->group(function () {
     Route::get('signout', [AuthController::class, 'signout'])->name('signout');
     Route::get('laporan/mingguan/pdl', [LaporanController::class, 'laporanpdlmingguan'])->name('laporanmingguanpdl');
->>>>>>> master
     Route::resource('anggota', AnggotaController::class);
     Route::resource('dropping', DroppingController::class)->except(['create',]);
     Route::resource('storting', StortingController::class)->except(['create',]);
