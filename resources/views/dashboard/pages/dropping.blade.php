@@ -53,11 +53,7 @@
 
                         `;
 
-<<<<<<< HEAD
-                        let datafetch = await fetch("/dropping/list/get");
-=======
                         let datafetch = await fetch("/api/dropping/list/get");
->>>>>>> master
                         let data = await datafetch.json();
                         listtablebodyanggota.innerHTML = '';
                         data.forEach((item, index) => {

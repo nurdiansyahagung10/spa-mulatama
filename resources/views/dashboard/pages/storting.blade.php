@@ -53,7 +53,7 @@
 
                         `;
 
-                        let datafetch = await fetch("/storting/list/get");
+                        let datafetch = await fetch("/api/storting/list/get");
                         let data = await datafetch.json();
                         listtablebodyanggota.innerHTML = '';
                         data.forEach((item, index) => {

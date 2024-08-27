@@ -101,9 +101,8 @@
             <thead class="text-sm dark:text-white">
                 <tr class="dark:border-stone-400">
                     <th rowspan="3" class="font-medium text-black dark:text-white">tanggal</th>
-                    <th rowspan="3" class="font-medium text-black dark:text-white">pdl</th>
                     <th colspan="3" class="font-medium text-black dark:text-white">anggota</th>
-                    <th colspan="3" class="font-medium text-black dark:text-white">Storting</th>
+                    <th colspan="4" class="font-medium text-black dark:text-white">Storting</th>
                     <th colspan="3" class="font-medium text-black dark:text-white">Dropping</th>
                     <th rowspan="3" class="font-medium text-black dark:text-white">simpanan</th>
                     <th rowspan="3" class="font-medium text-black dark:text-white">admin</th>
@@ -113,6 +112,7 @@
                     <th rowspan="2" class="font-medium text-black dark:text-white">Lama</th>
                     <th rowspan="2" class="font-medium text-black dark:text-white">Baru</th>
                     <th rowspan="2" class="font-medium text-black dark:text-white">Jumlah</th>
+                    <th rowspan="2" class="font-medium text-black dark:text-white">Anggota tertagih</th>
                     <th rowspan="2" class="font-medium text-black dark:text-white">bayar</th>
                     <th rowspan="2" class="font-medium text-black dark:text-white">tidak bayar</th>
                     <th rowspan="2" class="font-medium text-black dark:text-white">Jumlah dibayar</th>
@@ -125,8 +125,6 @@
         </table>
         
         <script>
-
-
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             const currentMonth = currentDate.getMonth();
@@ -148,66 +146,77 @@
                 });
             }
         
-            getliburdate().then(() => {
+            getliburdate().then(async () => {
+                // Generate date range excluding weekends and holidays
                 for (let day = firstDayOfMonth; day <= lastDayOfMonth; day.setDate(day.getDate() + 1)) {
                     const dayOfWeek = day.getDay();
-                    const formattedDate = day.toISOString().split('T')[0]; // Format YYYY-MM-DD
+                    const formattedDate = day.toISOString().split('T')[0];
                     if (dayOfWeek !== 0 && dayOfWeek !== 6 && !liburdate.includes(formattedDate)) {
-                        dates.push(new Date(day)); // Tambahkan tanggal ke daftar
+                        dates.push(new Date(day));
                     }
                 }
         
-                dates.forEach(async (date) => {
+                // Fetch all necessary data once, before processing each date
+                let dataanggotafetch = await fetch("/api/anggota/list/get");
+                let datastortingfetch = await fetch("/api/storting/list/get");
+                let datadroppingfetch = await fetch("/api/dropping/list/get");
+        
+                let anggotadata = await dataanggotafetch.json();
+                let stortingdata = await datastortingfetch.json();
+                let droppingdata = await datadroppingfetch.json();
+        
+                // Iterate through each date and process data
+                dates.forEach((date) => {
                     const formattedDate = date.toISOString().split('T')[0];
-                    let datafetch = await fetch("/api/anggota/list/get");
-                    let anggotadata = await datafetch.json();
         
-                    // Cari anggota yang sesuai dengan tanggal
-                    const filteredData = anggotadata.filter(item => item.created_at.startsWith(formattedDate));
+                    // Filter data by the current date
+                    const filteredanggotadata = anggotadata.filter(item => item.created_at.startsWith(formattedDate));
+                    const filteredstortingdata = stortingdata.filter(item => item.tanggal_storting === formattedDate);
+                    const filtereddroppingdata = droppingdata.filter(item => item.tanggal_dropping === formattedDate);
         
-                    let anggotaBaru = filteredData.filter(item => item.jenis_anggota === "baru").length;
-                    let anggotaLama = filteredData.filter(item => item.jenis_anggota === "lama").length;
+                    // Calculate values
+                    let anggotaBaru = filteredanggotadata.filter(item => item.jenis_anggota === "baru").length;
+                    let anggotaLama = filteredanggotadata.filter(item => item.jenis_anggota === "lama").length;
+                    let droppingbaru = filtereddroppingdata.filter(item => item.anggota.jenis_anggota === "baru").length;
+                    let droppinglama = filtereddroppingdata.filter(item => item.anggota.jenis_anggota === "lama").length;
+                    let anggotastorting = filteredstortingdata.length;
                     let stortingTotal = 0;
-            let droppingTotal = 0;
-            let stortingBayar = 0;
-            let stortingTidakBayar = 0;
-
-            filteredData.forEach(item => {
-                item.storting.forEach(storting => {
-                    if (storting.tanggal_storting === formattedDate) {
+                    let stortingBayar = 0;
+                    let stortingTidakBayar = 0;
+                    let droppingTotal = 0;
+        
+                    filteredstortingdata.forEach(storting => {
                         stortingTotal += parseFloat(storting.nominal_storting);
-                        stortingBayar += parseFloat(storting.nominal_storting); // Asumsi semuanya dibayar, jika tidak perlu disesuaikan logikanya
-                    }
-                });
-                item.dropping.forEach(dropping => {
-                    if (dropping.tanggal_dropping === formattedDate) {
+                        stortingBayar += parseFloat(storting.nominal_storting); // Asumsi semua dibayar
+                    });
+        
+                    filtereddroppingdata.forEach(dropping => {
                         droppingTotal += parseFloat(dropping.nominal_dropping);
-                    }
+                    });
+        
+                    // Render table row
+                    document.getElementById("laporan-list-body-table").innerHTML += `
+                        <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
+                            <td>${date.getDate()}</td>
+                            <td>${anggotaLama}</td>
+                            <td>${anggotaBaru}</td>
+                            <td>${anggotaLama + anggotaBaru}</td>
+                            <td>${anggotastorting}</td>
+                            <td>${stortingBayar}</td>
+                            <td>${stortingTidakBayar}</td>
+                            <td>${stortingTotal}</td>
+                            <td>${droppinglama}</td>
+                            <td>${droppingbaru}</td>
+                            <td>${droppingTotal}</td>
+                            <td>${droppingTotal * 0.02}</td>
+                            <td>${droppingTotal * 0.08}</td>
+                            <td>-</td>
+                        </tr>
+                    `;
                 });
             });
-
-            // Hasilkan baris tabel
-            document.getElementById("laporan-list-body-table").innerHTML += `
-                <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
-                    <td>${date.getDate()}</td>
-                    <td>${filteredData.length > 0 ? filteredData[0].pdl.nama : '-'}</td>
-                    <td>${anggotaLama}</td>
-                    <td>${anggotaBaru}</td>
-                    <td>${anggotaLama + anggotaBaru}</td>
-                    <td>${stortingBayar}</td>
-                    <td>${stortingTidakBayar}</td>
-                    <td>${stortingTotal}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>${droppingTotal}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-            `;
-        });
-    });
         
         </script>
+        
     </div>
 @endsection
