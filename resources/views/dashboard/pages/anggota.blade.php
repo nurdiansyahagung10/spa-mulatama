@@ -322,11 +322,6 @@
                            `;
                         });
 
-<<<<<<< HEAD
-                       
-=======
-
->>>>>>> master
                         console.log(btnsaerchbyvalue.trim());
                         if (btnsaerchbyvalue.trim() == "Nama") {
                             newdata = data.filter((item) =>
@@ -574,8 +569,6 @@
                                                                                 <option value="cabang">cabang</option>
 
                                                      `;
-<<<<<<< HEAD
-=======
                         let datafetch = await fetch("api/cabang/list/get");
                         filtereddata = await datafetch.json();
 
@@ -585,7 +578,6 @@
                            <option value="${item.nama}">${item.nama}</option>
                            `;
                         });
->>>>>>> master
 
                         document.getElementById('pdl').innerHTML = `
                                                                                 <option value="pdl">pdl</option>
