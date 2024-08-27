@@ -99,6 +99,7 @@ class DroppingController extends Controller
      */
     public function edit(string $id)
     {
+         
         $anggota = Anggota::all();
         $dropping = dropping::with('anggota')->find($id);
         return view('dashboard.pages.editdropping')->with(['anggota' => $anggota,'dropping' => $dropping ]);
@@ -122,11 +123,16 @@ class DroppingController extends Controller
             ],
         );
 
+        
+
         $cekdropping = Dropping::where('tanggal_dropping', $credentcial['tanggal_dropping'])->where('anggota_id', $credentcial['anggota_id'])->first();
         $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
 
-        if($cekdropping){
-            return redirect()->back()->withErrors('anggota '. $dropping->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_dropping']);
+        if($dropping->tanggal_dropping != $credentcial['tanggal_dropping']){
+            if($cekdropping){
+                return redirect()->back()->withErrors('anggota '. $dropping->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_dropping']);
+            }
+    
         }
 
 
