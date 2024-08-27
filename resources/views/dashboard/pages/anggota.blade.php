@@ -415,11 +415,11 @@
             let screenWidth = window.innerWidth;
 
 
-            if (screenWidth <= 640 && document.getElementById('more-option').classList.contains('h-[7.5rem]')) {
+            if (screenWidth <= 640 && document.getElementById('more-option').classList.contains('!h-[7.5rem]')) {
                 document.getElementById('more-option').classList.add('!h-[14rem]');
 
             } else if (screenWidth >= 640 && document.getElementById('more-option').classList.contains(
-                    'h-[7.5rem]')) {
+                    '!h-[7.5rem]')) {
                 document.getElementById('more-option').classList.remove('!h-[14rem]');
 
             }
@@ -429,7 +429,7 @@
             let screenWidth = window.innerWidth;
 
 
-            await document.getElementById('more-option').classList.toggle('h-[7.5rem]');
+            await document.getElementById('more-option').classList.toggle('!h-[7.5rem]');
             if (screenWidth <= 640) {
                 await document.getElementById('more-option').classList.toggle('!h-[14rem]');
 
