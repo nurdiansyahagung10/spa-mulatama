@@ -63,7 +63,11 @@ class JsonController extends Controller
         return response()->json($storting, 200);
     }
     public function pdl(request $request){
+<<<<<<< HEAD
         $pdl = Pdl::with('cabang')->orderByDesc('created_at')->get();
+=======
+        $pdl = Pdl::with(['cabang','anggota.dropping.storting'])->orderByDesc('created_at')->get();
+>>>>>>> master
 
 
         if ($pdl->isEmpty()) {
