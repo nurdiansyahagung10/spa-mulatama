@@ -430,8 +430,10 @@
 
 
             await document.getElementById('more-option').classList.toggle('h-[7.5rem]');
+            await document.getElementById('more-option').classList.toggle('h-0');
             if (screenWidth <= 640) {
                 document.getElementById('more-option').classList.toggle('!h-[14rem]');
+                document.getElementById('more-option').classList.toggle('h-0');
 
             }
 
