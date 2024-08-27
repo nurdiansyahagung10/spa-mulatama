@@ -430,12 +430,11 @@
 
 
             await document.getElementById('more-option').classList.toggle('h-[7.5rem]');
-            await document.getElementById('more-option').classList.toggle('h-0');
             if (screenWidth <= 640) {
-                document.getElementById('more-option').classList.toggle('!h-[14rem]');
-                document.getElementById('more-option').classList.toggle('h-0');
+                await document.getElementById('more-option').classList.toggle('!h-[14rem]');
 
             }
+            document.getElementById('more-option').classList.toggle('overflow-hidden');
 
             document.querySelectorAll('.more-option-item').forEach((item) => {
                 item.target.classList.toggle('overflow-hidden')
