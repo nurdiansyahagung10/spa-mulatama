@@ -79,6 +79,7 @@ class PdlController extends Controller
         }else{
             $credentcial = $request->validate([
                 'nama' => 'required',
+                "cabang_id" => "required"
             ]);    
         }
 
