@@ -13,7 +13,7 @@ class PdlSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = File::get("json/pdl.json");
+        $json = File::get("storage/app/json/pdl.json");
         $data = json_decode($json);
 
         foreach ($data as $obj) {

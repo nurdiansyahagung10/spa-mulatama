@@ -14,7 +14,7 @@ class AnggotaSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = File::get("json/anggota.json");
+        $json = File::get("storage/app/json/anggota.json");
         $data = json_decode($json);
 
         foreach ($data as $obj) {
