@@ -41,7 +41,7 @@
 
                     @foreach ($cabang as $item )
                     @if($item->id != $pdl->cabang_id)
-                    <option class="text-black" value="{{$item->id}}">{{$item->nama_cabang}}</option>
+                    <option class="text-black" value="{{$item->id}}">{{$item->nama}}</option>
                     @endif            
                     @endforeach
                   </select>
