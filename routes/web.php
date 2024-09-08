@@ -12,7 +12,11 @@ use App\Http\Controllers\DroppingController;
 use App\Http\Controllers\StortingController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ExportController;
+// routes/web.php
 
+use App\Http\Controllers\MigrationController;
+
+Route::get('/migrate-fresh', [MigrationController::class, 'freshMigrate'])->name('migrate.fresh');
 
 Route::middleware('guest')->group(function () {
     Route::get('signin', [AuthController::class, 'signinview'])->name('signin');
