@@ -24,6 +24,8 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+    }else{
+        Schema::dropIfExists('users');
     }
 
     if (!Schema::hasTable('password_reset_tokens')) {
