@@ -17,7 +17,6 @@ use App\Http\Controllers\FileController;
 
 use App\Http\Controllers\MigrationController;
 // routes/web.php
-Route::get('/file-structure', [FileController::class, 'getFileStructure']);
 
 Route::get('/migrate-fresh', [MigrationController::class, 'freshMigrate'])->name('migrate.fresh');
 
