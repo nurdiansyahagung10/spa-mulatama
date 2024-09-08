@@ -3,7 +3,7 @@
 @include('layout.notiferror')
 @include('layout.notifsuccess')
 <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
-    <h1 class="text-xl">Table List Cabang</h1>
+    <h1 class="text-xl">Table List Pdl</h1>
     <div class="flex gap-4">
         <a href="">
             <svg
@@ -75,7 +75,7 @@
 
                         `;
 
-                        let datafetch = await fetch("/pdl/list/get");
+                        let datafetch = await fetch("/api/pdl/list/get");
                         let data = await datafetch.json();
                         listtablebodycabang.innerHTML = '';
 

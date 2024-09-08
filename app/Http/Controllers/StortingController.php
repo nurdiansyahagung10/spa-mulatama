@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use File;
 use Illuminate\Http\Request;
+use App\Models\Dropping;
 use App\Models\Anggota;
 use App\Models\Storting;
+use App\Models\User;
+use Auth;
 class StortingController extends Controller
 {
     /**
@@ -13,8 +16,14 @@ class StortingController extends Controller
      */
     public function index()
     {
-        return view("dashboard.pages.storting");
-
+        $user = Auth::user();
+        $getusername = $user->nama;
+        $cabang = null;
+        if(isset($user->cabang)){
+            $cabang = $user->cabang->nama;
+        } 
+        $cabang = null;
+        return view("dashboard.pages.storting")->with(['getusername' => $getusername, 'cabang' => $cabang]);
     }
 
     /**
@@ -22,8 +31,8 @@ class StortingController extends Controller
      */
     public function create(string $id)
     {
-        $anggota = Anggota::find($id);
-        return view('dashboard.pages.addstorting')->with(['anggota'=> $anggota,]);
+        $dropping = Dropping::find($id);
+        return view('dashboard.pages.addstorting')->with(['dropping'=> $dropping,]);
 
     }
 
@@ -39,25 +48,25 @@ class StortingController extends Controller
                 'nominal_storting' => 'required',
                 'note' => 'nullable',
                 'bukti' => 'nullable',
-                "anggota_id" => 'required'
+                "dropping_id" => 'required'
                 
             ],
         );
 
 
-        $anggota = Anggota::with('pdl.cabang')->find($credentcial['anggota_id']);
+        $dropping = Dropping::with('anggota')->find($credentcial['dropping_id']);
 
-        $cekstorting = Storting::where('tanggal_storting', $credentcial['tanggal_storting'])->where('anggota_id', $credentcial['anggota_id'])->first();
+        $cekstorting = Storting::where('tanggal_storting', $credentcial['tanggal_storting'])->where('dropping_id', $credentcial['dropping_id'])->first();
         if($cekstorting){
-            return redirect()->back()->withErrors('anggota '. $anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_storting']);
+            return redirect()->back()->withErrors('anggota '. $dropping->anggota->nama .' sudah storting di tanggal '. $credentcial['tanggal_storting']);
         }
 
 
 
         if($request->file('bukti')){
             $file= $request->file('bukti');
-            $filename= date('YmdHi').' bukti '. $anggota->id .'.'.$file->extension();
-            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/storting'), $filename);
+            $filename= date('YmdHi').' bukti '. $dropping->anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. date('Y-m-d') .'/storting'), $filename);
             $credentcial['bukti']= $filename;
         }
      
@@ -68,7 +77,7 @@ class StortingController extends Controller
         Storting::create($credentcial);
 
 
-        return redirect()->back()->with("success", "berhasil tambah Storting " . $anggota['nama']);
+        return redirect()->back()->with("success", "berhasil tambah Storting " . $dropping->anggota->nama);
 
 
     }
@@ -78,7 +87,7 @@ class StortingController extends Controller
      */
     public function show(string $id)
     {
-        $storting = Storting::with('anggota.pdl.cabang')->find($id);
+        $storting = Storting::with('dropping.anggota.pdl.cabang')->find($id);
         return view('dashboard.pages.detailstorting')->with('storting', $storting );
     }
 
@@ -87,8 +96,8 @@ class StortingController extends Controller
      */
     public function edit(string $id)
     {
-        $anggota = Anggota::all();
-        $storting = storting::with('anggota')->find($id);
+        $anggota = Anggota::with('dropping')->whereHas('dropping')->get();
+        $storting = storting::with('dropping.anggota')->find($id);
         return view('dashboard.pages.editstorting')->with(['anggota' => $anggota,'storting' => $storting ]);
 
     }
@@ -99,7 +108,7 @@ class StortingController extends Controller
     public function update(Request $request, string $id)
     {
 
-        $storting = Storting::with('anggota.pdl.cabang')->find($id);
+        $storting = Storting::with('dropping.anggota.pdl.cabang')->find($id);
 
         $credentcial = $request->validate(
             [
@@ -107,27 +116,27 @@ class StortingController extends Controller
                 'nominal_storting' => 'required',
                 'note' => 'nullable',
                 'bukti' => 'nullable',
-                "anggota_id" => 'required'
+                "dropping_id" => 'required'
                 
             ],
         );
 
  
-        $cekstorting = Storting::where('tanggal_storting', $credentcial['tanggal_storting'])->where('anggota_id', $credentcial['anggota_id'])->first();
+        $cekstorting = Storting::where('tanggal_storting', $credentcial['tanggal_storting'])->where('dropping_id', $credentcial['dropping_id'])->first();
         
         if($storting->tanggal_storting != $credentcial['tanggal_storting']){
             if($cekstorting){
-                return redirect()->back()->withErrors('anggota '. $storting->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_storting']);
+                return redirect()->back()->withErrors('anggota '. $storting->dropping->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_storting']);
             }
         
         }
 
         if($request->file('bukti')){
             $file= $request->file('bukti');
-            $filename= date('YmdHi').' bukti '. $storting->anggota->id .'.'.$file->extension();
-            $file-> move(public_path('Image/'.$storting->anggota->pdl->cabang->id.'/'.$storting->anggota->pdl->id.'/'.$storting->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting'), $filename);
-            if(File::exists('Image/'.$storting->anggota->pdl->cabang->id.'/'.$storting->anggota->pdl->id.'/'.$storting->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti)){
-                File::delete('Image/'.$storting->anggota->pdl->cabang->id.'/'.$storting->anggota->pdl->id.'/'.$storting->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti);
+            $filename= date('YmdHi').' bukti '. $storting->dropping->anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$storting->dropping->anggota->pdl->cabang->id.'/'.$storting->dropping->anggota->pdl->id.'/'.$storting->dropping->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting'), $filename);
+            if(File::exists('Image/'.$storting->dropping->anggota->pdl->cabang->id.'/'.$storting->dropping->anggota->pdl->id.'/'.$storting->dropping->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti)){
+                File::delete('Image/'.$storting->dropping->anggota->pdl->cabang->id.'/'.$storting->dropping->anggota->pdl->id.'/'.$storting->dropping->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti);
             }
     
             $credentcial['bukti']= $filename;
@@ -137,7 +146,7 @@ class StortingController extends Controller
         Storting::find($id)->update($credentcial);
 
 
-        return redirect()->back()->with("success", "berhasil edit Storting " . $storting->anggota->nama);
+        return redirect()->back()->with("success", "berhasil edit Storting " . $storting->dropping->anggota->nama);
 
     }
 
@@ -146,15 +155,15 @@ class StortingController extends Controller
      */
     public function destroy(string $id)
     {
-        $storting = Storting::with('anggota.pdl.cabang')->find($id);
+        $storting = Storting::with('dropping.anggota.pdl.cabang')->find($id);
         $storting->delete();
 
-        if(File::exists('Image/'.$storting->anggota->pdl->cabang->id.'/'.$storting->anggota->pdl->id.'/'.$storting->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti)){
-            File::delete('Image/'.$storting->anggota->pdl->cabang->id.'/'.$storting->anggota->pdl->id.'/'.$storting->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti);
+        if(File::exists('Image/'.$storting->dropping->anggota->pdl->cabang->id.'/'.$storting->dropping->anggota->pdl->id.'/'.$storting->dropping->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti)){
+            File::delete('Image/'.$storting->dropping->anggota->pdl->cabang->id.'/'.$storting->dropping->anggota->pdl->id.'/'.$storting->dropping->anggota->id .'/'. $storting->created_at->format('Y-m-d') .'/storting/'.$storting->bukti);
     }
         
 
-        return redirect()->back()->with('success', "berhasil menghapus storting ". $storting->anggota->nama);
+        return redirect()->back()->with('success', "berhasil menghapus storting ". $storting->dropping->anggota->nama);
 
     }
 }

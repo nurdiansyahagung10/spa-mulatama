@@ -2,8 +2,8 @@
 @endsection @section('dashboardpage')
 @include('layout.notiferror')
 @include('layout.notifsuccess')
-<div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
-    <h1 class="text-xl">Table List Cabang</h1>
+<div class="flex  p-3 dark:text-white mt-10 mb-5 justify-between items-center">
+    <h1 class="text-xl w-10/12">Table List Cabang</h1>
     <div class="flex gap-4">
         <a href="">
             <svg
@@ -53,6 +53,12 @@
                     Nama cabang
                 </th>
                 <th class="font-medium text-black dark:text-white text-sm">
+                    Admin dan provisi
+                </th>
+                <th class="font-medium text-black dark:text-white text-sm">
+                    Simpanan
+                </th>
+                <th class="font-medium text-black dark:text-white text-sm">
                     Action
                 </th>
             </tr>
@@ -72,7 +78,7 @@
 
                         `;
 
-                        let datafetch = await fetch("/cabang/list/get");
+                        let datafetch = await fetch("/api/cabang/list/get");
                         let data = await datafetch.json();
                         listtablebodycabang.innerHTML = '';
 
@@ -81,6 +87,8 @@
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
                         <td>${item.nama}</td>
+                        <td>${item.admin_provisi}%</td>
+                        <td>${item.simpanan}%</td>
                         <td>
                             <div class="dropdown">
 <div tabindex="0" class="cursor-pointer dark:text-white text-black" >

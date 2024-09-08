@@ -11,15 +11,20 @@ use App\Http\Middleware\AuthAdmin;
 use App\Http\Controllers\DroppingController;
 use App\Http\Controllers\StortingController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\ExportController;
 
-Route::middleware([HaveAuth::class,])->group(function () {
+
+Route::middleware('guest')->group(function () {
     Route::get('signin', [AuthController::class, 'signinview'])->name('signin');
     Route::post('signin/auth', [AuthController::class, 'signin'])->name('auth');
 });
 
-Route::middleware([HaveNtAuth::class,])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('signout', [AuthController::class, 'signout'])->name('signout');
-    Route::get('laporan/mingguan/pdl', [LaporanController::class, 'laporanpdlmingguan'])->name('laporanmingguanpdl');
+    Route::get('laporan/bulanan/cbm', [LaporanController::class, 'laporanbulanancbm'])->name('laporanbulanancbm');
+    Route::get('laporan/bulanan/pbm', [LaporanController::class, 'laporanbulananpbm'])->name('laporanbulananpbm');
+    Route::post('export-anggota', [ExportController::class, 'exportanggota']);
+    Route::post('export-storting', [ExportController::class, 'exportstorting']);
     Route::resource('anggota', AnggotaController::class);
     Route::resource('dropping', DroppingController::class)->except(['create',]);
     Route::resource('storting', StortingController::class)->except(['create',]);

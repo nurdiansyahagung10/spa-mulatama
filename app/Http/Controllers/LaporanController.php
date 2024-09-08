@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 class LaporanController extends Controller
 {
-    public function laporanpdlmingguan(){
-        return view("dashboard.pages.laporanpdlmingguan");
+    public function laporanbulanancbm(){
+        return view("dashboard.pages.laporanbulanancbm");
+    }
+    public function laporanbulananpbm(){
+        return view("dashboard.pages.laporanbulananpbm");
     }
 }

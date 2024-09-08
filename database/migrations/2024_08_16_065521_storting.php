@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nominal_storting');
             $table->text('note')->nullable();
             $table->string('bukti')->nullable();
-            $table->bigInteger("anggota_id")->unsigned()->index();
-            $table->foreign("anggota_id")->references("id")->on("anggota")->onDelete('cascade');
+            $table->bigInteger("dropping_id")->unsigned()->index()->default('1');
+            $table->foreign("dropping_id")->references("id")->on("dropping")->onDelete('cascade');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });    

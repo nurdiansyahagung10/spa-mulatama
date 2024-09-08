@@ -24,7 +24,7 @@ class JsonController extends Controller
     }
 
     public function anggota (request $request){
-        $anggota = Anggota::with(['pdl.cabang', 'dropping', 'storting'])->orderByDesc('created_at')->get();
+        $anggota = Anggota::with(['pdl.cabang', 'dropping.storting'])->orderByDesc('created_at')->get();
 
         if ($anggota->isEmpty()) {
             return response()->json(['message' => 'No angota found'], 404);
@@ -53,7 +53,7 @@ class JsonController extends Controller
         return response()->json($dropping, 200);
     }
     public function storting(request $request){
-        $storting = storting::with('anggota.pdl.cabang')->orderByDesc('created_at')->get();
+        $storting = storting::with('dropping.anggota.pdl.cabang')->orderByDesc('created_at')->get();
 
 
         if ($storting->isEmpty()) {

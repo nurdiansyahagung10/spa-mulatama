@@ -6,6 +6,7 @@ use File;
 use Illuminate\Http\Request;
 use App\Models\Anggota;
 use App\Models\Dropping;
+use Auth;
 
 class DroppingController extends Controller
 {
@@ -14,8 +15,14 @@ class DroppingController extends Controller
      */
     public function index()
     {
-        return view("dashboard.pages.dropping");
-    }
+        $user = Auth::user();
+        $getusername = $user->nama;
+        $cabang = null;
+        if(isset($user->cabang)){
+            $cabang = $user->cabang->nama;
+        } 
+        $cabang = null;
+        return view("dashboard.pages.dropping")->with(['getusername' => $getusername, 'cabang' => $cabang]);    }
 
     /**
      * Show the form for creating a new resource.
@@ -66,6 +73,12 @@ class DroppingController extends Controller
             $filename= date('YmdHi').' foto_nasabah_dan_spk '. $anggota->id .'.'.$file->extension();
             $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
             $credentcial['foto_nasabah_dan_spk']= $filename;
+        }
+        if($request->file('foto_spk')){
+            $file= $request->file('foto_spk');
+            $filename= date('YmdHi').' foto_spk '. $anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
+            $credentcial['foto_spk']= $filename;
         }
         if($request->file('bukti')){
             $file= $request->file('bukti');
@@ -155,6 +168,15 @@ class DroppingController extends Controller
             }
             $credentcial['foto_nasabah_dan_spk']= $filename;
         }
+        if($request->file('foto_spk')){
+            $file= $request->file('foto_spk');
+            $filename= date('YmdHi').' foto_spk '. $dropping->anggota->id .'.'.$file->extension();
+            $file-> move(public_path('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. date('Y-m-d') .'/dropping/spk'), $filename);
+            if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_spk)){
+                File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_spk);
+            }
+            $credentcial['foto_spk']= $filename;
+        }
         if($request->file('bukti')){
             $file= $request->file('bukti');
             $filename= date('YmdHi').' bukti_dropping '. $dropping->anggota->id .'.'.$file->extension();
@@ -189,6 +211,9 @@ class DroppingController extends Controller
         
         if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk)){
             File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk);
+        }
+        if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_spk)){
+            File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_spk);
         }
 
         if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/bukti/'.$dropping->bukti)){

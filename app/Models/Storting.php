@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Anggota;
+use App\Models\Dropping;
 
 class Storting extends Model
 {
@@ -18,12 +19,12 @@ class Storting extends Model
         'nominal_storting',
         'note',
         'bukti',
-        "anggota_id",
+        'dropping_id',
     ];
 
-    public function anggota(): BelongsTo
+    public function dropping(): BelongsTo
     {
-        return $this->BelongsTo(Anggota::class);
+        return $this->BelongsTo(Dropping::class);
     }
 
 }

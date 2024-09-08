@@ -76,7 +76,9 @@
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed p-5  text-center   '>
                     <Image  id="foto_mendatangani_spk"                                     src="/Image/{{$dropping->anggota->pdl->cabang->id}}/{{$dropping->anggota->pdl->id}}/{{$dropping->anggota->id}}/{{$dropping->anggota->created_at->format('Y-m-d')}}/dropping/spk/{{$dropping->foto_nasabah_mendatangani_spk}}"
-                        class="w-auto relative h-40  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                        class="w-auto @if($dropping->foto_nasabah_mendatangani_spk)
+                            h-40
+                        @endif  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -93,7 +95,28 @@
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed  p-5 text-center   '>
                     <Image                                     
                     src="/Image/{{$dropping->anggota->pdl->cabang->id}}/{{$dropping->anggota->pdl->id}}/{{$dropping->anggota->id}}/{{$dropping->anggota->created_at->format('Y-m-d')}}/dropping/spk/{{$dropping->foto_nasabah_dan_spk}}"
-                        id="foto_nasabah_dan_spk" class="w-auto relative h-40  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                        id="foto_nasabah_dan_spk" class="w-auto @if($dropping->foto_nasabah_dan_spk)
+                            h-40
+                        @endif  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block text-black dark:text-white mb-2" for="grid-password">
+                        foto spk yang sudah di tandatangan
+                    </label>
+                    <input
+                        class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
+                        name="foto_spk" id="spk" type="file" accept="image/png, image/gif, image/jpeg">
+                </div>
+            </div>
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed  p-5 text-center   '>
+                    <Image                                     
+                    src="/Image/{{$dropping->anggota->pdl->cabang->id}}/{{$dropping->anggota->pdl->id}}/{{$dropping->anggota->id}}/{{$dropping->anggota->created_at->format('Y-m-d')}}/dropping/spk/{{$dropping->foto_nasabah_dan_spk}}"
+                        id="foto_spk" class="w-auto @if($dropping->foto_nasabah_dan_spk)
+                            h-40
+                        @endif  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -124,7 +147,9 @@
                     <Image  
                     src="/Image/{{$dropping->anggota->pdl->cabang->id}}/{{$dropping->anggota->pdl->id}}/{{$dropping->anggota->id}}/{{$dropping->anggota->created_at->format('Y-m-d')}}/dropping/bukti/{{$dropping->bukti}}"
 
-                    id="foto_bukti" class="w-auto relative h-40  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    id="foto_bukti" class="w-auto @if($dropping->bukti)
+                        h-40
+                    @endif  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
             <div class="flex  flex-wrap pt-3 mt-6 -mx-3 mb-6">
@@ -154,6 +179,13 @@
   if (file) {
     document.getElementById('foto_nasabah_dan_spk').src = URL.createObjectURL(file);
     document.getElementById('foto_nasabah_dan_spk').classList.add('h-40');
+  }
+}
+    document.getElementById('spk').onchange = evt => {
+  const [file] = document.getElementById('spk').files
+  if (file) {
+    document.getElementById('foto_spk').src = URL.createObjectURL(file);
+    document.getElementById('foto_spk').classList.add('h-40');
   }
 }
     document.getElementById('bukti').onchange = evt => {

@@ -26,7 +26,6 @@ return new class extends Migration
             $table->text('alamat')->nullable();
             $table->string('pengikat')->nullable();
             $table->string('foto_pengikat')->nullable();
-            $table->string('nominal_pinjaman')->nullable();
             $table->string('jenis_anggota')->default('baru');
             $table->bigInteger('nohp')->nullable();
             $table->bigInteger("staff_id")->unsigned()->index()->nullable();

@@ -49,10 +49,6 @@ class Anggota extends Model
     {
     return $this->HasMany(Dropping::class);
     }
-    public function storting(): HasMany
-    {
-    return $this->HasMany(Storting::class);
-    }
 
 
 }

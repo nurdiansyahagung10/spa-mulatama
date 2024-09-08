@@ -50,10 +50,9 @@
 
                         `;
 
-                        let datafetch = await fetch("/user/list/get");
+                        let datafetch = await fetch("/api/user/list/get");
                         let data = await datafetch.json();
                         listtablebodystaff.innerHTML = '';
-                        console.log(data);
                         data.forEach((item, index) => {
                             listtablebodystaff.innerHTML += `
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">

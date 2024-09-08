@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nominal_dropping');
             $table->string('foto_nasabah_mendatangani_spk')->nullable();
             $table->string('foto_nasabah_dan_spk')->nullable();
+            $table->string('foto_spk')->nullable();
             $table->text('note')->nullable();
             $table->string('bukti')->nullable();
             $table->bigInteger("anggota_id")->unsigned()->index();

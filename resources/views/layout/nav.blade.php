@@ -115,11 +115,11 @@
                                 </a>
                             </li>
                         @elseif (Request::url() == url('storting'))
-                            <li class="w-full text-stone-600 hover:text-black dark:text-stone-200 dark:hover:text-white p-4">
-                                <a href="{{ url('anggota/create') }}">
-                                    <button>Tambah Anggota</button>
+                            <dropping class="w-full text-stone-600 hover:text-black dark:text-stone-200 dark:hover:text-white p-4">
+                                <a href="{{ url('dropping') }}">
+                                    <button>List Anggota</button>
                                 </a>
-                            </li>
+                            </dropping
                         @elseif (Request::url() == url('cabang'))
                             <li class="w-full text-stone-600 hover:text-black dark:text-stone-200 dark:hover:text-white p-4">
                                 <a href="{{ url('cabang/create') }}">
@@ -300,10 +300,10 @@
                         </li>
                     @elseif (Request::url() == url('storting'))
                         <li>
-                            <a href="{{ url('anggota/create') }}">
+                            <a href="{{ url('dropping') }}">
                                 <button
                                     class="align-middle dark:text-stone-200 text-black/60 hover:text-black dark:hover:text-white">
-                                    Tambah anggota
+                                    List dropping
                                 </button>
                             </a>
                         </li>

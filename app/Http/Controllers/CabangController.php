@@ -33,7 +33,9 @@ class CabangController extends Controller
     {
     
         $credentcial = $request->validate([
-            "nama" => ["required",'unique:cabang,nama']
+            "nama" => ["required",'unique:cabang,nama'],
+            "admin_provisi" => "required",
+            "simpanan" => "required",
         ],
     [
         'nama.unique' => 'cabang ini sudah terdaftar',
@@ -72,17 +74,24 @@ class CabangController extends Controller
 
         if($cabang->nama != $request->nama){
             $credentcial = $request->validate([
-                'nama' => ["required",'unique:cabang,nama'],
+                "nama" => ["required",'unique:cabang,nama'],
+                "admin_provisi" => "required",
+                "simpanan" => "required",
             ],
-            [
-                'nama.unique' => 'cabang dengan nama '. $request->nama .' sudah terdaftar',                
-            ]);    
-        }else{
+        [
+            'nama.unique' => 'cabang ini sudah terdaftar',
+    
+        ]);
+            }else{
             $credentcial = $request->validate([
                 'nama' => 'required',
+                "admin_provisi" => "required",
+                "simpanan" => "required",
+
             ]);    
         }
 
+        
         Cabang::find($id)->update($credentcial);
         
         return redirect()->back()->with("success","berhasil edit cabang ".$cabang->nama);

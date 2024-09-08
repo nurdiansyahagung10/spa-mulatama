@@ -56,7 +56,7 @@
         </label>
         <select class="number-input block w-full bg-transparent text-black border-stone-400 dark:text-white border   rounded-full py-2 px-4  mb-3 leading-tight focus:outline-none dark:focus:border-white" required name="cabang_id"  >
           @foreach ($cabang as $item )
-          <option class="text-black" value="{{$item->id}}">{{$item->nama_cabang}}</option>            
+          <option class="text-black" value="{{$item->id}}">{{$item->nama}}</option>            
           @endforeach
         </select>
       </div>

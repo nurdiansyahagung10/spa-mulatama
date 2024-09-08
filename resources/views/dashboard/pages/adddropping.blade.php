@@ -83,6 +83,21 @@
                     <Image  id="foto_nasabah_dan_spk" class="w-auto relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block text-black dark:text-white mb-2" for="grid-password">
+                        foto spk yang sudah di tandatangan
+                    </label>
+                    <input
+                        class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
+                        name="foto_spk" id="spk" type="file" accept="image/png, image/gif, image/jpeg">
+                </div>
+            </div>
+            <div class=" flex   h-full mb-6">
+                <div  class='rounded-xl  relative inline-block border-2 border-dashed  p-5 text-center   '>
+                    <Image  id="foto_spk" class="w-auto relative   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                </div>
+            </div>
 
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
@@ -136,6 +151,13 @@
   if (file) {
     document.getElementById('foto_nasabah_dan_spk').src = URL.createObjectURL(file);
     document.getElementById('foto_nasabah_dan_spk').classList.add('h-40');
+  }
+}
+    document.getElementById('spk').onchange = evt => {
+  const [file] = document.getElementById('spk').files
+  if (file) {
+    document.getElementById('foto_spk').src = URL.createObjectURL(file);
+    document.getElementById('foto_spk').classList.add('h-40');
   }
 }
     document.getElementById('bukti').onchange = evt => {

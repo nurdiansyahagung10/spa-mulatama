@@ -29,6 +29,32 @@
                         required name="nama" type="text">
                 </div>
             </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block dark:text-white text-black mb-2" for="grid-password">
+                        Admin dan provisi
+                    </label>
+                    <div class="flex mb-3 items-center gap-2">
+                        <input
+                        class=" block w-full bg-transparent dark:text-white border-stone-400 text-black border   rounded-full py-2 px-4  leading-tight focus:outline-none dark:focus:border-white"
+                        required name="admin_provisi" type="number">
+                        <span class="text-lg">%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block dark:text-white text-black mb-2" for="grid-password">
+                        simpanan
+                    </label>
+                    <div class="flex mb-3 items-center gap-2">
+                        <input
+                        class=" block w-full bg-transparent dark:text-white border-stone-400 text-black border   rounded-full py-2 px-4  leading-tight focus:outline-none dark:focus:border-white"
+                        required name="simpanan" type="number">
+                        <span class="text-lg">%</span>
+                    </div>
+                </div>
+            </div>
 
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">

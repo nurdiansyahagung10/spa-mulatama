@@ -29,12 +29,34 @@
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
-                        anggota
+                        Anggota
                     </label>
-                    <input type="hidden" name="anggota_id" value="{{$anggota->id}}">
+                    <input
+                    class=" block w-full bg-gray-200 pointer-events-none darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
+                    value="{{$dropping->anggota->nama}}" type="text">
+                </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block text-black dark:text-white mb-2" for="grid-password">
+                        Nominal pinjaman
+                    </label>
+                    <input type="hidden" name="dropping_id" value="{{$dropping->id}}">
                     <input
                         class=" block w-full bg-gray-200 pointer-events-none darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        value="{{$anggota->nama}}" type="text">
+                        value="{{$dropping->nominal_dropping}}" type="text">
+                    
+            </div>
+            </div>
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full px-4">
+                    <label class="block text-black dark:text-white mb-2" for="grid-password">
+                        Target storting
+                    </label>
+                    <input type="hidden" name="dropping_id" value="{{$dropping->id}}">
+                    <input
+                        class=" block w-full bg-gray-200 pointer-events-none darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
+                        value="{{$dropping->nominal_dropping / 10 + ($dropping->nominal_dropping / 10 * 0.1)}}" type="text">
                     
             </div>
             </div>
@@ -50,7 +72,9 @@
                         class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
                         name="nominal_storting" type="number">
                 </div>
-            </div> 
+            </div>
+            
+            
 
 
             <div class="flex flex-wrap -mx-3 mb-6">

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('cabang', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
+            $table->integer('admin_provisi')->default('1');
+            $table->integer('simpanan')->default('1');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });

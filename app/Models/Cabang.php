@@ -14,6 +14,9 @@ class Cabang extends Model
     protected $table = "cabang";
     protected $fillable = [
         'nama',
+        'admin_provisi',
+        'simpanan',
+        'jasa',
         'created_at',
         'updated_at'
     ];
