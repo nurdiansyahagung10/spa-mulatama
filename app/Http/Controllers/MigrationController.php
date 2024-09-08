@@ -14,10 +14,10 @@ class MigrationController extends Controller
             Artisan::call('migrate:fresh');
 
             // Jika sukses, kembali ke halaman dengan pesan sukses
-            return return response()->json('berhasil', 200);
+             return response()->json('berhasil', 200);
         } catch (\Exception $e) {
             // Jika ada error, kembalikan dengan pesan error
-            return return response()->json($e->getMessage(), 200);
+             return response()->json($e->getMessage(), 200);
         }
     }
 }
