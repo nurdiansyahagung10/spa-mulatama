@@ -12,6 +12,7 @@ class MigrationController extends Controller
         try {
             // Menjalankan perintah migrate:fresh
             Artisan::call('migrate:fresh');
+            Artisan::call('db:seed');
 
             // Jika sukses, kembali ke halaman dengan pesan sukses
              return response()->json('berhasil', 200);
