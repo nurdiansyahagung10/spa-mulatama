@@ -12,9 +12,12 @@ use App\Http\Controllers\DroppingController;
 use App\Http\Controllers\StortingController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\FileController;
 // routes/web.php
 
 use App\Http\Controllers\MigrationController;
+// routes/web.php
+Route::get('/file-structure', [FileController::class, 'getFileStructure']);
 
 Route::get('/migrate-fresh', [MigrationController::class, 'freshMigrate'])->name('migrate.fresh');
 
