@@ -107,6 +107,7 @@
                     <th class="font-medium text-black dark:text-white">Nama</th>
                     <th class="font-medium text-black dark:text-white">No ktp</th>
                     <th class="font-medium text-black dark:text-white">No kk</th>
+                    <th class="font-medium text-black dark:text-white">data kosong</th>
                     <th class="font-medium text-black dark:text-white">Dropping</th>
                     <th class="font-medium text-black dark:text-white">Storting</th>
                     <th class="font-medium text-black dark:text-white">Jenis</th>
@@ -140,6 +141,8 @@
             getusercabang = '{{ $cabang }}';
         }
 
+
+
         function load(colspan) {
             return `
             <tr class="border-b-0">
@@ -147,13 +150,14 @@
             </tr>`;
         }
 
-        function innertableanggota(index, item, droppingCount, stortingCount) {
+        function innertableanggota(index, item, droppingCount, stortingCount, nullfield) {
             return `
                 <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                     <td>${index + 1}</td>
                     <td>${item.nama}</td>
                     <td>${item.ktp || "-"}</td>
                     <td>${item.kk || "-"}</td>
+                    <td>${nullfield}</td>
                     <td>${droppingCount}</td>
                     <td>${stortingCount}</td>
                     <td>${item.jenis_anggota}</td>
@@ -202,12 +206,20 @@
             }
 
             listtablebodyanggota.innerHTML = "";
+
+            let nulldata = null;
+
             newdata.forEach((item, index) => {
+                nulldata = Object.keys(item).reduce((count, key) => {
+                    return item[key] === null ? count + 1 : count;
+                }, 0);
                 const droppingCount = item.dropping ? item.dropping.length : 0;
-                const stortingCount = item.dropping.reduce((total, drop) => total + (drop.storting ?
+                const stortingCount = item.dropping.reduce((total, drop) => total + (drop
+                    .storting ?
                     drop.storting.length : 0), 0);
-                listtablebodyanggota.innerHTML += innertableanggota(index, item, droppingCount,
-                    stortingCount);
+                listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                    droppingCount,
+                    stortingCount, nulldata);
             });
         });
 
@@ -224,21 +236,30 @@
         document.getElementById('pdl').addEventListener('input', (e) => {
             cabang = document.getElementById('cabang').value;
             listtablebodyanggota.innerHTML = "";
+            let nulldata = null;
+
             newdata.forEach((item, index) => {
+                nulldata = Object.keys(item).reduce((count, key) => {
+                    return item[key] === null ? count + 1 : count;
+                }, 0);
                 if (item.pdl.nama == e.target.value) {
                     const droppingCount = item.dropping ? item.dropping.length : 0;
-                    const stortingCount = item.dropping.reduce((total, drop) => total + (drop.storting ?
+                    const stortingCount = item.dropping.reduce((total, drop) => total + (
+                        drop.storting ?
                         drop.storting.length : 0), 0);
 
-                    listtablebodyanggota.innerHTML += innertableanggota(index, item, droppingCount,
+                    listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                        droppingCount,
                         stortingCount);
                 } else if (e.target.value == 'pdl') {
                     if (item.pdl.cabang.nama == cabang) {
                         const droppingCount = item.dropping ? item.dropping.length : 0;
-                        const stortingCount = item.dropping.reduce((total, drop) => total + (drop.storting ?
-                            drop.storting.length : 0), 0);
+                        const stortingCount = item.dropping.reduce((total, drop) => total +
+                            (drop.storting ?
+                                drop.storting.length : 0), 0);
 
-                        listtablebodyanggota.innerHTML += innertableanggota(index, item, droppingCount,
+                        listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                            droppingCount,
                             stortingCount);
                     }
                 }
@@ -296,14 +317,16 @@
             } else if (btnsaerchbyvalue.trim() == "Kk") {
                 newdata = data.filter((item) => {
                     if (item.kk != null) {
-                        return item.kk.toString().toLowerCase().includes(searchdata.toLowerCase());
+                        return item.kk.toString().toLowerCase().includes(searchdata
+                            .toLowerCase());
                     }
                 });
 
             } else if (btnsaerchbyvalue.trim() == "Ktp") {
                 newdata = data.filter((item) => {
                     if (item.ktp != null) {
-                        return item.ktp.toString().toLowerCase().includes(searchdata.toLowerCase());
+                        return item.ktp.toString().toLowerCase().includes(searchdata
+                            .toLowerCase());
                     }
                 });
             }
@@ -322,12 +345,19 @@
             }
 
             listtablebodyanggota.innerHTML = "";
+            let nulldata = null;
+
             newdata.forEach((item, index) => {
+                nulldata = Object.keys(item).reduce((count, key) => {
+                    return item[key] === null ? count + 1 : count;
+                }, 0);
                 const droppingCount = item.dropping ? item.dropping.length : 0;
-                const stortingCount = item.dropping.reduce((total, drop) => total + (drop.storting ?
+                const stortingCount = item.dropping.reduce((total, drop) => total + (
+                    drop.storting ?
                     drop.storting.length : 0), 0);
 
-                listtablebodyanggota.innerHTML += innertableanggota(index, item, droppingCount,
+                listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                    droppingCount,
                     stortingCount);
             });
         });
@@ -343,10 +373,12 @@
             let screenWidth = window.innerWidth;
 
 
-            if (screenWidth <= 640 && document.getElementById('more-option').classList.contains('h-[7.5rem]')) {
+            if (screenWidth <= 640 && document.getElementById('more-option').classList.contains(
+                    'h-[7.5rem]')) {
                 document.getElementById('more-option').classList.add('!h-[14rem]');
 
-            } else if (screenWidth >= 640 && document.getElementById('more-option').classList.contains(
+            } else if (screenWidth >= 640 && document.getElementById('more-option').classList
+                .contains(
                     'h-[7.5rem]')) {
                 document.getElementById('more-option').classList.remove('!h-[14rem]');
 
@@ -426,22 +458,33 @@
                 }
 
                 listtablebodyanggota.innerHTML = "";
+                let nulldata = null;
+
                 newdata.forEach((item, index) => {
+                    nulldata = Object.keys(item).reduce((count, key) => {
+                        return item[key] === null ? count + 1 : count;
+                    }, 0);
                     if (item.pdl.cabang.nama == e.target.value) {
-                        const droppingCount = item.dropping ? item.dropping.length : 0;
-                        const stortingCount = item.dropping.reduce((total, drop) => total + (
+                        const droppingCount = item.dropping ? item.dropping
+                            .length : 0;
+                        const stortingCount = item.dropping.reduce((total,
+                            drop) => total + (
                             drop.storting ?
                             drop.storting.length : 0), 0);
 
-                        listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                        listtablebodyanggota.innerHTML += innertableanggota(
+                            index, item,
                             droppingCount, stortingCount);
                     } else if (e.target.value == 'cabang') {
-                        const droppingCount = item.dropping ? item.dropping.length : 0;
-                        const stortingCount = item.dropping.reduce((total, drop) => total + (
+                        const droppingCount = item.dropping ? item.dropping
+                            .length : 0;
+                        const stortingCount = item.dropping.reduce((total,
+                            drop) => total + (
                             drop.storting ?
                             drop.storting.length : 0), 0);
 
-                        listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                        listtablebodyanggota.innerHTML += innertableanggota(
+                            index, item,
                             droppingCount, stortingCount);
                     }
                 });
@@ -500,13 +543,20 @@
             if (admin == false) {
                 newdata = newdata.filter(item => item.pdl.cabang.nama === getusercabang)
             }
+            let nulldata = null;
+
             newdata.forEach((item, index) => {
+                nulldata = Object.keys(item).reduce((count, key) => {
+                    return item[key] === null ? count + 1 : count;
+                }, 0);
                 const droppingCount = item.dropping ? item.dropping.length : 0;
-                const stortingCount = item.dropping.reduce((total, drop) => total + (drop
+                const stortingCount = item.dropping.reduce((total, drop) => total + (
+                    drop
                     .storting ?
                     drop.storting.length : 0), 0);
 
-                listtablebodyanggota.innerHTML += innertableanggota(index, item, droppingCount,
+                listtablebodyanggota.innerHTML += innertableanggota(index, item,
+                    droppingCount,
                     stortingCount);
             });
 
