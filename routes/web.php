@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('dropping', DroppingController::class)->except(['create',]);
     Route::resource('storting', StortingController::class)->except(['create',]);
     Route::get('dropping/create/{id}', [DroppingController::class, 'create'])->name('dropping.create');
-    Route::get('storting/create/{id}', [StortingController::class, 'create'])->name('storting.create');
+    Route::get('storting/create/{id}/{tanggal}', [StortingController::class, 'create'])->name('storting.create');
     Route::get('dashboard', function () {
         return view('dashboard.pages.dashboard');
     });

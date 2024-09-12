@@ -43,7 +43,7 @@ class JsonController extends Controller
         return response()->json($cabang, 200);
     }
     public function dropping(request $request){
-        $dropping = Dropping::with('anggota.pdl.cabang')->orderByDesc('created_at')->get();
+        $dropping = Dropping::with(['anggota.pdl.cabang', 'storting'])->orderByDesc('created_at')->get();
 
 
         if ($dropping->isEmpty()) {

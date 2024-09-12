@@ -13,7 +13,7 @@ class DroppingSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = File::get("/var/www/spa-mulatama/storage/app/json/dropping.json");
+        $json = File::get("/var/www/spa-mulataa/storage/app/json/dropping.json");
         $data = json_decode($json);
 
         foreach ($data as $obj) {

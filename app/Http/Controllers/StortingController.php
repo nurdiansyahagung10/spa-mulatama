@@ -29,10 +29,10 @@ class StortingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $id)
+    public function create(string $id, string $tanggal)
     {
         $dropping = Dropping::find($id);
-        return view('dashboard.pages.addstorting')->with(['dropping'=> $dropping,]);
+        return view('dashboard.pages.addstorting')->with(['dropping'=> $dropping,'tanggal_storting' => $tanggal]);
 
     }
 

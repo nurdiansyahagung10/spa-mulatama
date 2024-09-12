@@ -133,9 +133,6 @@
                                 @csrf
                                 <li class="w-full"><a href="/dropping/${item.id}" class="hover:text-white ">view</a></li>
                                 <li class="w-full"><a href="/dropping/${item.id}/edit" class="hover:text-white ">Edit</a></li>
-                                <li><a hr\ef="/storting/create/${
-                                                        item.id
-                                                    }" class="hover:text-white">Storting</a></li>
                                 <li class="w-full"><button class="hover:text-white ">Delete</button></li>
                             </form>                            </div>
                             </td>                    </tr> 

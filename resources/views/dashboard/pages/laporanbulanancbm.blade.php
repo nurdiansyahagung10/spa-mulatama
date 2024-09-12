@@ -273,7 +273,8 @@
                     0
                 );
                 let stortingtarget = filteredStorting.reduce(
-                    (sum, item) => sum + parseFloat(item.dropping.nominal_dropping) / 10 + (parseFloat(item.dropping.nominal_dropping) / 10 * 0.1),
+                    (sum, item) => sum + parseFloat(item.dropping.nominal_dropping) / 10 + (parseFloat(item.dropping
+                        .nominal_dropping) / 10 * 0.1),
                     0
                 );
                 let tidakterbayar = stortingtarget - stortingTotal;
