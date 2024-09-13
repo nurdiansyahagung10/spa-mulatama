@@ -113,8 +113,8 @@
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed  p-5 text-center   '>
                     <Image                                     
-                    src="/Image/{{$dropping->anggota->pdl->cabang->id}}/{{$dropping->anggota->pdl->id}}/{{$dropping->anggota->id}}/{{$dropping->anggota->created_at->format('Y-m-d')}}/dropping/spk/{{$dropping->foto_nasabah_dan_spk}}"
-                        id="foto_spk" class="w-auto @if($dropping->foto_nasabah_dan_spk)
+                    src="/Image/{{$dropping->anggota->pdl->cabang->id}}/{{$dropping->anggota->pdl->id}}/{{$dropping->anggota->id}}/{{$dropping->anggota->created_at->format('Y-m-d')}}/dropping/spk/{{$dropping->foto_spk}}"
+                        id="foto_spk" class="w-auto @if($dropping->foto_spk)
                             h-40
                         @endif  rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
