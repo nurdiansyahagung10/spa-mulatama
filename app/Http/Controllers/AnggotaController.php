@@ -16,14 +16,13 @@ class AnggotaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
+    {
         $user = Auth::user();
         $getusername = $user->nama;
         $cabang = null;
         if(isset($user->cabang)){
             $cabang = $user->cabang->nama;
-        } 
-        $cabang = null;
+        }
         return view("dashboard.pages.anggota")->with(['getusername' => $getusername, 'cabang' => $cabang]);
     }
 

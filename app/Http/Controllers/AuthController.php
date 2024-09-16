@@ -22,11 +22,21 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentcial)) {
+        if (Auth::attempt($credentcial) && $accessToken = Auth::guard('api')->attempt($credentcial)) {
+            session(['access_token' => $accessToken]);
+
             return redirect('dashboard');
         }
 
         return redirect()->back()->withErrors(['email'=>'email atau password salah'])->onlyInput('email');
+    }
+
+    public function refresh(Request $request)
+    {
+            $newToken = Auth::guard('api')->refresh();
+
+            session(['access_token' => $newToken]);
+            return response()->json(['message' => 'succses refresh token'], 202);
     }
 
     public function signupview(){
@@ -41,7 +51,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors('password dan confirm password tidak sama');
         }
 
-        
+
 
         $credentcial = $request->validate([
             'nama' => ['required','unique:users,nama'],
@@ -50,22 +60,32 @@ class AuthController extends Controller
             'cabang_id' => ['required','numeric']
         ],
     [
-        'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',                
-        'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',                
+        'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',
+        'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',
 ]);
 
         $credentcial['password'] = Hash::make($credentcial['password']);
 
 
         User::create(array_merge($credentcial,['role'=>'staff']));
-        
+
         return redirect()->back()->with("success","berhasil tambah staff ". $credentcial['nama']);
     }
 
     public function signout(request $request)
     {
         Auth::logout();
-        return redirect()->route('signin');
+
+        try{
+            Auth::guard('api')->setToken(session('access_token'))->logout();
+            $request->session()->forget('access_token');
+            return redirect()->route('signin');
+
+        }catch(\Exception $e){
+            $request->session()->forget('access_token');
+            return redirect()->route('signin');
+        }
+
     }
 
     public function edit(request $request, string $id){
@@ -85,7 +105,7 @@ class AuthController extends Controller
                 'nama' => 'required',
                 'email' => 'required',
                 'cabang_id' => ['required','numeric']
-            ]);    
+            ]);
         }else if($user->nama != $request->nama){
             $credentcial = $request->validate([
                 'nama' => ['required','unique:users,nama'],
@@ -93,8 +113,8 @@ class AuthController extends Controller
                 'cabang_id' => ['required','numeric']
             ],
             [
-                'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',                
-            ]);    
+                'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',
+            ]);
         }else if($user->email != $request->email){
             $credentcial = $request->validate([
                 'nama' => 'required',
@@ -102,8 +122,8 @@ class AuthController extends Controller
                 'cabang_id' => ['required','numeric']
             ],
             [
-                'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',                
-            ]);    
+                'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',
+            ]);
 
         }else{
             $credentcial = $request->validate([
@@ -112,13 +132,13 @@ class AuthController extends Controller
                 'cabang_id' => ['required','numeric']
             ],
             [
-                'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',                
-                'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',                
-            ]);    
+                'nama.unique' => 'staff dengan nama '. $request->nama .' sudah terdaftar',
+                'email.unique' => 'staff dengan email '. $request->email .' sudah terdaftar',
+            ]);
         }
 
         User::find($id)->update($credentcial);
-        
+
         return redirect()->back()->with("success","berhasil edit staff ".$user['nama']);
 
     }

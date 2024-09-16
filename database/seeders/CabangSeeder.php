@@ -14,7 +14,7 @@ class CabangSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = File::get("/var/www/spa-mulatama/storage/app/json/cabang.json");
+        $json = File::get("storage/app/json/cabang.json");
         $data = json_decode($json);
 
         foreach ($data as $obj) {

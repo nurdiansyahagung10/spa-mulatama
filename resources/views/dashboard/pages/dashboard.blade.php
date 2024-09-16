@@ -320,69 +320,70 @@
                 </div>
             </a>
 
-            <a href="{{ url('pdl') }}"
-                class="card bg-base-100 dark:border-stone-400 dark:hover:border-white text-black dark:text-white border transition-all duration-300 hover:border-stone-300 group overflow-hidden grid grid-cols-2 w-full">
-                <div
-                    class="relative bg-stone-50 dark:bg-base-100 group-hover:bg-gradient-to-r from-[#36b49f71] to-[#daff7571]">
-                    <div class="pointer-events-none">
-                        <div
-                            class="absolute inset-0 rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50">
-                            <svg aria-hidden="true"
-                                class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] dark:fill-white/[0.02] dark:stroke-white/5 fill-black/[0.02] stroke-black/5">
-                                <defs>
-                                    <pattern id=":r2s:" width="72" height="56" patternUnits="userSpaceOnUse"
-                                        x="50%" y="-6">
-                                        <path d="M.5 56V.5H72" fill="none"></path>
-                                    </pattern>
-                                </defs>
-                                <rect width="100%" height="100%" stroke-width="0" fill="url(#:r2s:)"></rect>
-                                <svg x="50%" y="-6" class="overflow-visible">
-                                    <rect stroke-width="0" width="73" height="57" x="-72" y="112"></rect>
-                                    <rect stroke-width="0" width="73" height="57" x="72" y="168"></rect>
-                                </svg>
-                            </svg>
-                        </div>
-                        <div class="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay transition duration-300 group-hover:opacity-100"
-                            style="
-                    mask-image: radial-gradient(
-                        180px at 278.5px 36px,
-                        white,
-                        transparent
-                    );
-                ">
-                            <svg aria-hidden="true"
-                                class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] fill-black/50 stroke-black/70 dark:fill-white/50 dark:stroke-white/70">
-                                <defs>
-                                    <pattern id=":r2t:" width="72" height="56" patternUnits="userSpaceOnUse"
-                                        x="50%" y="-6">
-                                        <path d="M.5 56V.5H72" fill="none"></path>
-                                    </pattern>
-                                </defs>
-                                <rect width="100%" height="100%" stroke-width="0" fill="url(#:r2t:)"></rect>
-                                <svg x="50%" y="-6" class="overflow-visible">
-                                    <rect stroke-width="0" width="73" height="57" x="-72" y="112"></rect>
-                                    <rect stroke-width="0" width="73" height="57" x="72" y="168"></rect>
-                                </svg>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div>
-                        <div
-                            class="rounded-full border-stone-400 dark:bg-base-300 bg-base-200 w-8 h-8 flex items-center justify-center border">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="size-[1.22rem] opacity-70">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <h2 class="card-title">List pdl</h2>
-                </div>
-            </a>
         @endif
 
+        <a href="{{ url('pdl') }}"
+        class="card bg-base-100 dark:border-stone-400 dark:hover:border-white text-black dark:text-white border transition-all duration-300 hover:border-stone-300 group overflow-hidden grid grid-cols-2 w-full">
+        <div
+            class="relative bg-stone-50 dark:bg-base-100 group-hover:bg-gradient-to-r from-[#36b49f71] to-[#daff7571]">
+            <div class="pointer-events-none">
+                <div
+                    class="absolute inset-0 rounded-2xl transition duration-300 [mask-image:linear-gradient(white,transparent)] group-hover:opacity-50">
+                    <svg aria-hidden="true"
+                        class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] dark:fill-white/[0.02] dark:stroke-white/5 fill-black/[0.02] stroke-black/5">
+                        <defs>
+                            <pattern id=":r2s:" width="72" height="56" patternUnits="userSpaceOnUse"
+                                x="50%" y="-6">
+                                <path d="M.5 56V.5H72" fill="none"></path>
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" stroke-width="0" fill="url(#:r2s:)"></rect>
+                        <svg x="50%" y="-6" class="overflow-visible">
+                            <rect stroke-width="0" width="73" height="57" x="-72" y="112"></rect>
+                            <rect stroke-width="0" width="73" height="57" x="72" y="168"></rect>
+                        </svg>
+                    </svg>
+                </div>
+                <div class="absolute inset-0 rounded-2xl opacity-0 mix-blend-overlay transition duration-300 group-hover:opacity-100"
+                    style="
+            mask-image: radial-gradient(
+                180px at 278.5px 36px,
+                white,
+                transparent
+            );
+        ">
+                    <svg aria-hidden="true"
+                        class="absolute inset-x-0 inset-y-[-30%] h-[160%] w-full skew-y-[-18deg] fill-black/50 stroke-black/70 dark:fill-white/50 dark:stroke-white/70">
+                        <defs>
+                            <pattern id=":r2t:" width="72" height="56" patternUnits="userSpaceOnUse"
+                                x="50%" y="-6">
+                                <path d="M.5 56V.5H72" fill="none"></path>
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" stroke-width="0" fill="url(#:r2t:)"></rect>
+                        <svg x="50%" y="-6" class="overflow-visible">
+                            <rect stroke-width="0" width="73" height="57" x="-72" y="112"></rect>
+                            <rect stroke-width="0" width="73" height="57" x="72" y="168"></rect>
+                        </svg>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div>
+                <div
+                    class="rounded-full border-stone-400 dark:bg-base-300 bg-base-200 w-8 h-8 flex items-center justify-center border">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" class="size-[1.22rem] opacity-70">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                    </svg>
+                </div>
+            </div>
+            <h2 class="card-title">List pdl</h2>
+        </div>
+    </a>
+    
         <a href="{{ url('anggota/create') }}"
             class="card bg-base-100 dark:border-stone-400 dark:hover:border-white text-black dark:text-white border transition-all duration-300 hover:border-stone-300 group overflow-hidden grid grid-cols-2 w-full">
             <div

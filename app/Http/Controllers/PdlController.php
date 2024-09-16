@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cabang;
 use App\Models\pdl;
+use Auth;
 
 class PdlController extends Controller
 {
@@ -13,7 +14,13 @@ class PdlController extends Controller
      */
     public function index()
     {
-        return view("dashboard.pages.pdl");
+        $user = Auth::user();
+        $getusername = $user->nama;
+        $cabang = null;
+        if(isset($user->cabang)){
+            $cabang = $user->cabang->nama;
+        }
+        return view("dashboard.pages.pdl")->with(['getusername' => $getusername, 'cabang' => $cabang]);
     }
 
     /**
@@ -74,17 +81,17 @@ class PdlController extends Controller
 
             ],
             [
-                'nama.unique' => 'pdl dengan nama '. $request->nama .' sudah terdaftar',                
-            ]);    
+                'nama.unique' => 'pdl dengan nama '. $request->nama .' sudah terdaftar',
+            ]);
         }else{
             $credentcial = $request->validate([
                 'nama' => 'required',
                 "cabang_id" => "required"
-            ]);    
+            ]);
         }
 
         Pdl::find($id)->update($credentcial);
-        
+
         return redirect()->back()->with("success","berhasil edit pdl ".$pdl->nama);
     }
 

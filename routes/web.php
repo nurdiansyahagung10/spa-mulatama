@@ -4,9 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CabangController;
 use App\Http\Controllers\AnggotaController;
-use App\Http\Middleware\HaveAuth;
 use App\Http\Controllers\PdlController;
-use App\Http\Middleware\HaveNtAuth;
 use App\Http\Middleware\AuthAdmin;
 use App\Http\Controllers\DroppingController;
 use App\Http\Controllers\StortingController;
@@ -36,12 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('storting', StortingController::class)->except(['create',]);
     Route::get('dropping/create/{id}', [DroppingController::class, 'create'])->name('dropping.create');
     Route::get('storting/create/{id}/{tanggal}', [StortingController::class, 'create'])->name('storting.create');
+    Route::resource('pdl', PdlController::class)->except(['create',]);
     Route::get('dashboard', function () {
         return view('dashboard.pages.dashboard');
     });
 
     Route::middleware([AuthAdmin::class,])->group(function () {
-        Route::resource('pdl', PdlController::class);
+        Route::resource('pdl', PdlController::class)->only(['create',]);
         Route::get('staff/create', [AuthController::class, 'signupview'])->name('addstaff');
         Route::post('staff/auth', [AuthController::class, 'signup'])->name('staffauth');
         Route::get('staff/list', [AuthController::class, 'usershow'])->name('staff');

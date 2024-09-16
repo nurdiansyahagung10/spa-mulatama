@@ -34,7 +34,7 @@
                             class="block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400 rounded-full py-[0.35rem] px-4 leading-tight focus:outline-none dark:focus:border-white"
                             name="search" id="search" type="text" />
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
                 <div class="flex gap-2 px-4 w-full">
                     <div class="flex flex-row gap-1 w-full">
                         <span>Tanggal Ditambahkan</span>
-                        <input type="date" name="tanggal" id="tanggal_dropping"
+                        <input type="date" name="tanggal" id="dropping_date"
                             class="block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400 rounded-full py-[0.35rem] px-4 leading-tight focus:outline-none dark:focus:border-white">
                     </div>
 
@@ -93,26 +93,77 @@
                     <th class="font-medium text-black dark:text-white ">Action</th>
                 </tr>
             </thead>
-            <tbody id="anggota-list-body-table" class="text-black/60 dark:text-stone-200">
-                <script>
-                    let data = null;
-                    let newdata = null;
-                    const btnsearchby = document.querySelectorAll(".btn-searchby");
-                    let btnsaerchbyvalue = "Nama";
-                    const search = document.getElementById("search");
-                    let listtablebodyanggota = document.getElementById(
-                        "anggota-list-body-table"
-                    );
-                    let getusernama = '{{ $getusername }}';
-                    let admin = getusernama == 'admin' ? true : false;
-                    let getusercabang = null;
-                    if (admin == false) {
-                        getusercabang = '{{ $cabang }}';
-                    }
+            <tbody id="list-body-table" class="text-black/60 dark:text-stone-200">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+          let initialmain = null;
+    let initialanggota = null;
+    let initialcabang = null;
+    let initialpdl = null;
+    let newdata = null;
+    let globalfiltered = null;
+    let datacabang = null;
+    let datapdl = null;
+    let defaultsearchvalue = "Nama";
+    const btnsearchby = document.querySelectorAll(".btn-searchby");
+    const search = document.getElementById("search");
+    const divsearch = document.getElementById("input-search");
+    const searchtoggle = document.getElementById('search-toggle');
+    const moretoggle = document.getElementById('more-toggle');
+    const moreoptionitem = document.querySelectorAll('.more-option-item');
+    const selectcabang = document.getElementById('cabang');
+    const moreoption = document.getElementById('more-option');
+    const selectpdl = document.getElementById('pdl');
+    const selectdate = document.getElementById('dropping_date');
+    const listtablebodydropping = document.getElementById(
+        "list-body-table"
+    );
 
 
-                    function innertabledropping(index, item) {
-                        return `<tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
+    class main {
+        constructor() {
+            this.accesstoken = "{{session('access_token')}}";
+        }
+
+        getusername() {
+            return '{{ $getusername }}';
+        }
+
+        admincek() {
+                return this.getusername() === 'admin' ? true : false;
+            }
+
+        getusercabang() {
+                return '{{ $cabang }}';
+
+        }
+
+        load(colspan) {
+            return `
+            <tr class="border-b-0">
+                <td colspan="${colspan}" class="h-[20rem]"><span class="text-black loading dark:text-white loading-bars loading-md"></span></td>
+            </tr>`;
+        }
+
+
+        refreshToken() {
+
+            fetch('/api/refresh', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `bearer ${this.accesstoken}`,
+
+                },
+            });
+
+        }
+
+        innerdatatable(index, item) {
+            return `<tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
                         <td>${item.anggota.nama}</td>
                         <td>${item.nominal_dropping - (item.nominal_dropping * item.anggota.pdl.cabang.admin_provisi / 100)}</td>
@@ -129,290 +180,310 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                                     </svg></div>
                             <form method="post" action="/dropping/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
-                                @method('delete')   
+                                @method('delete')
                                 @csrf
                                 <li class="w-full"><a href="/dropping/${item.id}" class="hover:text-white ">view</a></li>
                                 <li class="w-full"><a href="/dropping/${item.id}/edit" class="hover:text-white ">Edit</a></li>
                                 <li class="w-full"><button class="hover:text-white ">Delete</button></li>
                             </form>                            </div>
-                            </td>                    </tr> 
+                            </td>                    </tr>
+                    `;
+        }
+
+        loaddatatable(data) {
+            return data.map((item, index) => {
+                            return this.innerdatatable(index, item);
+                        }).join('');
+
+        }
+
+
+    }
+
+
+    class dropping extends main {
+
+        droppingfetch() {
+            return fetch("/api/dropping/list/get", {
+                'method': 'GET',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Authorization': `bearer ${this.accesstoken}`,
+                },
+            }).then(async (response) => {
+                if (response.status === 401) {
+                    await this.refreshToken();
+                    response = await fetch("/api/dropping/list/get", {
+                        'method': 'GET',
+                        'headers': {
+                            'Accept': 'application/json',
+                            'Authorization': `bearer ${this.accesstoken}`,
+                        },
+                    });
+                    return response
+                } else {
+                    return response
+                }
+            });
+        }
+
+    }
+
+    class cabang extends dropping {
+        cabangfetch() {
+            return fetch("/api/cabang/list/get", {
+                'method': 'GET',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Authorization': `bearer ${this.accesstoken}`,
+                },
+            }).then(response => { return response })
+        }
+    }
+
+    class pdl extends cabang {
+        pdlfetch() {
+            return fetch("/api/pdl/list/get", {
+                'method': 'GET',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Authorization': `bearer ${this.accesstoken}`,
+                },
+            }).then(response => { return response });
+        }
+    }
+
+
+
+
+
+    window.addEventListener("load", async () => {
+        initialmain = new main;
+        initialdropping = new dropping;
+        initialcabang = new cabang;
+        initialpdl = new pdl;
+        listtablebodydropping.innerHTML = initialmain.load(11);
+        let datafetchdropping = await initialdropping.droppingfetch();
+        let datadropping = await datafetchdropping.json();
+        let datafetchcabang = await initialcabang.cabangfetch();
+        datacabang = await datafetchcabang.json();
+        let datafetchpdl = await initialpdl.pdlfetch();
+        datapdl = await datafetchpdl.json();
+        newdata = datadropping;
+        globalfiltered = datadropping;
+
+        if (initialmain.admincek() === false) {
+            newdata = datadropping.filter(item => item.anggota.pdl.cabang.nama === initialmain.getusercabang());
+            datacabang.forEach((item, index) => {
+                selectcabang.innerHTML = `
+                       <option value="${initialmain.getusercabang()}">${initialmain.getusercabang()}</option>
+                       `;
+            });
+            selectpdl.innerHTML = `
+                    <option value="pdl">pdl</option>
+                     `;
+
+            datapdl.forEach((item, index) => {
+                if (item.cabang.nama == initialmain.getusercabang()) {
+                    selectpdl.innerHTML += `
+                       <option value="${item.nama}">${item.nama}</option>
+                       `;
+                }
+            });
+
+            selectcabang.classList.add('pointer-events-none');
+            selectcabang.classList.add('bg-gray-200');
+            selectcabang.classList.remove('bg-transparent');
+        }
+        else {
+            datacabang.forEach((item, index) => {
+                selectcabang.innerHTML += `
+                       <option value="${item.nama}">${item.nama}</option>
+                       `;
+            });
+
+        }
+
+        listtablebodydropping.innerHTML = "";
+        listtablebodydropping.innerHTML = initialmain.loaddatatable(newdata);
+
+
+    });
+
+
+    btnsearchby.forEach((e) => {
+        e.addEventListener("click", (e) => {
+            defaultsearchvalue = e.target.textContent;
+            btnsearchby.forEach((e) => {
+                e.classList.remove("text-white");
+                e.classList.add("text-stone-400");
+
+            });
+            e.target.classList.add("text-white");
+        });
+
+    });
+
+    selectpdl.addEventListener('input', (e) => {
+        listtablebodydropping.innerHTML = initialmain.load(11);
+        let nulldata = null;
+        let filtereddata = null;
+
+        if (e.target.value == 'pdl') {
+            filtereddata = globalfiltered.filter(item => item.anggota.pdl.cabang.nama === initialmain.getusercabang());
+        } else {
+            filtereddata = globalfiltered.filter(item => item.anggota.pdl.nama === e.target.value);
+        }
+
+
+        listtablebodydropping.innerHTML = "";
+        listtablebodydropping.innerHTML = initialmain.loaddatatable(filtereddata);
+
+
+    });
+
+    search.addEventListener("input", async (e) => {
+        let searchdata = e.target.value.toLowerCase();
+        selectdate.value = '';
+        selectpdl.innerHTML = `
+            <option value="pdl">pdl</option>
+        `;
+
+
+        switch (defaultsearchvalue.trim()) {
+            case "Nama":
+                globalfiltered = newdata.filter((item) =>
+                    item.anggota.nama.toLowerCase().includes(searchdata)
+                );
+
+                break;
+        }
+
+
+        if (initialmain.admincek() == false) {
+            globalfiltered = globalfiltered.filter(item => item.anggota.pdl.cabang.nama === initialmain.getusercabang());
+            datapdl.forEach((item, index) => {
+                if (item.cabang.nama == initialmain.getusercabang()) {
+                    selectpdl.innerHTML += `
+                        <option value="${item.nama}">${item.nama}</option>
+                    `;
+                }
+            });
+
+        } else {
+            selectcabang.innerHTML = `
+                <option value="cabang">cabang</option>
+            `;
+
+            datacabang.forEach((item, index) => {
+                selectcabang.innerHTML += `
+               <option value="${item.nama}">${item.nama}</option>
+               `;
+            });
+
+
+        }
+
+        listtablebodydropping.innerHTML = "";
+        listtablebodydropping.innerHTML = initialmain.loaddatatable(globalfiltered);
+
+    });
+
+
+    searchtoggle.addEventListener('click', async () => {
+        await divsearch.classList.toggle('h-12');
+        divsearch.classList.toggle('overflow-hidden');
+
+    });
+
+    window.addEventListener('resize', function (event) {
+        let screenWidth = window.innerWidth;
+
+
+        if (screenWidth <= 640 && moreoption.classList.contains(
+            'h-[7.5rem]')) {
+            moreoption.classList.add('!h-[14rem]');
+
+        } else if (screenWidth >= 640 && moreoption.classList
+            .contains(
+                'h-[7.5rem]')) {
+            moreoption.classList.remove('!h-[14rem]');
+
+        }
+    });
+
+    moretoggle.addEventListener('click', async () => {
+        let screenWidth = window.innerWidth;
+        await moreoption.classList.toggle('h-[7.5rem]');
+        if (screenWidth <= 640) {
+            moreoption.classList.toggle('!h-[14rem]');
+        }
+
+        moreoptionitem.forEach((item) => {
+            item.target.classList.toggle('overflow-hidden')
+        });
+    });
+
+
+    selectcabang.addEventListener("input", async (e) => {
+
+        selectpdl.innerHTML = `
+            <option value="pdl">pdl</option>
+             `;
+        datapdl.forEach((item, index) => {
+            listtablebodydropping.innerHTML = initialmain.load(11);
+            if (item.cabang.nama == e.target.value) {
+                document.getElementById('pdl').innerHTML += `
+               <option value="${item.nama}">${item.nama}</option>
+               `;
+
+            }
+
+            let filtereddata = null;
+
+            if (e.target.value == 'cabang') {
+                filtereddata = globalfiltered;
+            } else {
+                filtereddata = globalfiltered.filter(item => item.anggota.pdl.cabang.nama === e.target.value);
+            }
+
+            listtablebodydropping.innerHTML = "";
+            listtablebodydropping.innerHTML = initialmain.loaddatatable(filtereddata);
+
+
+        });
+    });
+
+    selectdate.addEventListener("input", async (e) => {
+        search.value = '';
+        listtablebodydropping.innerHTML = initialmain.load(11)
+        selectpdl.innerHTML = `<option value="pdl">pdl</option>`;
+        globalfiltered = newdata.filter((item) =>
+            item.tanggal_dropping.toLowerCase().includes(e.target.value)
+        );
+
+        if (initialmain.admincek() == false) {
+            datapdl.forEach((item, index) => {
+                if (item.cabang.nama == initialmain.getusercabang()) {
+                    selectpdl.innerHTML += `
+                        <option value="${item.nama}">${item.nama}</option>
                     `;
 
-                    }
+                }
+            });
+            globalfiltered = globalfiltered.filter(item => item.anggota.pdl.cabang.nama === initialmain.getusercabang())
 
-                    function load(colspan) {
-                        return `
-            <tr class="border-b-0">
-                <td colspan="${colspan}" class="h-[20rem]"><span class="text-black loading dark:text-white loading-bars loading-md"></span></td>
-            </tr>`;
-                    }
-
-
-                    window.addEventListener("load", async () => {
-                        listtablebodyanggota.innerHTML = load(12);
-                        let datafetch = await fetch("/api/dropping/list/get");
-                        data = await datafetch.json();
-                        newdata = data;
-                        if (admin == false) {
-                            newdata = data.filter(item => item.anggota.pdl.cabang.nama === getusercabang)
-                        }
-
-                        listtablebodyanggota.innerHTML = "";
-                        newdata.forEach((item, index) => {
-                            listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                        });
-                    });
-
-
-
-                    btnsearchby.forEach((e) => {
-                        e.addEventListener("click", (e) => {
-                            btnsaerchbyvalue = e.target.textContent;
-
-                        });
-
-                    });
-
-                    document.getElementById('pdl').addEventListener('input', (e) => {
-                        cabang = document.getElementById('cabang').value;
-                        listtablebodyanggota.innerHTML = "";
-                        newdata.forEach((item, index) => {
-                            if (item.anggota.pdl.nama == e.target.value) {
-
-                                listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                            } else if (e.target.value == 'pdl') {
-                                if (item.anggota.pdl.cabang.nama == cabang) {
-
-                                    listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                                }
-                            }
-                        });
-
-                    });
-
-                    search.addEventListener("input", async (e) => {
-                        const searchdata = e.target.value.toLowerCase();
-                        document.getElementById('tanggal_dropping').value = '';
-                        if (admin) {
-                            document.getElementById('cabang').innerHTML = `
-                                                                    <option value="cabang">cabang</option>
-
-                                         `;
-                            let datafetch = await fetch("/api/cabang/list/get");
-                            filtereddata = await datafetch.json();
-                            filtereddata.forEach((item, index) => {
-                                document.getElementById('cabang').innerHTML += `
+        } else {
+            selectcabang.innerHTML = `<option value="cabang">cabang</option>`;
+            datacabang.forEach((item, index) => {
+                selectcabang.innerHTML += `
                <option value="${item.nama}">${item.nama}</option>
                `;
-                            });
+            });
+        }
 
-
-
-                        }
-
-                        document.getElementById('pdl').innerHTML = `
-                                                                    <option value="pdl">pdl</option>
-
-                                         `;
-                        if (admin == false) {
-                            let pdldatafetch = await fetch("/api/pdl/list/get");
-                            let filtereddatapdl = await pdldatafetch.json();
-                            document.getElementById('pdl').innerHTML = `
-            <option value="pdl">pdl</option>
-
-             `;
-
-                            filtereddatapdl.forEach((item, index) => {
-                                if (item.cabang.nama == getusercabang) {
-                                    document.getElementById('pdl').innerHTML += `
-               <option value="${item.nama}">${item.nama}</option>
-               `;
-
-                                }
-                            });
-
-                        }
-
-                        if (btnsaerchbyvalue.trim() == "Nama") {
-                            newdata = data.filter((item) =>
-                                item.anggota.nama.toLowerCase().includes(searchdata)
-                            );
-                        } 
-
-                        if (admin == false) {
-                            newdata = newdata.filter(item => item.anggota.pdl.cabang.nama === getusercabang)
-                        }
-
-                        listtablebodyanggota.innerHTML = "";
-                        newdata.forEach((item, index) => {
-
-                            listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                        });
-                    });
-
-
-                    document.getElementById('search-toggle').addEventListener('click', async () => {
-                        await document.getElementById('input-search').classList.toggle('h-12');
-                        document.getElementById('input-search').classList.toggle('overflow-hidden');
-
-                    });
-
-                    window.addEventListener('resize', function(event) {
-                        let screenWidth = window.innerWidth;
-
-
-                        if (screenWidth <= 640 && document.getElementById('more-option').classList.contains('h-[7.5rem]')) {
-                            document.getElementById('more-option').classList.add('!h-[14rem]');
-
-                        } else if (screenWidth >= 640 && document.getElementById('more-option').classList.contains(
-                                'h-[7.5rem]')) {
-                            document.getElementById('more-option').classList.remove('!h-[14rem]');
-
-                        }
-                    });
-
-                    document.getElementById('more-toggle').addEventListener('click', async () => {
-                        let screenWidth = window.innerWidth;
-
-
-                        await document.getElementById('more-option').classList.toggle('h-[7.5rem]');
-                        if (screenWidth <= 640) {
-                            document.getElementById('more-option').classList.toggle('!h-[14rem]');
-
-                        }
-
-                        document.querySelectorAll('.more-option-item').forEach((item) => {
-                            item.target.classList.toggle('overflow-hidden')
-                        });
-                    });
-
-                    window.addEventListener("load", async () => {
-                        console.log(newdata);
-                        let datafetch = await fetch("/api/cabang/list/get");
-                        filtereddata = await datafetch.json();
-                        if (admin == false) {
-                            filtereddata.forEach((item, index) => {
-                                document.getElementById('cabang').innerHTML = `
-               <option value="${getusercabang}">${getusercabang}</option>
-               `;
-                            });
-
-                            let pdldatafetch = await fetch("/api/pdl/list/get");
-                            let filtereddatapdl = await pdldatafetch.json();
-                            document.getElementById('pdl').innerHTML = `
-            <option value="pdl">pdl</option>
-
-             `;
-                            filtereddatapdl.forEach((item, index) => {
-                                if (item.cabang.nama == getusercabang) {
-                                    document.getElementById('pdl').innerHTML += `
-               <option value="${item.nama}">${item.nama}</option>
-               `;
-
-                                }
-                            });
-
-                            document.getElementById('cabang').classList.add('pointer-events-none');
-                            document.getElementById('cabang').classList.add('bg-gray-200');
-                            document.getElementById('cabang').classList.remove('bg-transparent');
-
-
-                        } else {
-                            filtereddata.forEach((item, index) => {
-                                document.getElementById('cabang').innerHTML += `
-               <option value="${item.nama}">${item.nama}</option>
-               `;
-                            });
-
-                        }
-                    });
-
-                    document.getElementById('cabang').addEventListener("input", async (e) => {
-
-                        let datafetch = await fetch("/api/pdl/list/get");
-                        filtereddata = await datafetch.json();
-                        document.getElementById('pdl').innerHTML = `
-            <option value="pdl">pdl</option>
-
-             `;
-                        filtereddata.forEach((item, index) => {
-                            if (item.cabang.nama == e.target.value) {
-                                document.getElementById('pdl').innerHTML += `
-               <option value="${item.nama}">${item.nama}</option>
-               `;
-
-                            }
-
-                            listtablebodyanggota.innerHTML = "";
-                            newdata.forEach((item, index) => {
-                                if (item.anggota.pdl.cabang.nama == e.target.value) {
-                                    listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                                } else if (e.target.value == 'cabang') {
-                                    listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                                }
-                            });
-
-                        });
-                    });
-                    document.getElementById('tanggal_dropping').addEventListener("input", async (e) => {
-                        document.getElementById('search').value = '';
-
-                        if (admin) {
-                            document.getElementById('cabang').innerHTML = `
-                                                                    <option value="cabang">cabang</option>
-
-                                         `;
-                            let datafetch = await fetch("/api/cabang/list/get");
-                            filtereddata = await datafetch.json();
-                            filtereddata.forEach((item, index) => {
-                                document.getElementById('cabang').innerHTML += `
-               <option value="${item.nama}">${item.nama}</option>
-               `;
-                            });
-
-
-
-                        }
-
-                        document.getElementById('pdl').innerHTML = `
-                                                                    <option value="pdl">pdl</option>
-
-                                         `;
-                        if (admin == false) {
-                            let pdldatafetch = await fetch("/api/pdl/list/get");
-                            let filtereddatapdl = await pdldatafetch.json();
-                            document.getElementById('pdl').innerHTML = `
-            <option value="pdl">pdl</option>
-
-             `;
-
-                            filtereddatapdl.forEach((item, index) => {
-                                if (item.cabang.nama == getusercabang) {
-                                    document.getElementById('pdl').innerHTML += `
-               <option value="${item.nama}">${item.nama}</option>
-               `;
-
-                                }
-                            });
-
-                        }
-
-                        newdata = data.filter((item) =>
-                            item.tanggal_dropping.toLowerCase().includes(e.target.value)
-                        );
-
-
-                        listtablebodyanggota.innerHTML = "";
-                        if (admin == false) {
-                            newdata = newdata.filter(item => item.anggota.pdl.cabang.nama === getusercabang)
-                        }
-                        newdata.forEach((item, index) => {
-                            listtablebodyanggota.innerHTML += innertabledropping(index, item);
-                        });
-
-                    });
-                </script>
-            </tbody>
-        </table>
-    </div>
+        listtablebodydropping.innerHTML = "";
+        listtablebodydropping.innerHTML = initialmain.loaddatatable(globalfiltered);
+    });
+    </script>
 @endsection

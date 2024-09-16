@@ -13,7 +13,7 @@ class StortingSeeder extends Seeder
      */
     public function run(): void
     {
-        $json = File::get('/var/www/spa-mulatama/storage/app/json/storting.json');
+        $json = File::get('storage/app/json/storting.json');
         $data = json_decode($json);
 
         foreach ($data as $obj) {

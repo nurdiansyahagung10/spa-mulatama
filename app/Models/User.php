@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Cabang;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -39,6 +42,11 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function cabang(): BelongsTo
+    {
+        return $this->BelongsTo(Cabang::class);
+    }
 
     public function getJWTIdentifier()
     {

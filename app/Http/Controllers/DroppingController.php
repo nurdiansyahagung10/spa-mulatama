@@ -20,8 +20,7 @@ class DroppingController extends Controller
         $cabang = null;
         if(isset($user->cabang)){
             $cabang = $user->cabang->nama;
-        } 
-        $cabang = null;
+        }
         return view("dashboard.pages.dropping")->with(['getusername' => $getusername, 'cabang' => $cabang]);    }
 
     /**
@@ -47,7 +46,7 @@ class DroppingController extends Controller
                 'note' => 'nullable',
                 'bukti' => 'nullable',
                 "anggota_id" => 'required'
-                
+
             ],
         );
 
@@ -86,7 +85,7 @@ class DroppingController extends Controller
             $file-> move(public_path('Image/'.$anggota->pdl->cabang->id.'/'.$anggota->pdl->id.'/'.$anggota->id .'/'. date('Y-m-d') .'/dropping/bukti'), $filename);
             $credentcial['bukti']= $filename;
         }
-     
+
 
 
         // $user = Auth::user();
@@ -112,7 +111,7 @@ class DroppingController extends Controller
      */
     public function edit(string $id)
     {
-         
+
         $anggota = Anggota::all();
         $dropping = dropping::with('anggota')->find($id);
         return view('dashboard.pages.editdropping')->with(['anggota' => $anggota,'dropping' => $dropping ]);
@@ -132,11 +131,11 @@ class DroppingController extends Controller
                 'note' => 'nullable',
                 'bukti' => 'nullable',
                 "anggota_id" => 'required'
-                
+
             ],
         );
 
-        
+
 
         $cekdropping = Dropping::where('tanggal_dropping', $credentcial['tanggal_dropping'])->where('anggota_id', $credentcial['anggota_id'])->first();
         $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
@@ -145,7 +144,7 @@ class DroppingController extends Controller
             if($cekdropping){
                 return redirect()->back()->withErrors('anggota '. $dropping->anggota->nama .' sudah dropping di tanggal '. $credentcial['tanggal_dropping']);
             }
-    
+
         }
 
 
@@ -187,7 +186,7 @@ class DroppingController extends Controller
 
             $credentcial['bukti']= $filename;
         }
-     
+
 
         $dropping->update($credentcial);
 
@@ -201,14 +200,14 @@ class DroppingController extends Controller
      */
     public function destroy(string $id)
     {
-        
+
         $dropping = dropping::with('anggota.pdl.cabang')->find($id);
         $dropping->delete();
 
         if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_mendatangani_spk)){
             File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_mendatangani_spk);
         }
-        
+
         if(File::exists('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk)){
             File::delete('Image/'.$dropping->anggota->pdl->cabang->id.'/'.$dropping->anggota->pdl->id.'/'.$dropping->anggota->id .'/'. $dropping->created_at->format('Y-m-d') .'/dropping/spk/'.$dropping->foto_nasabah_dan_spk);
         }
