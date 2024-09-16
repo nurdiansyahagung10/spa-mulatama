@@ -63,8 +63,8 @@
                 </div>
                 <div class="flex gap-2 px-4 w-full">
                     <div class="flex flex-row gap-1 w-full">
-                        <span>Tanggal Ditambahkan</span>
-                        <input type="date" name="tanggal" id="date_created"
+                        <span>Tanggal Storting</span>
+                        <input type="date" name="tanggal" id="storting_date"
                             class="block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400 rounded-full py-[0.35rem] px-4 leading-tight focus:outline-none dark:focus:border-white">
                     </div>
 
@@ -121,7 +121,7 @@
         const selectcabang = document.getElementById('cabang');
         const moreoption = document.getElementById('more-option');
         const selectpdl = document.getElementById('pdl');
-        const selectdate = document.getElementById('date_created');
+        const selectdate = document.getElementById('storting_date');
         const listtablebodystorting = document.getElementById(
             "list-body-table"
         );
@@ -178,7 +178,7 @@
                         <td>${item.dropping.anggota.pdl.nama}</td>
                         <td>${item.dropping.anggota.pdl.cabang.nama}</td>
                         <td>${item.tanggal_storting}</td>
-                        <td>${new Date(item.tanggal_storting).toISOString().split('T')[0]}</td>
+                        <td>${new Date(item.created_at).toISOString().split('T')[0]}</td>
 <td>
                                                         <div class="dropdown">
                             <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
@@ -472,7 +472,7 @@
             listtablebodystorting.innerHTML = initialmain.load(11)
             selectpdl.innerHTML = `<option value="pdl">pdl</option>`;
             globalfiltered = newdata.filter((item) =>
-                item.created_at.toLowerCase().includes(e.target.value)
+                item.tanggal_storting.toLowerCase().includes(e.target.value)
             );
 
             if (initialmain.admincek() == false) {

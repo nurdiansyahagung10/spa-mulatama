@@ -63,7 +63,7 @@
                 </div>
                 <div class="flex gap-2 px-4 w-full">
                     <div class="flex flex-row gap-1 w-full">
-                        <span>Tanggal Ditambahkan</span>
+                        <span>Tanggal Dropping</span>
                         <input type="date" name="tanggal" id="dropping_date"
                             class="block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400 rounded-full py-[0.35rem] px-4 leading-tight focus:outline-none dark:focus:border-white">
                     </div>
