@@ -21,7 +21,7 @@ class DroppingController extends Controller
         if(isset($user->cabang)){
             $cabang = $user->cabang->nama;
         }
-        return view("dashboard.pages.dropping")->with(['getusername' => $getusername, 'cabang' => $cabang]);    }
+        return view("dashboard.pages.dropping.dropping")->with(['getusername' => $getusername, 'cabang' => $cabang]);    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +29,7 @@ class DroppingController extends Controller
     public function create(string $id)
     {
         $anggota = Anggota::find($id);
-        return view('dashboard.pages.adddropping')->with(['anggota'=> $anggota,]);
+        return view('dashboard.pages.dropping.adddropping')->with(['anggota'=> $anggota,]);
 
     }
 
@@ -103,7 +103,7 @@ class DroppingController extends Controller
     public function show(string $id)
     {
         $dropping = Dropping::with('anggota.pdl.cabang')->find($id);
-        return view('dashboard.pages.detaildropping')->with('dropping', $dropping );
+        return view('dashboard.pages.dropping.detaildropping')->with('dropping', $dropping );
     }
 
     /**
@@ -114,7 +114,7 @@ class DroppingController extends Controller
 
         $anggota = Anggota::all();
         $dropping = dropping::with('anggota')->find($id);
-        return view('dashboard.pages.editdropping')->with(['anggota' => $anggota,'dropping' => $dropping ]);
+        return view('dashboard.pages.dropping.editdropping')->with(['anggota' => $anggota,'dropping' => $dropping ]);
     }
 
     /**

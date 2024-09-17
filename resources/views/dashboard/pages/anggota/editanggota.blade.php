@@ -31,7 +31,7 @@
 
                         @if ($item->id != $anggota->pdl->id)
                         <option class="text-black" value="{{ $item->id }}">{{ $item->nama }}</option>
-                            
+
                         @endif
                         @endforeach
                     </select>
@@ -116,7 +116,7 @@
                         name="ktp" value="{{$anggota->ktp}}" type="number">
                 </div>
             </div>
-            
+
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
@@ -140,7 +140,7 @@
             </div>
             <div class=" flex   h-full mb-6">
                 <div  class='rounded-xl  relative inline-block border-2 border-dashed  text-center p-5  '>
-                    <Image id="foto_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota}}" class="w-auto relative h-40    rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota}}" class="w-auto relative  {{$anggota->foto_anggota ? 'h-40' : '' }}    rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -157,7 +157,7 @@
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_ktp_anggota}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_ktp_anggota" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_ktp_anggota}}" class="w-auto relative  {{$anggota->foto_ktp_anggota ? 'h-40' : '' }}   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-3">
@@ -173,7 +173,7 @@
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_memegang_ktp" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_memegang_ktp" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/ktp dan anggota/{{$anggota->foto_anggota_memegang_ktp}}" class="w-auto relative {{$anggota->foto_anggota_memegang_ktp ? 'h-40' : '' }}   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -199,7 +199,7 @@
             </div>
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_usaha" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/tempat usaha/{{$anggota->foto_usaha}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_usaha" src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/tempat usaha/{{$anggota->foto_usaha}}" class="w-auto relative {{$anggota->foto_usaha ? 'h-40' : '' }}    rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
@@ -216,7 +216,7 @@
             </div>
 
 
-            
+
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full px-4">
                     <label class="block text-black dark:text-white mb-2" for="grid-password">
@@ -240,22 +240,10 @@
 
             <div class=" flex  h-full mb-6">
                 <div  class='rounded-xl  relative inline-block  border-2 border-dashed text-center p-5  '>
-                    <Image id="foto_pengikat"  src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/surat pengikat/{{$anggota->foto_pengikat}}" class="w-auto relative h-40   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
+                    <Image id="foto_pengikat"  src="/Image/{{$anggota->pdl->cabang->id}}/{{$anggota->pdl->id}}/{{$anggota->id}}/{{$anggota->created_at->format('Y-m-d')}}/pengajuan/surat pengikat/{{$anggota->foto_pengikat}}" class="w-auto relative {{$anggota->foto_pengikat ? 'h-40' : '' }}   rounded-xl" alt="" width={0} height={0}  objectFit="conten"></Image>
                 </div>
             </div>
 
-
-
-            {{-- <div class="flex flex-wrap -mx-3">
-                <div class="w-full px-4">
-                    <label class="block text-black dark:text-white mb-2" for="grid-password">
-                        Nominal pinjaman
-                    </label>
-                    <input
-                        class=" block w-full bg-transparent darK:text-white border text-black dark:text-white border-stone-400  rounded-full py-2 px-4 mb-3 leading-tight focus:outline-none dark:focus:border-white "
-                        name="nominal_pinjaman" value="{{$anggota->nominal_pinjaman}}" type="number">
-                </div>
-            </div> --}}
             <div class="flex flex-wrap pt-3 mt-6 -mx-3 mb-6">
                 <div class="w-full px-4">
                     <button
@@ -271,40 +259,40 @@
 
     <script>
 
-        
+
     document.getElementById('anggota').onchange = evt => {
   const [file] = document.getElementById('anggota').files
   if (file) {
     document.getElementById('foto_anggota').src = URL.createObjectURL(file);
-    
+
   }
 }
     document.getElementById('ktp_anggota').onchange = evt => {
   const [file] = document.getElementById('ktp_anggota').files
   if (file) {
     document.getElementById('foto_ktp_anggota').src = URL.createObjectURL(file);
-    
+
   }
 }
     document.getElementById('memegang_ktp').onchange = evt => {
   const [file] = document.getElementById('memegang_ktp').files
   if (file) {
     document.getElementById('foto_memegang_ktp').src = URL.createObjectURL(file);
-    
+
   }
 }
     document.getElementById('usaha').onchange = evt => {
   const [file] = document.getElementById('usaha').files
   if (file) {
     document.getElementById('foto_usaha').src = URL.createObjectURL(file);
-    
+
   }
 }
     document.getElementById('pengikat').onchange = evt => {
   const [file] = document.getElementById('pengikat').files
   if (file) {
     document.getElementById('foto_pengikat').src = URL.createObjectURL(file);
-    
+
   }
 }
 

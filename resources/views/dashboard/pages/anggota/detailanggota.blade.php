@@ -7,14 +7,15 @@
     <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
         <div class="grid gap-4 w-full grid-cols-2">
             <a href="/anggota">
-            <button type="button" class="flex items-center gap-2" id="search-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                  </svg>
-                                    <span class="text-xl">Back</span>
-            </button>
-        </a>
-        <h1 class="text-xl text-right">Detail anggota</h1>
+                <button type="button" class="flex items-center gap-2" id="search-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                    <span class="text-xl">Back</span>
+                </button>
+            </a>
+            <h1 class="text-xl text-right">Detail anggota</h1>
 
         </div>
     </div>
@@ -51,27 +52,27 @@
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>tanggal lahir</td>
                     <td>:</td>
-                    <td>{{ $anggota->tanggal_lahir }}</td>
+                    <td>{{ $anggota->tanggal_lahir ? $anggota->tanggal_lahir : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td> Alamat rumah</td>
                     <td>:</td>
-                    <td>{{ $anggota->alamat }}</td>
+                    <td>{{ $anggota->alamat ? $anggota->alamat : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>No hp</td>
                     <td>:</td>
-                    <td>{{ $anggota->nohp }}</td>
+                    <td>{{ $anggota->nohp ? $anggota->nohp : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>No KK</td>
                     <td>:</td>
-                    <td>{{ $anggota->kk }}</td>
+                    <td>{{ $anggota->kk ? $anggota->kk : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>No Ktp</td>
                     <td>:</td>
-                    <td>{{ $anggota->ktp }}</td>
+                    <td>{{ $anggota->ktp ? $anggota->ktp : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>Foto anggota</td>
@@ -79,10 +80,15 @@
                     <td class="flex justify-center">
                         <div class=" flex  h-full mb-6">
                             <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                <Image id="foto_pengikat"
-                                    src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/ktp dan anggota/{{ $anggota->foto_anggota }}"
-                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                    objectFit="conten"></Image>
+                                @if ($anggota->foto_anggota)
+                                    <Image id="foto_pengikat"
+                                        src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/ktp dan anggota/{{ $anggota->foto_anggota }}"
+                                        class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                        objectFit="conten"></Image>
+                                @else
+                                    -
+                                @endif
+
                             </div>
                         </div>
                     </td>
@@ -93,10 +99,15 @@
                     <td class="flex justify-center">
                         <div class=" flex  h-full mb-6">
                             <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                <Image id="foto_pengikat"
-                                    src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/ktp dan anggota/{{ $anggota->foto_ktp_anggota }}"
-                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                    objectFit="conten"></Image>
+                                @if ($anggota->foto_ktp_anggota)
+                                    <Image id="foto_pengikat"
+                                        src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/ktp dan anggota/{{ $anggota->foto_ktp_anggota }}"
+                                        class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                        objectFit="conten"></Image>
+                                @else
+                                    -
+                                @endif
+
                             </div>
                         </div>
                     </td>
@@ -107,17 +118,22 @@
                     <td class="flex justify-center">
                         <div class=" flex  h-full mb-6">
                             <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                <Image id="foto_pengikat"
-                                    src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/ktp dan anggota/{{ $anggota->foto_anggota_memegang_ktp }}"
-                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                    objectFit="conten"></Image>
+                                @if ($anggota->foto_anggota_memegang_ktp)
+                                    <Image id="foto_pengikat"
+                                        src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/ktp dan anggota/{{ $anggota->foto_anggota_memegang_ktp }}"
+                                        class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                        objectFit="conten"></Image>
+                                @else
+                                    -
+                                @endif
+
                             </div>
                         </div>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>Usaha</td>
                     <td>:</td>
-                    <td>{{ $anggota->usaha }}</td>
+                    <td>{{ $anggota->usaha ? $anggota->usaha : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>Foto usaha</td>
@@ -126,24 +142,29 @@
 
                         <div class=" flex  h-full mb-6">
                             <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                <Image id="foto_pengikat"
-                                    src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/tempat usaha/{{ $anggota->foto_usaha }}"
-                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                    objectFit="conten"></Image>
+                                @if ($anggota->foto_usaha)
+                                    <Image id="foto_pengikat"
+                                        src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/tempat usaha/{{ $anggota->foto_usaha }}"
+                                        class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                        objectFit="conten"></Image>
+                                @else
+                                    -
+                                @endif
+
                             </div>
                         </div>
                     </td>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td> Alamat usaha</td>
                     <td>:</td>
-                    <td>{{ $anggota->alamat_usaha }}</td>
+                    <td>{{ $anggota->alamat_usaha ? $anggota->alamat_usaha : '-' }}</td>
                 </tr>
                 </tr>
 
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>Surat Pengikat</td>
                     <td>:</td>
-                    <td>{{ $anggota->pengikat }}</td>
+                    <td>{{ $anggota->pengikat ? $anggota->pengikat : '-' }}</td>
                 </tr>
                 <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
                     <td>Foto surat pengikat</td>
@@ -152,10 +173,15 @@
 
                         <div class=" flex  h-full mb-6">
                             <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                <Image id="foto_pengikat"
-                                    src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/surat pengikat/{{ $anggota->foto_pengikat }}"
-                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                    objectFit="conten"></Image>
+                                @if ($anggota->foto_pengikat)
+                                    <Image id="foto_pengikat"
+                                        src="/Image/{{ $anggota->pdl->cabang->id }}/{{ $anggota->pdl->id }}/{{ $anggota->id }}/{{ $anggota->created_at->format('Y-m-d') }}/pengajuan/surat pengikat/{{ $anggota->foto_pengikat }}"
+                                        class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                        objectFit="conten"></Image>
+                                @else
+                                    -
+                                @endif
+
                             </div>
                         </div>
                     </td>
@@ -252,34 +278,34 @@
                         <td>${item != null ? new Date(item.tanggal_storting).toISOString().split('T')[0] : `belum storting`}</td>
 
                         ${item != null ? `<td>
-                                                                                    <div class="dropdown">
-                                                        <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                                                </svg></div>
-                                                        <form method="post" action="/storting/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
-                                                            @method('delete')   
-                                                            @csrf
-                                                            <li class="w-full"><a href="/storting/${item.id}" class="hover:text-white ">view</a></li>
-                                                                                            <li class="w-full"><a href="/storting/${item.id}/edit" class="hover:text-white ">Edit</a></li>
+                                                                                                                <div class="dropdown">
+                                                                                    <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                                                            </svg></div>
+                                                                                    <form method="post" action="/storting/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
+                                                                                        @method('delete')
+                                                                                        @csrf
+                                                                                        <li class="w-full"><a href="/storting/${item.id}" class="hover:text-white ">view</a></li>
+                                                                                                                        <li class="w-full"><a href="/storting/${item.id}/edit" class="hover:text-white ">Edit</a></li>
 
-                                                            <li class="w-full"><button class="hover:text-white ">Delete</button></li>
-                                                        </form>                            </div>
-                                                        </td>` : `<td>
-                                                                                    <div class="dropdown">
-                                                        <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
-                                                            
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                                                                </svg></div>
-                                                                                <div  tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
-                                                            <li><a hr\ef="/storting/create/${
-                                                                                    dropping.id
-                                                                                }/${tanggalstorting}" class="hover:text-white">Storting</a></li>
-                                                            </div>
-                                                            </div>
-                                                        </td> `}
-                    </tr> 
+                                                                                        <li class="w-full"><button class="hover:text-white ">Delete</button></li>
+                                                                                    </form>                            </div>
+                                                                                    </td>` : `<td>
+                                                                                                                <div class="dropdown">
+                                                                                    <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
+
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                                                            </svg></div>
+                                                                                                            <div  tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
+                                                                                        <li><a hr\ef="/storting/create/${
+                                                                                                                dropping.id
+                                                                                                            }/${tanggalstorting}" class="hover:text-white">Storting</a></li>
+                                                                                        </div>
+                                                                                        </div>
+                                                                                    </td> `}
+                    </tr>
                     `;
         }
 
@@ -288,7 +314,7 @@
                 totalstorting += parseFloat(item.nominal_storting);
             });
             return `
-       
+
        <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
            <td>resort</td>
            <td>:</td>
@@ -333,17 +359,17 @@
            <td>foto anggota mendatangani spk</td>
            <td>:</td>
            <td class="flex justify-center">
-               ${dropping.foto_nasabah_mendatangani_spk != null ? 
+               ${dropping.foto_nasabah_mendatangani_spk != null ?
                    `<div class=" flex  h-full">
-                                                                                                           <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                                                                                               <Image id="foto_pengikat"
-                                                                                                                   src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
-                                                                                                           .toISOString()
-                                                                                                           .split("T")[0] }/dropping/spk/${dropping.foto_nasabah_mendatangani_spk }"
-                                                                                                                   class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                                                                                                   objectFit="conten"></Image>
-                                                                                                           </div>
-                                                                                                       </div>`
+                                                                                                                                       <div class='rounded-xl  relative inline-block   text-center p-5  '>
+                                                                                                                                           <Image id="foto_pengikat"
+                                                                                                                                               src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
+                                                                                                                                       .toISOString()
+                                                                                                                                       .split("T")[0] }/dropping/spk/${dropping.foto_nasabah_mendatangani_spk }"
+                                                                                                                                               class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                                                                                                                               objectFit="conten"></Image>
+                                                                                                                                       </div>
+                                                                                                                                   </div>`
                :
                    `<span>-</span>`
                }
@@ -355,15 +381,15 @@
            <td>
                ${dropping.foto_nasabah_dan_spk != null ?
                    `<div class=" flex justify-center h-full">
-                                                                                                           <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                                                                                               <Image id="foto_pengikat"
-                                                                                                                   src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
-                                                                                                           .toISOString()
-                                                                                                           .split("T")[0] }/dropping/spk/${dropping.foto_nasabah_dan_spk }"
-                                                                                                                   class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                                                                                                   objectFit="conten"></Image>
-                                                                                                           </div>
-                                                                                                       </div>`
+                                                                                                                                       <div class='rounded-xl  relative inline-block   text-center p-5  '>
+                                                                                                                                           <Image id="foto_pengikat"
+                                                                                                                                               src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
+                                                                                                                                       .toISOString()
+                                                                                                                                       .split("T")[0] }/dropping/spk/${dropping.foto_nasabah_dan_spk }"
+                                                                                                                                               class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                                                                                                                               objectFit="conten"></Image>
+                                                                                                                                       </div>
+                                                                                                                                   </div>`
                    :
                    `<span>-</span>`
                }
@@ -375,15 +401,15 @@
            <td>
                ${dropping.foto_spk != null ?
                    `<div class=" flex justify-center h-full">
-                                                                                                           <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                                                                                               <Image id="foto_pengikat"
-                                                                                                                   src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
-                                                                                                           .toISOString()
-                                                                                                           .split("T")[0] }/dropping/spk/${dropping.foto_spk }"
-                                                                                                                   class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                                                                                                   objectFit="conten"></Image>
-                                                                                                           </div>
-                                                                                                       </div>`
+                                                                                                                                       <div class='rounded-xl  relative inline-block   text-center p-5  '>
+                                                                                                                                           <Image id="foto_pengikat"
+                                                                                                                                               src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
+                                                                                                                                       .toISOString()
+                                                                                                                                       .split("T")[0] }/dropping/spk/${dropping.foto_spk }"
+                                                                                                                                               class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                                                                                                                               objectFit="conten"></Image>
+                                                                                                                                       </div>
+                                                                                                                                   </div>`
                :
                    `<span>-</span>`
                }
@@ -404,32 +430,32 @@
                ${dropping.bukti != null ?
                    `<div class=" flex  h-full">
 
-                                                                                                           <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                                                                                               <Image id="foto_pengikat"
-                                                                                                                   src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
-                                                                                                           .toISOString()
-                                                                                                           .split("T")[0] }/dropping/bukti/${dropping.bukti }"
-                                                                                                                   class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                                                                                                   objectFit="conten"></Image>
-                                                                                                           </div>
-                                                                                                       </div>
-                                                                                                   ` : `
-                                                                                                       <span>-</span>` }
+                                                                                                                                       <div class='rounded-xl  relative inline-block   text-center p-5  '>
+                                                                                                                                           <Image id="foto_pengikat"
+                                                                                                                                               src="/Image/${dropping.anggota.pdl.cabang.id }/${dropping.anggota.pdl.id }/${dropping.anggota.id }/${new Date(dropping.anggota.created_at)
+                                                                                                                                       .toISOString()
+                                                                                                                                       .split("T")[0] }/dropping/bukti/${dropping.bukti }"
+                                                                                                                                               class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                                                                                                                               objectFit="conten"></Image>
+                                                                                                                                       </div>
+                                                                                                                                   </div>
+                                                                                                                               ` : `
+                                                                                                                                   <span>-</span>` }
            </td>
        </tr>
        <tr class="dark:border-stone-400 dark:text-stone-300 text-black dark:hover:text-white">
            <td colspan="3" class="px-0">
             <form method="post" action="/dropping/${dropping.id}" class="grid grid-cols-2 gap-2" tabindex="0" >
-                                @method('delete')   
+                                @method('delete')
                                 @csrf
                                 <a href="/dropping/${dropping.id}/edit" class="hover:text-white "><button type="button" class="btn w-full bg-transparent border  border-white">Edit</button></a>
                                 <button type="submit" class="btn bg-transparent border  border-white">Delete</button>
-                                </form> 
-            
+                                </form>
+
                             </td>
        </tr>
 
-   
+
    `;
         }
 
@@ -469,7 +495,13 @@
 
         window.addEventListener('load', async () => {
             droppingbody.innerHTML = load(2);
-            let datafetch = await fetch('/api/dropping/list/get');
+            let datafetch = await fetch("/api/dropping/list/get", {
+                'method': 'GET',
+                'headers': {
+                    'Accept': 'application/json',
+                    'Authorization': `bearer {{ session('access_token') }}`,
+                },
+            });
             data = await datafetch.json();
             droppingdata = data.filter(item => item.anggota_id === {{ $anggota->id }});
             if (droppingdata.length == 0) {
@@ -482,7 +514,7 @@
                 let dropping = droppingdata[0];
                 droppingbody.innerHTML = '';
                 listdropping.innerHTML += `
-                <li><a href="/dropping/create/{{$anggota->id}}"><button class="btn bg-transparent border-white border border-bottom">tambah dropping</button></a></li>
+                <li><a href="/dropping/create/{{ $anggota->id }}"><button class="btn bg-transparent border-white border border-bottom">tambah dropping</button></a></li>
                 `;
                 droppingdata.forEach((item, index) => {
                     if (index == 0) {
@@ -557,14 +589,14 @@
 
         async function rendernewdata(index, event) {
             tanggal = [];
-            datatenor.tenor =[];
-            datatenor.macet =[];
+            datatenor.tenor = [];
+            datatenor.macet = [];
             droppingdata = data.filter(item => item.anggota_id === {{ $anggota->id }});
             let dropping = droppingdata[index];
             droppingbody.innerHTML = '';
             listdropping.innerHTML = '';
             listdropping.innerHTML += `
-                <li><a href="/dropping/create/{{$anggota->id}}"><button class="btn bg-transparent border-white border border-bottom">tambah dropping</button></a></li>
+                <li><a href="/dropping/create/{{ $anggota->id }}"><button class="btn bg-transparent border-white border border-bottom">tambah dropping</button></a></li>
                 `;
 
             droppingdata.forEach((item, i) => {

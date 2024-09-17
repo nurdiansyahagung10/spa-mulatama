@@ -279,11 +279,12 @@
             datacabang = await datafetchcabang.json();
             let datafetchpdl = await initialpdl.pdlfetch();
             datapdl = await datafetchpdl.json();
-            newdata = datastorting;
-            globalfiltered = datastorting;
 
             if (initialmain.admincek() === false) {
                 newdata = datastorting.filter(item => item.dropping.anggota.pdl.cabang.nama === initialmain
+                    .getusercabang());
+                globalfiltered = datastorting.filter(item => item.dropping.anggota.pdl.cabang.nama ===
+                    initialmain
                     .getusercabang());
                 datacabang.forEach((item, index) => {
                     selectcabang.innerHTML = `
@@ -306,6 +307,9 @@
                 selectcabang.classList.add('bg-gray-200');
                 selectcabang.classList.remove('bg-transparent');
             } else {
+                newdata = datastorting;
+                globalfiltered = datastorting;
+
                 datacabang.forEach((item, index) => {
                     selectcabang.innerHTML += `
                      <option value="${item.nama}">${item.nama}</option>
@@ -340,8 +344,8 @@
             let filtereddata = null;
 
             if (e.target.value == 'pdl') {
-                filtereddata = globalfiltered.filter(item => item.dropping.anggota.pdl.cabang.nama === initialmain
-                    .getusercabang());
+                filtereddata = globalfiltered.filter(item => item.dropping.anggota.pdl.cabang.nama === selectcabang
+                    .value);
             } else {
                 filtereddata = globalfiltered.filter(item => item.dropping.anggota.pdl.nama === e.target.value);
             }
@@ -355,6 +359,7 @@
 
         search.addEventListener("input", async (e) => {
             let searchdata = e.target.value.toLowerCase();
+            listtablebodystorting.innerHTML = initialmain.load(11);
             selectdate.value = '';
             selectpdl.innerHTML = `
           <option value="pdl">pdl</option>
@@ -372,8 +377,6 @@
 
 
             if (initialmain.admincek() == false) {
-                globalfiltered = globalfiltered.filter(item => item.dropping.anggota.pdl.cabang.nama === initialmain
-                    .getusercabang());
                 datapdl.forEach((item, index) => {
                     if (item.cabang.nama == initialmain.getusercabang()) {
                         selectpdl.innerHTML += `
@@ -438,33 +441,31 @@
 
 
         selectcabang.addEventListener("input", async (e) => {
-
+            listtablebodystorting.innerHTML = initialmain.load(11);
             selectpdl.innerHTML = `
           <option value="pdl">pdl</option>
            `;
             datapdl.forEach((item, index) => {
-                listtablebodystorting.innerHTML = initialmain.load(11);
                 if (item.cabang.nama == e.target.value) {
                     document.getElementById('pdl').innerHTML += `
              <option value="${item.nama}">${item.nama}</option>
              `;
 
                 }
-
-                let filtereddata = null;
-
-                if (e.target.value == 'cabang') {
-                    filtereddata = globalfiltered;
-                } else {
-                    filtereddata = globalfiltered.filter(item => item.dropping.anggota.pdl.cabang
-                        .nama === e.target.value);
-                }
-
-                listtablebodystorting.innerHTML = "";
-                listtablebodystorting.innerHTML = initialmain.loaddatatable(filtereddata);
-
-
             });
+
+
+            if (e.target.value == 'cabang') {
+                filtereddata = globalfiltered;
+            } else {
+                filtereddata = globalfiltered.filter(item => item.dropping.anggota.pdl.cabang
+                    .nama === e.target.value);
+            }
+
+            listtablebodystorting.innerHTML = "";
+            listtablebodystorting.innerHTML = initialmain.loaddatatable(filtereddata);
+
+
         });
 
         selectdate.addEventListener("input", async (e) => {
@@ -484,8 +485,6 @@
 
                     }
                 });
-                globalfiltered = globalfiltered.filter(item => item.dropping.anggota.pdl.cabang.nama === initialmain.getusercabang())
-
             } else {
                 selectcabang.innerHTML = `<option value="cabang">cabang</option>`;
                 datacabang.forEach((item, index) => {

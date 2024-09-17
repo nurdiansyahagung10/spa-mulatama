@@ -3,6 +3,7 @@
     @endsection @section('dashboardpage')
     @include('layout.notiferror')
     @include('layout.notifsuccess')
+
     <div class="flex p-3 dark:text-white mt-10 mb-5 justify-between items-center">
         <h1 class="text-xl w-10/12">Table List dropping</h1>
         <div class="flex gap-4">
@@ -76,39 +77,32 @@
             <thead class="text-sm dark:text-white">
 
                 <tr class="dark:border-stone-400">
-                    <th class="font-medium text-black dark:text-white">
-                        No
-                    </th>
-                    <th class="font-medium text-black dark:text-white">
-                        Nama pdl
-                    </th>
-                    <th class="font-medium text-black dark:text-white">
-                        cabang
-                    </th>
-                    <th class="font-medium text-black dark:text-white">
-                        tanggal ditambahkan
-                    </th>
-                    @if ($getusername == 'admin')
-                    <th class="font-medium text-black dark:text-white">
-                        Action
-                    </th>
-
-                    @endif
+                    <th class="font-medium text-black dark:text-white">No</th>
+                    <th class="font-medium text-black dark:text-white">Nama</th>
+                    <th class="font-medium text-black dark:text-white">Email</th>
+                    <th class="font-medium text-black dark:text-white">Cabang</th>
+                    <th class="font-medium text-black dark:text-white">tanggal ditambahkan</th>
+                    <th class="font-medium text-black dark:text-white">Action</th>
                 </tr>
             </thead>
             <tbody id="list-body-table" class="text-black/60 dark:text-stone-200">
             </tbody>
         </table>
     </div>
-
+    </tr>
+    </thead>
+    <tbody id="list-body-table" class="text-black/60 dark:text-stone-200">
+    </tbody>
+    </table>
+    </div>
     <script>
         let initialmain = null;
         let initialcabang = null;
-        let initialpdl = null;
+        let initialstaff = null;
         let newdata = null;
         let globalfiltered = null;
         let datacabang = null;
-        let datapdl = null;
+        let datastaff = null;
         let defaultsearchvalue = "Nama";
         const btnsearchby = document.querySelectorAll(".btn-searchby");
         const search = document.getElementById("search");
@@ -118,7 +112,6 @@
         const moreoptionitem = document.querySelectorAll('.more-option-item');
         const selectcabang = document.getElementById('cabang');
         const moreoption = document.getElementById('more-option');
-        const selectpdl = document.getElementById('pdl');
         const selectdate = document.getElementById('date_created');
         const listtablebodystorting = document.getElementById(
             "list-body-table"
@@ -168,24 +161,25 @@
                     <tr class="dark:border-stone-400 dark:text-stone-300 hover:text-black dark:hover:text-white">
                         <td>${index + 1}</td>
                         <td>${item.nama}</td>
+                        <td>${item.email}</td>
                         <td>${item.cabang.nama}</td>
-                        <td>${new Date(item.created_at)
+                                                <td>${new Date(item.created_at)
                     .toISOString()
                     .split("T")[0]}</td>
-                        ${this.admincek() == false ? `` : `<td>
-                                <div class="dropdown">
-    <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                            </svg></div>
-    <form method="post" action="/pdl/${item.id}" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
-        @method('delete')
-        @csrf
-        <li><a href="/pdl/${item.id}/edit" class="hover:text-white ">Edit</a></li>
-        <li><button class="hover:text-white ">Delete</button></li>
-    </form>                            </div>
-    </td>` }
-                    </tr>
+<td>
+                                                        <div class="dropdown">
+                            <div tabindex="0" class="cursor-pointer dark:text-white text-black" >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                    </svg></div>
+                            <form method="post" action="${item.id}/delete" tabindex="0" class="dropdown-content menu rounded-box z-[1] w-24 mt-2 dark:border dark:bg-base-300 bg-black text-stone-300 border-0  dark:border-stone-400 p-2 shadow">
+                                @method('delete')
+                                @csrf
+                                <li><a href="${item.id}/edit" class="hover:text-white ">Edit</a></li>
+                                <li><button class="hover:text-white ">Delete</button></li>
+                            </form>
+                            </div>
+                            </td>                    </tr>
                     `;
             }
 
@@ -199,10 +193,10 @@
         }
 
 
-        class pdl extends main {
+        class staff extends main {
 
-            pdlfetch() {
-                return fetch("/api/pdl/list/get", {
+            stafffetch() {
+                return fetch("/api/user/list/get", {
                     'method': 'GET',
                     'headers': {
                         'Accept': 'application/json',
@@ -211,7 +205,7 @@
                 }).then(async (response) => {
                     if (response.status === 401) {
                         await this.refreshToken();
-                        response = await fetch("/api/pdl/list/get", {
+                        response = await fetch("/api/user/list/get", {
                             'method': 'GET',
                             'headers': {
                                 'Accept': 'application/json',
@@ -227,7 +221,7 @@
 
         }
 
-        class cabang extends pdl {
+        class cabang extends staff {
             cabangfetch() {
                 return fetch("/api/cabang/list/get", {
                     'method': 'GET',
@@ -249,26 +243,28 @@
         window.addEventListener("load", async () => {
             initialmain = new main;
             initialcabang = new cabang;
-            initialpdl = new pdl;
+            initialstaff = new staff;
             listtablebodystorting.innerHTML = initialmain.load(11);
             let datafetchcabang = await initialcabang.cabangfetch();
             datacabang = await datafetchcabang.json();
-            let datafetchpdl = await initialpdl.pdlfetch();
-            datapdl = await datafetchpdl.json();
-            newdata = datapdl;
-            globalfiltered = datapdl;
+            let datafetchstaff = await initialstaff.stafffetch();
+            datastaff = await datafetchstaff.json();
+
 
             if (initialmain.admincek() === false) {
-                newdata = datapdl.filter(item => item.cabang.nama === initialmain.getusercabang());
+                newdata = datastaff.filter(item => item.cabang.nama === initialmain.getusercabang());
+                globalfiltered = datastaff.filter(item => item.cabang.nama === initialmain.getusercabang());
                 datacabang.forEach((item, index) => {
                     selectcabang.innerHTML = `
                  <option value="${initialmain.getusercabang()}">${initialmain.getusercabang()}</option>
                  `;
                 });
                 selectcabang.classList.add('pointer-events-none');
-            selectcabang.classList.add('bg-gray-200');
+                selectcabang.classList.add('bg-gray-200');
                 selectcabang.classList.remove('bg-transparent');
             } else {
+                newdata = datastaff;
+                globalfiltered = datastaff;
                 datacabang.forEach((item, index) => {
                     selectcabang.innerHTML += `
                  <option value="${item.nama}">${item.nama}</option>
@@ -286,6 +282,7 @@
 
 
         search.addEventListener("input", async (e) => {
+            listtablebodystorting.innerHTML = initialmain.load(11);
             let searchdata = e.target.value.toLowerCase();
             selectdate.value = '';
 
@@ -300,10 +297,7 @@
             }
 
 
-            if (initialmain.admincek() == false) {
-                globalfiltered = globalfiltered.filter(item => item.cabang.nama === initialmain
-                    .getusercabang());
-            } else {
+            if (initialmain.admincek() !== false) {
                 selectcabang.innerHTML = `
           <option value="cabang">cabang</option>
       `;
@@ -360,6 +354,7 @@
 
         selectcabang.addEventListener("input", async (e) => {
 
+            listtablebodystorting.innerHTML = initialmain.load(11);
 
             let filtereddata = null;
 
@@ -377,6 +372,7 @@
         });
 
         selectdate.addEventListener("input", async (e) => {
+
             search.value = '';
             listtablebodystorting.innerHTML = initialmain.load(11)
             globalfiltered = newdata.filter((item) =>
@@ -384,9 +380,6 @@
             );
 
             if (initialmain.admincek() == false) {
-                globalfiltered = globalfiltered.filter(item => item.cabang.nama === initialmain.getusercabang())
-
-            } else {
                 selectcabang.innerHTML = `<option value="cabang">cabang</option>`;
                 datacabang.forEach((item, index) => {
                     selectcabang.innerHTML += `

@@ -22,7 +22,7 @@ class StortingController extends Controller
         if(isset($user->cabang)){
             $cabang = $user->cabang->nama;
         }
-        return view("dashboard.pages.storting")->with(['getusername' => $getusername, 'cabang' => $cabang]);
+        return view("dashboard.pages.storting.storting")->with(['getusername' => $getusername, 'cabang' => $cabang]);
     }
 
     /**
@@ -31,7 +31,7 @@ class StortingController extends Controller
     public function create(string $id, string $tanggal)
     {
         $dropping = Dropping::find($id);
-        return view('dashboard.pages.addstorting')->with(['dropping'=> $dropping,'tanggal_storting' => $tanggal]);
+        return view('dashboard.pages.storting.addstorting')->with(['dropping'=> $dropping,'tanggal_storting' => $tanggal]);
 
     }
 
@@ -87,7 +87,7 @@ class StortingController extends Controller
     public function show(string $id)
     {
         $storting = Storting::with('dropping.anggota.pdl.cabang')->find($id);
-        return view('dashboard.pages.detailstorting')->with('storting', $storting );
+        return view('dashboard.pages.storting.detailstorting')->with('storting', $storting );
     }
 
     /**
@@ -97,7 +97,7 @@ class StortingController extends Controller
     {
         $anggota = Anggota::with('dropping')->whereHas('dropping')->get();
         $storting = storting::with('dropping.anggota')->find($id);
-        return view('dashboard.pages.editstorting')->with(['anggota' => $anggota,'storting' => $storting ]);
+        return view('dashboard.pages.storting.editstorting')->with(['anggota' => $anggota,'storting' => $storting ]);
 
     }
 

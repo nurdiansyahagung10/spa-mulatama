@@ -72,10 +72,15 @@
                     <td>
                         <div class=" flex justify-center   h-full mb-6">
                             <div class='rounded-xl  relative inline-block   text-center p-5  '>
-                                <Image id="foto_pengikat"
-                                    src="/Image/{{ $storting->dropping->anggota->pdl->cabang->id }}/{{ $storting->dropping->anggota->pdl->id }}/{{ $storting->dropping->anggota->id }}/{{ $storting->dropping->anggota->created_at->format('Y-m-d') }}/storting/{{ $storting->bukti }}"
-                                    class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
-                                    objectFit="conten"></Image>
+                                @if ($storting->bukti)
+                                    <Image id="foto_pengikat"
+                                        src="/Image/{{ $storting->dropping->anggota->pdl->cabang->id }}/{{ $storting->dropping->anggota->pdl->id }}/{{ $storting->dropping->anggota->id }}/{{ $storting->dropping->anggota->created_at->format('Y-m-d') }}/storting/{{ $storting->bukti }}"
+                                        class="max-w-52 relative   rounded-xl" alt="" width={0} height={0}
+                                        objectFit="conten"></Image>
+                                @else
+                                    -
+                                @endif
+
                             </div>
                         </div>
                     </td>

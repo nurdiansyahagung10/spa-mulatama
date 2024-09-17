@@ -41,7 +41,7 @@ class AuthController extends Controller
 
     public function signupview(){
         $cabang = Cabang::all();
-        return view('dashboard.pages.adduser')->with('cabang', $cabang);
+        return view('dashboard.pages.staff.adduser')->with('cabang', $cabang);
     }
 
 
@@ -91,7 +91,7 @@ class AuthController extends Controller
     public function edit(request $request, string $id){
         $cabang = Cabang::all();
         $user = User::with('cabang')->find($id);
-        return view('dashboard.pages.edituser')->with(['user'=> $user, 'cabang' => $cabang]);
+        return view('dashboard.pages.staff.edituser')->with(['user'=> $user, 'cabang' => $cabang]);
 
     }
 
@@ -144,9 +144,13 @@ class AuthController extends Controller
     }
 
     public function usershow(request $request){
-        $user = User::get();
-
-        return view('dashboard.pages.users')->with('user', $user);
+        $user = Auth::user();
+        $getusername = $user->nama;
+        $cabang = null;
+        if(isset($user->cabang)){
+            $cabang = $user->cabang->nama;
+        }
+        return view("dashboard.pages.staff.users")->with(['getusername' => $getusername, 'cabang' => $cabang]);
 
     }
 

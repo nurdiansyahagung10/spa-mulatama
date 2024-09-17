@@ -23,7 +23,7 @@ class AnggotaController extends Controller
         if(isset($user->cabang)){
             $cabang = $user->cabang->nama;
         }
-        return view("dashboard.pages.anggota")->with(['getusername' => $getusername, 'cabang' => $cabang]);
+        return view("dashboard.pages.anggota.anggota")->with(['getusername' => $getusername, 'cabang' => $cabang]);
     }
 
     /**
@@ -33,7 +33,7 @@ class AnggotaController extends Controller
     {
         $pdl = pdl::all();
         $cabang = Cabang::all();
-        return view('dashboard.pages.addanggota')->with(['cabang' => $cabang, 'pdl' => $pdl]);
+        return view('dashboard.pages.anggota.addanggota')->with(['cabang' => $cabang, 'pdl' => $pdl]);
     }
 
     /**
@@ -113,7 +113,7 @@ class AnggotaController extends Controller
     public function show(string $id)
     {
         $anggota = Anggota::with('pdl.cabang')->find($id);
-        return view('dashboard.pages.detailanggota')->with('anggota', $anggota);
+        return view('dashboard.pages.anggota.detailanggota')->with('anggota', $anggota);
     }
 
     /**
@@ -125,7 +125,7 @@ class AnggotaController extends Controller
     {
         $pdl = pdl::all();
         $anggota = Anggota::with('pdl.cabang')->find($id);
-        return view('dashboard.pages.editanggota')->with(['anggota' => $anggota, 'pdl' => $pdl]);
+        return view('dashboard.pages.anggota.editanggota')->with(['anggota' => $anggota, 'pdl' => $pdl]);
     }
 
     /**

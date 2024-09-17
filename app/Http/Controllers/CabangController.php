@@ -15,7 +15,7 @@ class CabangController extends Controller
     public function index()
     {
         $cabang = cabang::all();
-        return view("dashboard.pages.cabang")->with("cabang", $cabang);
+        return view("dashboard.pages.cabang.cabang")->with("cabang", $cabang);
     }
 
     /**
@@ -23,7 +23,7 @@ class CabangController extends Controller
      */
     public function create()
     {
-        return view('dashboard.pages.addcabang');
+        return view('dashboard.pages.cabang.addcabang');
     }
 
     /**
@@ -31,7 +31,7 @@ class CabangController extends Controller
      */
     public function store(Request $request)
     {
-    
+
         $credentcial = $request->validate([
             "nama" => ["required",'unique:cabang,nama'],
             "admin_provisi" => "required",
@@ -44,7 +44,7 @@ class CabangController extends Controller
         Cabang::create($credentcial);
 
         return redirect()->back()->with("success","berhasil tambah cabang ". $credentcial['nama']);
-        
+
     }
 
     /**
@@ -61,7 +61,7 @@ class CabangController extends Controller
     public function edit(string $id)
     {
         $cabang = Cabang::find($id);
-        return view('dashboard.pages.editcabang')->with('cabang', $cabang);
+        return view('dashboard.pages.cabang.editcabang')->with('cabang', $cabang);
     }
 
     /**
@@ -69,7 +69,7 @@ class CabangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
+
         $cabang = Cabang::find($id);
 
         if($cabang->nama != $request->nama){
@@ -80,7 +80,7 @@ class CabangController extends Controller
             ],
         [
             'nama.unique' => 'cabang ini sudah terdaftar',
-    
+
         ]);
             }else{
             $credentcial = $request->validate([
@@ -88,12 +88,12 @@ class CabangController extends Controller
                 "admin_provisi" => "required",
                 "simpanan" => "required",
 
-            ]);    
+            ]);
         }
 
-        
+
         Cabang::find($id)->update($credentcial);
-        
+
         return redirect()->back()->with("success","berhasil edit cabang ".$cabang->nama);
     }
 

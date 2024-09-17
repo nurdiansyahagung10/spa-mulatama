@@ -20,7 +20,7 @@ class PdlController extends Controller
         if(isset($user->cabang)){
             $cabang = $user->cabang->nama;
         }
-        return view("dashboard.pages.pdl")->with(['getusername' => $getusername, 'cabang' => $cabang]);
+        return view("dashboard.pages.pdl.pdl")->with(['getusername' => $getusername, 'cabang' => $cabang]);
     }
 
     /**
@@ -29,7 +29,7 @@ class PdlController extends Controller
     public function create()
     {
         $cabang = Cabang::all();
-        return view('dashboard.pages.addpdl')->with('cabang' , $cabang);
+        return view('dashboard.pages.pdl.addpdl')->with('cabang' , $cabang);
     }
 
     /**
@@ -64,7 +64,7 @@ class PdlController extends Controller
     {
         $cabang = Cabang::all();
         $pdl = Pdl::with('cabang')->find($id);
-        return view('dashboard.pages.editpdl')->with(['cabang' => $cabang, 'pdl' => $pdl]);
+        return view('dashboard.pages.pdl.editpdl')->with(['cabang' => $cabang, 'pdl' => $pdl]);
     }
 
     /**
