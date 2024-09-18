@@ -387,19 +387,7 @@
                     },
                 }).then(async (response) => {
                     try {
-                        if (response.status === 401) {
-                            await this.refreshToken();
-                            response = await fetch("/api/anggota/list/get", {
-                                'method': 'GET',
-                                'headers': {
-                                    'Accept': 'application/json',
-                                    'Authorization': `bearer ${this.accesstoken}`,
-                                },
-                            });
                             return response.status === 404 ? [] : await response.json();
-                        } else {
-                            return response.status === 404 ? [] : await response.json();
-                        }
                     } catch (error) {
                         console.error(`Error fetching data from ${url}:`, error);
                         return [];

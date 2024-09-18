@@ -235,7 +235,9 @@
                     return item[key] === null ? count + 1 : count;
                 }, 0);
                 const droppingCount = item.dropping ? item.dropping.length : 0;
-                const stortingCount = item.dropping.storting ? item.dropping.storting.length : 0;
+                const stortingCount = item.dropping.reduce((count, item) => {
+                    return item.storting.length;
+                }, 0);
                 return this.innerdatatable(index, item, droppingCount, stortingCount, nulldata);
             }).join('');
 
@@ -255,19 +257,7 @@
                     'Authorization': `bearer ${this.accesstoken}`,
                 },
             }).then(async (response) => {
-                if (response.status === 401) {
-                    await this.refreshToken();
-                    response = await fetch("/api/anggota/list/get", {
-                        'method': 'GET',
-                        'headers': {
-                            'Accept': 'application/json',
-                            'Authorization': `bearer ${this.accesstoken}`,
-                        },
-                    });
                     return response
-                } else {
-                    return response
-                }
             });
         }
 

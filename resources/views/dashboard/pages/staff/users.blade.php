@@ -203,19 +203,8 @@
                         'Authorization': `bearer ${this.accesstoken}`,
                     },
                 }).then(async (response) => {
-                    if (response.status === 401) {
-                        await this.refreshToken();
-                        response = await fetch("/api/user/list/get", {
-                            'method': 'GET',
-                            'headers': {
-                                'Accept': 'application/json',
-                                'Authorization': `bearer ${this.accesstoken}`,
-                            },
-                        });
+
                         return response;
-                    } else {
-                        return response;
-                    }
                 });
             }
 
